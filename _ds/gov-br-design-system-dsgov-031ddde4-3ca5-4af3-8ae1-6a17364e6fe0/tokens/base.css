@@ -1,0 +1,55 @@
+/* ===========================================================================
+   GOV.BR Design System — base element defaults
+   Minimal resets + default type roles + link styling so consumer pages inherit
+   the gov.br voice without extra setup.
+   =========================================================================== */
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-family-base);
+  font-size: var(--text-body);
+  line-height: var(--line-height-medium);
+  color: var(--text-default);
+  background: var(--background);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-family-base);
+  color: var(--text-strong);
+  line-height: var(--line-height-low);
+  margin: 0 0 var(--spacing-scale-2x);
+  text-wrap: balance;
+}
+h1 { font-size: var(--text-h1); font-weight: var(--font-weight-semi-bold); }
+h2 { font-size: var(--text-h2); font-weight: var(--font-weight-semi-bold); }
+h3 { font-size: var(--text-h3); font-weight: var(--font-weight-semi-bold); }
+h4 { font-size: var(--text-h4); font-weight: var(--font-weight-medium); }
+
+p { margin: 0 0 var(--spacing-scale-2x); text-wrap: pretty; }
+
+a {
+  color: var(--text-link);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color var(--duration) var(--easing-standard);
+}
+a:hover { color: var(--interactive-dark); }
+a:visited { color: var(--visited); }
+a:focus-visible {
+  outline: none;
+  border-radius: var(--surface-rounder-sm);
+  box-shadow: var(--focus);
+}
+
+*:focus-visible {
+  outline: none;
+  box-shadow: var(--focus);
+}
+
+::selection { background: var(--blue-warm-20); color: var(--text-strong); }

@@ -1,0 +1,53 @@
+/* ===========================================================================
+   GOV.BR Design System — Webfonts
+   Primary typeface is RAWLINE (institutional gov.br font). The real Rawline
+   binaries ship with this design system under assets/fonts/rawline/ (official
+   gov.br package, SIL Open Font License). "Raleway" is the documented
+   secondary/display face and is loaded from Google Fonts as a fallback.
+   =========================================================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;500&display=swap");
+
+/* Rawline — bundled official binaries (paths relative to this file in tokens/) */
+@font-face {
+  font-family: "Rawline";
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url("../assets/fonts/rawline/rawline-300.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Rawline";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../assets/fonts/rawline/rawline-400.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Rawline";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("../assets/fonts/rawline/rawline-500.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Rawline";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("../assets/fonts/rawline/rawline-600.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Rawline";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../assets/fonts/rawline/rawline-700.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Rawline";
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url("../assets/fonts/rawline/rawline-900.woff2") format("woff2");
+}

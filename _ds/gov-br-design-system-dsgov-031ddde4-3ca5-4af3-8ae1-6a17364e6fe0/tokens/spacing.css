@@ -1,0 +1,32 @@
+/* ===========================================================================
+   GOV.BR Design System — Spacing & layout tokens
+   8px base grid ("escala de medidas"). half = 4px, base = 8px, then multiples.
+   =========================================================================== */
+
+:root {
+  --spacing-scale-half: 4px;
+  --spacing-scale-base: 8px;
+  --spacing-scale-baseh: 12px;
+  --spacing-scale-2x: 16px;
+  --spacing-scale-2xh: 20px;
+  --spacing-scale-3x: 24px;
+  --spacing-scale-3xh: 28px;
+  --spacing-scale-4x: 32px;
+  --spacing-scale-5x: 40px;
+  --spacing-scale-6x: 48px;
+  --spacing-scale-7x: 56px;
+  --spacing-scale-8x: 64px;
+  --spacing-scale-9x: 72px;
+  --spacing-scale-10x: 80px;
+
+  /* Container widths */
+  --container-sm: 576px;
+  --container-md: 768px;
+  --container-lg: 992px;
+  --container-xl: 1200px;
+
+  /* Component heights (gov.br sizing scale: small / medium / large) */
+  --height-small: 32px;
+  --height-medium: 40px; /* padrão */
+  --height-large: 48px;
+}

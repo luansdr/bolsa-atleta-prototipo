@@ -1,0 +1,51 @@
+/* ===========================================================================
+   GOV.BR Design System — Typography tokens
+   Primary typeface: Rawline (institutional). Secondary/display: Raleway.
+   Type scale is a 1.2 (minor-third) ratio on a 1rem (16px) base, mirroring
+   the @govbr-ds "font-size-scale" tokens.
+   =========================================================================== */
+
+:root {
+  /* Families */
+  --font-family-base: "Rawline", "Rubik", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-family-secondary: "Raleway", "Rawline", "Rubik", sans-serif;
+  --font-family-mono: "Roboto Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  /* Weights (Rawline ships 100–900; these are the ones the DS uses) */
+  --font-weight-thin: 300;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semi-bold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extra-bold: 800;
+
+  /* Size scale (base = 16px) */
+  --font-size-scale-down-02: 0.694rem; /* 11px — legendas menores */
+  --font-size-scale-down-01: 0.833rem; /* 13px — apoio / captions */
+  --font-size-scale-base: 1rem;        /* 16px — corpo de texto */
+  --font-size-scale-up-01: 1.2rem;     /* 19px */
+  --font-size-scale-up-02: 1.44rem;    /* 23px */
+  --font-size-scale-up-03: 1.728rem;   /* 28px */
+  --font-size-scale-up-04: 2.074rem;   /* 33px */
+  --font-size-scale-up-05: 2.488rem;   /* 40px */
+  --font-size-scale-up-06: 2.986rem;   /* 48px — display */
+
+  /* Line heights */
+  --line-height-low: 1.15;
+  --line-height-medium: 1.45;
+  --line-height-high: 1.66;
+
+  /* Letter spacing */
+  --tracking-tight: -0.01em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.08em; /* eyebrows / rótulos em caixa alta */
+
+  /* Semantic type roles */
+  --text-display: var(--font-size-scale-up-06);
+  --text-h1: var(--font-size-scale-up-05);
+  --text-h2: var(--font-size-scale-up-03);
+  --text-h3: var(--font-size-scale-up-02);
+  --text-h4: var(--font-size-scale-up-01);
+  --text-body: var(--font-size-scale-base);
+  --text-support: var(--font-size-scale-down-01);
+}

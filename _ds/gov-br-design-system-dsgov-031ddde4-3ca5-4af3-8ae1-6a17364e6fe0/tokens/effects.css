@@ -1,0 +1,33 @@
+/* ===========================================================================
+   GOV.BR Design System — Borders, radii, shadows, motion
+   Distinctive gov.br traits: pill-shaped buttons (100em), gently rounded
+   cards/inputs (4–8px), soft downward elevation shadows, quick 150ms fades.
+   =========================================================================== */
+
+:root {
+  /* Border widths */
+  --border-width-none: 0; /* @kind other */
+  --border-width-hair: 1px;
+  --border-width-thick: 2px;
+  --border-width-heavy: 3px; /* barra de estado à esquerda em mensagens */
+
+  /* Radii */
+  --surface-rounder-sm: 4px;   /* inputs, tags, itens */
+  --surface-rounder-md: 8px;   /* cards, modais */
+  --surface-rounder-lg: 16px;  /* superfícies grandes */
+  --surface-rounder-pill: 100em; /* BOTÕES — totalmente arredondados */
+
+  /* Elevation — soft, downward, low-opacity dark blue/black */
+  --color-shadow: rgba(var(--pure-100-rgb), 0.16);
+  --surface-shadow-sm: 0 1px 3px var(--color-shadow);
+  --surface-shadow-md: 0 3px 6px var(--color-shadow);
+  --surface-shadow-lg: 0 6px 18px var(--color-shadow);
+  --surface-shadow-header: 0 0.5px 1.5px rgba(var(--pure-100-rgb), 0.16),
+                           0 1px 3px rgba(var(--pure-100-rgb), 0.08);
+
+  /* Motion */
+  --duration-fast: 100ms; /* @kind other */
+  --duration: 150ms; /* @kind other */
+  --duration-slow: 300ms; /* @kind other */
+  --easing-standard: cubic-bezier(0.4, 0, 0.2, 1); /* @kind other */
+}

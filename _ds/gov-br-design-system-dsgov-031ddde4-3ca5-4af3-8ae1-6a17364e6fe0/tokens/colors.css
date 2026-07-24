@@ -1,0 +1,112 @@
+/* ===========================================================================
+   GOV.BR Design System — Color tokens
+   Palette derived from the official gov.br visual identity (SERPRO) and the
+   @govbr-ds/core token naming (USWDS-style "blue-warm / green-cool" families).
+   Base values are the institutional brand colors; semantic aliases below are
+   what components should consume.
+   =========================================================================== */
+
+:root {
+  /* --- Pure ------------------------------------------------------------- */
+  --pure-0: #ffffff;
+  --pure-0-rgb: 255, 255, 255; /* @kind color */
+  --pure-100: #000000;
+  --pure-100-rgb: 0, 0, 0; /* @kind color */
+
+  /* --- Blue (Azul) — the primary brand family ------------------------- */
+  --blue-warm-5: #e8f2ff;
+  --blue-warm-10: #d4e5ff;
+  --blue-warm-20: #adcdff;
+  --blue-warm-vivid-30: #5992ed;
+  --blue-warm-vivid-40: #2670e8;
+  --blue-warm-vivid-50: #155bcb;
+  --blue-warm-vivid-60: #123f87; /* legacy */
+  --blue-warm-vivid-70: #1351b4; /* AZUL — cor institucional gov.br */
+  --blue-warm-vivid-80: #0c326f; /* Azul intenso */
+  --blue-warm-vivid-90: #071d41; /* Azul marinho — topo de página */
+
+  /* --- Green (Verde) --------------------------------------------------- */
+  --green-cool-vivid-5: #ecf3ec;
+  --green-cool-vivid-50: #168821; /* VERDE — gov.br / sucesso */
+  --green-cool-vivid-70: #0c4b1c;
+
+  /* --- Yellow (Amarelo) ------------------------------------------------ */
+  --yellow-vivid-5: #fff5c2;
+  --yellow-vivid-20: #ffcd07; /* AMARELO — gov.br / destaque / atenção */
+  --yellow-vivid-30: #e6b800;
+
+  /* --- Red (Vermelho) -------------------------------------------------- */
+  --red-vivid-5: #fbeae9;
+  --red-vivid-50: #e52207; /* VERMELHO — erro / perigo */
+  --red-vivid-60: #c31f0a;
+
+  /* --- Neutral gray scale ---------------------------------------------- */
+  --gray-2: #f8f8f8;
+  --gray-5: #f0f0f0;
+  --gray-10: #e6e6e6;
+  --gray-20: #cccccc;
+  --gray-30: #b3b3b3;
+  --gray-40: #999999;
+  --gray-50: #808080;
+  --gray-60: #666666;
+  --gray-70: #4d4d4d;
+  --gray-80: #333333;
+  --gray-90: #1a1a1a;
+
+  /* =====================================================================
+     SEMANTIC ALIASES — consume these in components, not the base scale.
+     ===================================================================== */
+
+  /* Interactive / brand */
+  --interactive: var(--blue-warm-vivid-70);
+  --interactive-rgb: 19, 81, 180; /* @kind color */
+  --interactive-dark: var(--blue-warm-vivid-80);
+  --interactive-light: var(--blue-warm-5);
+  --visited: #663399; /* links visitados (violeta institucional) */
+
+  /* Surfaces & text */
+  --background: var(--gray-2);
+  --surface-card: var(--pure-0);
+  --surface-header: var(--pure-0);
+  --surface-overlay: rgba(var(--pure-100-rgb), 0.5);
+
+  --text-strong: var(--gray-90);
+  --text-default: var(--gray-80); /* corpo de texto padrão */
+  --text-secondary: var(--gray-60);
+  --text-disabled: var(--gray-40);
+  --text-inverse: var(--pure-0);
+  --text-link: var(--interactive);
+
+  /* Borders */
+  --border-color: var(--gray-20);
+  --border-color-strong: var(--gray-40);
+
+  /* Feedback / status */
+  --success: var(--green-cool-vivid-50);
+  --success-bg: var(--green-cool-vivid-5);
+  --warning: var(--yellow-vivid-20);
+  --warning-bg: var(--yellow-vivid-5);
+  --danger: var(--red-vivid-50);
+  --danger-bg: var(--red-vivid-5);
+  --info: var(--blue-warm-vivid-50);
+  --info-bg: var(--blue-warm-5);
+
+  /* State overlays — gov.br layers a tint of the current color on hover/press.
+     Multiply the interactive/base color by these opacities. */
+  --hover: 0.16; /* @kind other */
+  --pressed: 0.32; /* @kind other */
+  --disabled-opacity: 0.45; /* @kind other */
+
+  /* Focus — the distinctive gov.br focus ring (thick light-blue halo) */
+  --focus-color: var(--blue-warm-vivid-40);
+  --focus-width: 4px;
+  --focus: 0 0 0 var(--focus-width) rgba(38, 112, 232, 0.4);
+}
+
+/* Dark top bar utility (used by header/footer institucional) */
+.govbr-dark {
+  --surface-card: var(--blue-warm-vivid-90);
+  --text-default: var(--pure-0);
+  --text-secondary: var(--gray-20);
+  --border-color: rgba(var(--pure-0-rgb), 0.16);
+}
