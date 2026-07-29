@@ -527,7 +527,7 @@
                   </div>
                 </sc-for>
               </div>
-              <div style="margin-top:12px;font-size:12.5px;color:var(--text-secondary)"><i class="fas fa-circle-info" style="color:var(--interactive);margin-right:6px"></i>Desempate final por idade (mais novo primeiro).</div>
+              <div style="margin-top:12px;font-size:12.5px;color:var(--text-secondary)"><i class="fas fa-circle-info" style="color:var(--interactive);margin-right:6px"></i>Desempate final por idade, <b>da maior para a menor</b> (mais velho primeiro) — item 18.2.1 do edital. Persistindo empate (mesma data de nascimento), sorteio pelo DGEA.</div>
             </div>
 
             <!-- Pontuação COTP -->
@@ -630,8 +630,46 @@
           <div style="background:var(--blue-warm-vivid-90);color:#fff;border-radius:12px;padding:22px;margin-bottom:16px">
             <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.14);padding:4px 12px;border-radius:100px;font-size:12px;font-weight:700;margin-bottom:12px"><i class="fas fa-circle-play"></i> Edital 01/2026 · inscrições abertas</div>
             <div style="font-size:19px;font-weight:800;margin-bottom:6px">Faça sua inscrição</div>
-            <div style="font-size:13.5px;color:var(--gray-20);line-height:1.55;margin-bottom:18px">Verificamos sua elegibilidade, você escolhe o tipo de bolsa e preenche o formulário guiado — em 5 etapas simples.</div>
-            <button onClick="{{ goEleg }}" style="display:inline-flex;align-items:center;gap:10px;padding:13px 24px;border:0;border-radius:100px;background:#fff;color:var(--interactive);font-weight:700;font-size:15px;font-family:inherit;cursor:pointer">Começar minha inscrição <i class="fas fa-arrow-right"></i></button>
+            <div style="font-size:13.5px;color:var(--gray-20);line-height:1.55;margin-bottom:18px">Você escolhe o tipo de bolsa e preenche o formulário guiado — em 4 etapas simples. Pode se inscrever em mais de uma bolsa; cada uma gera um protocolo próprio.</div>
+            <button onClick="{{ novaInscricao }}" style="display:inline-flex;align-items:center;gap:10px;padding:13px 24px;border:0;border-radius:100px;background:#fff;color:var(--interactive);font-weight:700;font-size:15px;font-family:inherit;cursor:pointer">Começar minha inscrição <i class="fas fa-arrow-right"></i></button>
+          </div>
+
+          <!-- atalho: já tem inscrições -->
+          <sc-if value="{{ temInscricoes }}" hint-placeholder-val="{{ false }}">
+            <button onClick="{{ irInscricoes }}" style="display:flex;align-items:center;gap:14px;width:100%;text-align:left;background:#fff;border:1px solid var(--interactive);border-radius:12px;box-shadow:var(--surface-shadow-sm);padding:16px 18px;margin-bottom:16px;cursor:pointer;font-family:inherit">
+              <span style="width:40px;height:40px;border-radius:10px;background:var(--interactive-light);color:var(--interactive);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0"><i class="fas fa-folder-tree"></i></span>
+              <span style="flex:1"><span style="display:block;font-weight:700;color:var(--text-strong);font-size:14.5px">Você já tem inscrições em andamento</span><span style="display:block;font-size:13px;color:var(--text-secondary)">Acompanhe o status de cada protocolo.</span></span>
+              <i class="fas fa-arrow-right" style="color:var(--interactive)"></i>
+            </button>
+          </sc-if>
+
+          <!-- prepare-se: documentos -->
+          <div style="background:#fff;border:1px solid var(--gray-10);border-radius:12px;box-shadow:var(--surface-shadow-sm);padding:20px;margin-bottom:16px">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><i class="fas fa-clipboard-check" style="color:var(--interactive)"></i><span style="font-size:16px;font-weight:700;color:var(--text-strong)">Prepare-se: documentos que você vai precisar</span></div>
+            <div style="font-size:12.5px;color:var(--text-secondary);line-height:1.5;margin-bottom:12px">Tenha estes documentos em mãos antes de começar. A lista exata é ajustada pelo sistema conforme o <b>tipo de bolsa</b> e a <b>modalidade</b>.</div>
+            <sc-for list="{{ homeDocs }}" as="d" hint-placeholder-count="6">
+              <div style="display:flex;align-items:flex-start;gap:10px;padding:7px 0;font-size:13px;color:var(--text-default);line-height:1.45"><i class="fas fa-circle-check" style="color:var(--success);font-size:14px;margin-top:2px"></i><span>{{ d }}</span></div>
+            </sc-for>
+            <div style="font-size:12px;color:var(--text-secondary);line-height:1.45;margin-top:10px"><i class="fas fa-signature" style="color:#a4530a;margin-right:5px"></i>Assinaturas aceitas: gov.br, ICP-Brasil ou manuscrita escaneada. Imagem colada é recusada (item 15 do edital).</div>
+          </div>
+
+          <!-- valores da bolsa -->
+          <div style="background:#fff;border:1px solid var(--gray-10);border-radius:12px;box-shadow:var(--surface-shadow-sm);padding:20px;margin-bottom:16px">
+            <div style="font-size:16px;font-weight:700;color:var(--text-strong);margin-bottom:12px">Valores da bolsa — 2026</div>
+            <div class="gcols g-3" style="gap:12px">
+              <sc-for list="{{ homeValores }}" as="vf" hint-placeholder-count="3">
+                <div style="border:1px solid var(--gray-10);border-radius:10px;padding:14px;text-align:center"><div style="font-size:12px;color:var(--text-secondary);margin-bottom:4px">{{ vf.faixa }}</div><div style="font-size:18px;font-weight:800;color:var(--interactive);font-variant-numeric:tabular-nums">{{ vf.valor }}</div></div>
+              </sc-for>
+            </div>
+            <div style="font-size:12px;color:var(--text-secondary);line-height:1.45;margin-top:10px"><i class="fas fa-circle-info" style="color:var(--info);margin-right:5px"></i>A faixa de valor muda automaticamente no mês do seu aniversário.</div>
+          </div>
+
+          <!-- prazos do ciclo -->
+          <div style="background:#fff;border:1px solid var(--gray-10);border-radius:12px;box-shadow:var(--surface-shadow-sm);padding:20px;margin-bottom:16px">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px"><i class="fas fa-calendar-days" style="color:var(--interactive)"></i><span style="font-size:16px;font-weight:700;color:var(--text-strong)">Prazos do ciclo — Edital 01/2026</span></div>
+            <sc-for list="{{ homePrazos }}" as="p" hint-placeholder-count="6">
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid var(--gray-5)"><span style="font-size:13.5px;color:var(--text-default)">{{ p.m }}</span><span style="font-size:13px;font-weight:700;color:var(--text-strong)">{{ p.d }}</span></div>
+            </sc-for>
           </div>
 
           <!-- passos -->
@@ -655,7 +693,8 @@
       <!-- ===== ATLETA · INÍCIO (COM INSCRIÇÃO — acompanhamento) ===== -->
       <sc-if value="{{ show.aDashStatus }}" hint-placeholder-val="{{ false }}">
         <div style="max-width:600px;margin:0 auto">
-          <div style="font-size:14px;color:var(--text-secondary);margin-bottom:2px">Olá, Lucas</div>
+          <button onClick="{{ irInscricoes }}" style="display:inline-flex;align-items:center;gap:8px;background:none;border:0;color:var(--interactive);font-weight:600;font-size:13.5px;font-family:inherit;cursor:pointer;padding:0;margin-bottom:12px"><i class="fas fa-arrow-left"></i> Minhas inscrições</button>
+          <div style="font-size:13px;color:var(--text-secondary);margin-bottom:2px">{{ jornadaBolsa }} · Protocolo {{ jornadaProtocolo }}</div>
           <h1 style="font-size:24px;font-weight:700;color:var(--text-strong);margin:0 0 4px">{{ jornadaInfo.headline }}</h1>
           <div style="font-size:14px;color:var(--text-secondary);line-height:1.5;margin-bottom:16px">{{ jornadaInfo.sub }}</div>
 
@@ -665,8 +704,8 @@
               <div style="font-size:13px;color:var(--gray-20)">Protocolo</div>
               <span style="{{ jornadaInfo.chip }}"><i class="{{ jornadaInfo.statusIcon }}"></i> {{ jornadaInfo.statusLabel }}</span>
             </div>
-            <div style="font-size:20px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:.5px;margin-top:2px">SP156-2026-004821</div>
-            <div style="font-size:13px;color:var(--gray-20);margin-top:10px">Bolsa Geral · Judô · enviada em 20/06/2026</div>
+            <div style="font-size:20px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:.5px;margin-top:2px">{{ jornadaProtocolo }}</div>
+            <div style="font-size:13px;color:var(--gray-20);margin-top:10px">{{ jornadaBolsa }} · enviada em 20/06/2026</div>
           </div>
 
           <!-- alerta contextual (ex.: pendência) -->
@@ -715,6 +754,70 @@
       </sc-if>
 
       <!-- ===== ATLETA · ELEGIBILIDADE + ESCOLHA DE TIPO ===== -->
+      <!-- ===== ATLETA · MINHAS INSCRIÇÕES (hub multi-inscrição) ===== -->
+      <sc-if value="{{ show.aInscricoes }}" hint-placeholder-val="{{ false }}">
+        <div style="max-width:660px;margin:0 auto">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:6px">
+            <div>
+              <div style="font-size:14px;color:var(--text-secondary)">Olá, Lucas</div>
+              <h1 style="font-size:24px;font-weight:700;color:var(--text-strong);margin:2px 0 0">Minhas inscrições</h1>
+            </div>
+            <button onClick="{{ novaInscricao }}" style="display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border:0;border-radius:100px;background:var(--interactive);color:#fff;font-weight:700;font-size:14px;font-family:inherit;cursor:pointer;flex-shrink:0"><i class="fas fa-plus"></i> Nova inscrição</button>
+          </div>
+          <div style="font-size:13.5px;color:var(--text-secondary);line-height:1.55;margin:6px 0 20px">Você pode se inscrever em mais de um tipo de bolsa — <b>cada inscrição gera um protocolo próprio</b> e é analisada de forma independente. A contemplação na Bolsa Geral tem precedência sobre a do Centro Olímpico.</div>
+
+          <sc-if value="{{ temInscricoes }}" hint-placeholder-val="{{ true }}">
+            <div style="display:grid;gap:14px">
+              <sc-for list="{{ inscricoesView }}" as="i" hint-placeholder-count="3">
+                <button onClick="{{ i.onOpen }}" style="{{ i.cardStyle }}">
+                  <div style="display:flex;align-items:center;gap:14px">
+                    <span style="{{ i.iconWrap }}"><i class="{{ i.icon }}"></i></span>
+                    <div style="flex:1;min-width:0">
+                      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><span style="font-weight:700;font-size:15px;color:var(--text-strong)">{{ i.bolsa }}</span><span style="{{ i.statusStyle }}">{{ i.statusLabel }}</span></div>
+                      <div style="font-size:12.5px;color:var(--text-secondary);margin-top:4px">{{ i.modalidade }} · {{ i.categoria }} · enviada em {{ i.enviadaEm }}</div>
+                      <div style="font-size:12px;color:var(--text-secondary);margin-top:2px;font-variant-numeric:tabular-nums">Protocolo {{ i.protocolo }}</div>
+                    </div>
+                    <i class="fas fa-chevron-right" style="color:var(--text-secondary);flex-shrink:0"></i>
+                  </div>
+                </button>
+              </sc-for>
+            </div>
+          </sc-if>
+          <sc-if value="{{ semInscricoes }}" hint-placeholder-val="{{ false }}">
+            <div style="text-align:center;background:#fff;border:1px dashed var(--gray-20);border-radius:12px;padding:40px 24px">
+              <i class="fas fa-folder-open" style="font-size:34px;color:var(--gray-30)"></i>
+              <div style="font-weight:700;font-size:16px;color:var(--text-strong);margin-top:12px">Você ainda não tem inscrições</div>
+              <div style="font-size:13.5px;color:var(--text-secondary);margin:6px 0 18px;line-height:1.5">Comece agora — escolha o tipo de bolsa e preencha o formulário guiado.</div>
+              <button onClick="{{ novaInscricao }}" style="display:inline-flex;align-items:center;gap:8px;padding:13px 24px;border:0;border-radius:100px;background:var(--interactive);color:#fff;font-weight:700;font-size:15px;font-family:inherit;cursor:pointer">Fazer minha primeira inscrição <i class="fas fa-arrow-right"></i></button>
+            </div>
+          </sc-if>
+        </div>
+      </sc-if>
+
+      <!-- ===== ATLETA · NOVA INSCRIÇÃO (escolha entre as 4 bolsas) ===== -->
+      <sc-if value="{{ show.aNova }}" hint-placeholder-val="{{ false }}">
+        <div style="max-width:660px;margin:0 auto">
+          <button onClick="{{ irInscricoes }}" style="display:inline-flex;align-items:center;gap:8px;background:none;border:0;color:var(--interactive);font-weight:600;font-size:13.5px;font-family:inherit;cursor:pointer;padding:0;margin-bottom:14px"><i class="fas fa-arrow-left"></i> Minhas inscrições</button>
+          <h1 style="font-size:24px;font-weight:700;color:var(--text-strong);margin:0 0 4px">Nova inscrição</h1>
+          <div style="font-size:13.5px;color:var(--text-secondary);line-height:1.55;margin-bottom:20px">Escolha o tipo de bolsa. Cada tipo pede documentos e segue regras próprias do edital. Você poderá fazer outra inscrição depois, se quiser concorrer a mais de uma.</div>
+          <div style="display:grid;gap:14px">
+            <sc-for list="{{ bolsasView }}" as="b" hint-placeholder-count="4">
+              <div style="background:#fff;border:1px solid var(--gray-10);border-radius:12px;box-shadow:var(--surface-shadow-sm);padding:18px">
+                <div style="display:flex;gap:14px;align-items:flex-start">
+                  <span style="{{ b.iconWrap }}"><i class="{{ b.icon }}"></i></span>
+                  <div style="flex:1;min-width:0">
+                    <div style="font-weight:700;font-size:15.5px;color:var(--text-strong)">{{ b.nome }}</div>
+                    <div style="font-size:12.5px;color:var(--interactive);font-weight:600;margin:3px 0 7px;line-height:1.4">{{ b.tagline }}</div>
+                    <div style="font-size:13px;color:var(--text-secondary);line-height:1.55">{{ b.desc }}</div>
+                  </div>
+                </div>
+                <button onClick="{{ b.onChoose }}" style="margin-top:14px;width:100%;padding:12px;border:1px solid var(--interactive);border-radius:100px;background:#fff;color:var(--interactive);font-weight:700;font-size:14px;font-family:inherit;cursor:pointer">Escolher esta bolsa <i class="fas fa-arrow-right"></i></button>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
       <sc-if value="{{ show.aEleg }}" hint-placeholder-val="{{ false }}">
         <div style="max-width:600px;margin:0 auto">
           <h1 style="font-size:24px;font-weight:700;color:var(--text-strong);margin:0 0 4px">Você pode se inscrever?</h1>
@@ -771,19 +874,20 @@
           <div style="background:#fff;border:1px solid var(--gray-10);border-radius:12px;box-shadow:var(--surface-shadow-sm);padding:22px">
             <!-- i1 · Dados pessoais -->
             <sc-if value="{{ show.i1 }}" hint-placeholder-val="{{ false }}">
-              <div style="font-size:17px;font-weight:700;color:var(--text-strong);margin-bottom:16px">Dados pessoais</div>
+              <div style="font-size:17px;font-weight:700;color:var(--text-strong);margin-bottom:6px">Dados pessoais</div>
+              <div style="display:flex;align-items:flex-start;gap:10px;background:var(--info-bg);border-left:3px solid var(--info);border-radius:8px;padding:10px 12px;margin-bottom:14px"><i class="fas fa-id-badge" style="color:var(--info);font-size:15px;margin-top:1px"></i><span style="font-size:12.5px;color:var(--text-default);line-height:1.45"><b>Nome, CPF e data de nascimento</b> vêm do seu login <b>gov.br</b> e não podem ser editados. Confira e complete os demais campos.</span></div>
               <div style="display:grid;gap:16px">
                 <div>
                   <div style="font-size:13px;font-weight:600;color:var(--text-default);margin-bottom:6px">CPF do atleta</div>
-                  <div style="position:relative"><input value="123.***.***-09" style="width:100%;padding:13px 14px;border:1px solid var(--success);border-radius:8px;font-size:15px;font-variant-numeric:tabular-nums" /><span style="position:absolute;right:10px;top:50%;transform:translateY(-50%);display:inline-flex;align-items:center;gap:5px;color:var(--success);font-size:12px;font-weight:700"><i class="fas fa-circle-check"></i> Validado (gov.br)</span></div>
+                  <div style="position:relative"><input value="123.***.***-09" readonly style="width:100%;padding:13px 14px;border:1px solid var(--success);border-radius:8px;font-size:15px;font-variant-numeric:tabular-nums;background:var(--gray-2)" /><span style="position:absolute;right:10px;top:50%;transform:translateY(-50%);display:inline-flex;align-items:center;gap:5px;color:var(--success);font-size:12px;font-weight:700"><i class="fas fa-circle-check"></i> Validado (gov.br)</span></div>
                 </div>
-                <div><div style="font-size:13px;font-weight:600;color:var(--text-default);margin-bottom:6px">Nome completo do atleta</div><input value="Lucas Andrade da Silva" style="width:100%;padding:13px 14px;border:1px solid var(--border-color-strong);border-radius:8px;font-size:15px" /></div>
+                <div><div style="font-size:13px;font-weight:600;color:var(--text-default);margin-bottom:6px">Nome completo do atleta <span style="font-weight:400;color:var(--text-secondary)">· gov.br</span></div><input value="Lucas Andrade da Silva" readonly style="width:100%;padding:13px 14px;border:1px solid var(--border-color-strong);border-radius:8px;font-size:15px;background:var(--gray-2)" /></div>
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
-                  <div><div style="font-size:13px;font-weight:600;color:var(--text-default);margin-bottom:6px">Data de nascimento</div><input value="14/09/2008" style="width:100%;padding:13px 14px;border:1px solid var(--border-color-strong);border-radius:8px;font-size:15px" /></div>
-                  <div><div style="font-size:13px;font-weight:600;color:var(--text-default);margin-bottom:6px">Sexo</div><div style="position:relative"><select style="width:100%;padding:13px 14px;border:1px solid var(--border-color-strong);border-radius:8px;font-size:15px;appearance:none;background:#fff"><option>Masculino</option><option>Feminino</option></select><i class="fas fa-angle-down" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--text-secondary);pointer-events:none"></i></div></div>
+                  <div><div style="font-size:13px;font-weight:600;color:var(--text-default);margin-bottom:6px">Data de nascimento <span style="font-weight:400;color:var(--text-secondary)">· gov.br</span></div><input type="text" value="14/09/2008" readonly style="width:100%;padding:13px 14px;border:1px solid var(--border-color-strong);border-radius:8px;font-size:15px;background:var(--gray-2)" /></div>
+                  <div><div style="font-size:13px;font-weight:600;color:var(--text-default);margin-bottom:6px">Sexo <span style="font-weight:400;color:var(--text-secondary)">· gov.br</span></div><input value="Masculino" readonly style="width:100%;padding:13px 14px;border:1px solid var(--border-color-strong);border-radius:8px;font-size:15px;background:var(--gray-2)" /></div>
                 </div>
-                <div><div style="font-size:13px;font-weight:600;color:var(--text-default);margin-bottom:6px">E-mail</div><input value="lucas.andrade@email.com" style="width:100%;padding:13px 14px;border:1px solid var(--border-color-strong);border-radius:8px;font-size:15px" /></div>
-                <div><div style="font-size:13px;font-weight:600;color:var(--text-default);margin-bottom:6px">Telefone celular</div><input value="(11) 98765-4321" style="width:100%;padding:13px 14px;border:1px solid var(--border-color-strong);border-radius:8px;font-size:15px" /></div>
+                <div><div style="font-size:13px;font-weight:600;color:var(--text-default);margin-bottom:6px">E-mail <span style="color:var(--danger)">*</span></div><input type="email" value="lucas.andrade@email.com" placeholder="seu@email.com" style="width:100%;padding:13px 14px;border:1px solid var(--border-color-strong);border-radius:8px;font-size:15px" /></div>
+                <div><div style="font-size:13px;font-weight:600;color:var(--text-default);margin-bottom:6px">Telefone celular <span style="color:var(--danger)">*</span></div><input type="tel" value="(11) 98765-4321" placeholder="(11) 90000-0000" style="width:100%;padding:13px 14px;border:1px solid var(--border-color-strong);border-radius:8px;font-size:15px" /></div>
                 <div style="display:flex;align-items:center;gap:14px;background:var(--info-bg);border-left:3px solid var(--info);border-radius:8px;padding:14px 16px">
                   <i class="fas fa-cake-candles" style="color:var(--info);font-size:18px"></i>
                   <div style="font-size:13px;color:var(--text-default)"><b>17 anos</b> — faixa 8 a 17 anos → <b>R$ 779,29/mês</b>. Atletas acima de 25 anos só podem se inscrever como Relevância.</div>
@@ -814,33 +918,189 @@
                 <i class="{{ tipoCard.icon }}" style="font-size:22px;color:var(--interactive)"></i>
                 <div style="flex:1"><div style="font-weight:700;font-size:15px;color:var(--interactive-dark)">{{ tipoCard.nome }}</div><div style="font-size:13px;color:var(--text-secondary);line-height:1.5;margin-top:2px">{{ tipoCard.desc }}</div></div>
               </div>
-              <button onClick="{{ goEleg }}" style="margin-top:12px;display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border:1px solid var(--border-color);border-radius:100px;background:#fff;color:var(--text-default);font-weight:600;font-size:13px;cursor:pointer"><i class="fas fa-right-left"></i> Trocar tipo de bolsa</button>
+              <button onClick="{{ novaInscricao }}" style="margin-top:12px;display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border:1px solid var(--border-color);border-radius:100px;background:#fff;color:var(--text-default);font-weight:600;font-size:13px;cursor:pointer;font-family:inherit"><i class="fas fa-right-left"></i> Trocar tipo de bolsa</button>
+              <div style="margin-top:14px;padding:14px 16px;border:1px solid var(--gray-10);border-radius:10px;background:var(--gray-2)">
+                <div style="font-size:12.5px;font-weight:700;color:var(--text-strong);margin-bottom:8px"><i class="fas fa-folder-open" style="color:var(--interactive);margin-right:6px"></i>Documentos exigidos por esta bolsa</div>
+                <sc-for list="{{ docsBolsa }}" as="d" hint-placeholder-count="5">
+                  <div style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;color:var(--text-default);line-height:1.5;padding:3px 0"><i class="fas fa-file-lines" style="color:var(--text-secondary);font-size:11px;margin-top:3px"></i><span>{{ d }}</span></div>
+                </sc-for>
+                <div style="font-size:11.5px;color:var(--text-secondary);margin-top:8px;line-height:1.45">A lista se ajusta à sua modalidade na etapa seguinte (ex.: modalidades sem clube não exigem a declaração do clube).</div>
+              </div>
               <div style="margin-top:14px;font-size:13px;color:var(--text-secondary);line-height:1.5">O tipo de bolsa define os documentos exigidos e as próximas etapas desta inscrição.</div>
-              <label style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--text-default);cursor:pointer;line-height:1.5;margin-top:16px;padding-top:16px;border-top:1px solid var(--gray-10)"><input type="checkbox" style="margin-top:3px" /><span>Declaro que li integralmente o edital do Programa Bolsa Atleta Rei Pelé 2026 e estou ciente de todas as regras, critérios, obrigações e condições aplicáveis ao tipo de bolsa selecionado.</span></label>
+              <label style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--text-default);cursor:pointer;line-height:1.5;margin-top:16px;padding-top:16px;border-top:1px solid var(--gray-10)"><input type="checkbox" style="margin-top:3px" /><span>Declaro que li integralmente o <a href="https://prefeitura.sp.gov.br/documents/d/esportes/edital-bolsa-atleta-2026-rev5-pdf" target="_blank" rel="noopener" style="color:var(--interactive);font-weight:600">edital do Programa Bolsa Atleta Rei Pelé 2026</a> e estou de acordo com os <a href="#" onclick="return false" style="color:var(--interactive);font-weight:600">termos de uso</a> e a <a href="#" onclick="return false" style="color:var(--interactive);font-weight:600">política de privacidade</a> da plataforma, ciente de todas as regras, critérios, obrigações e condições aplicáveis.</span></label>
             </sc-if>
             <!-- i3 · Elegibilidade básica (documentos por tipo) -->
             <sc-if value="{{ show.i3 }}" hint-placeholder-val="{{ false }}">
               <div style="font-size:17px;font-weight:700;color:var(--text-strong);margin-bottom:4px">Elegibilidade básica</div>
-              <div style="font-size:13px;color:var(--text-secondary);margin-bottom:16px">Documentos que comprovam seu vínculo esportivo. Baixe o modelo oficial, assine e envie.</div>
+              <div style="font-size:13px;color:var(--text-secondary);margin-bottom:16px">Sua modalidade esportiva e os documentos que comprovam o vínculo. Baixe o modelo oficial, assine e envie.</div>
+              <!-- modalidade esportiva -->
+              <div style="padding:16px;border:1px solid var(--gray-10);border-radius:10px;margin-bottom:14px">
+                <div style="font-weight:600;font-size:14px;color:var(--text-strong);margin-bottom:12px"><i class="fas fa-medal" style="color:var(--interactive);margin-right:7px"></i>Modalidade esportiva</div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
+                  <div><div style="font-size:13px;font-weight:600;color:var(--text-default);margin-bottom:6px">Modalidade</div><div style="position:relative"><select value="{{ modalidade }}" onChange="{{ setModalidade }}" style="width:100%;padding:12px 14px;border:1px solid var(--border-color-strong);border-radius:8px;font-size:14px;appearance:none;background:#fff;font-family:inherit"><option value="">Selecione a modalidade</option><sc-for list="{{ modKeys }}" as="m" hint-placeholder-count="10"><option>{{ m }}</option></sc-for></select><i class="fas fa-angle-down" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--text-secondary);pointer-events:none"></i></div></div>
+                  <div><div style="font-size:13px;font-weight:600;color:var(--text-default);margin-bottom:6px">Categoria</div><div style="position:relative"><select style="width:100%;padding:12px 14px;border:1px solid var(--border-color-strong);border-radius:8px;font-size:14px;appearance:none;background:#fff;font-family:inherit"><option value="">{{ modSelPlaceholder }}</option><sc-for list="{{ modCategorias }}" as="c" hint-placeholder-count="6"><option>{{ c }}</option></sc-for></select><i class="fas fa-angle-down" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--text-secondary);pointer-events:none"></i></div></div>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
+                  <div><div style="font-size:13px;font-weight:600;color:var(--text-default);margin-bottom:6px">Prova / especialidade</div>
+                    <sc-if value="{{ modTemProvas }}" hint-placeholder-val="{{ false }}"><div style="position:relative"><select style="width:100%;padding:12px 14px;border:1px solid var(--border-color-strong);border-radius:8px;font-size:14px;appearance:none;background:#fff;font-family:inherit"><option value="">Selecione a prova</option><sc-for list="{{ modProvas }}" as="p" hint-placeholder-count="6"><option>{{ p }}</option></sc-for></select><i class="fas fa-angle-down" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--text-secondary);pointer-events:none"></i></div></sc-if>
+                    <sc-if value="{{ modSemProvas }}" hint-placeholder-val="{{ true }}"><div style="padding:12px 14px;border:1px dashed var(--border-color);border-radius:8px;font-size:13px;color:var(--text-secondary);background:var(--gray-2)">{{ modProvaMsg }}</div></sc-if>
+                  </div>
+                  <div><div style="font-size:13px;font-weight:600;color:var(--text-default);margin-bottom:6px">Competição indicada pelo edital</div><div style="position:relative"><select style="width:100%;padding:12px 14px;border:1px solid var(--border-color-strong);border-radius:8px;font-size:14px;appearance:none;background:#fff;font-family:inherit"><option value="">{{ modSelPlaceholderC }}</option><sc-for list="{{ modCompeticoes }}" as="k" hint-placeholder-count="3"><option>{{ k }}</option></sc-for></select><i class="fas fa-angle-down" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--text-secondary);pointer-events:none"></i></div></div>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr;gap:14px">
+                  <div><div style="font-size:13px;font-weight:600;color:var(--text-default);margin-bottom:6px">Colocação obtida</div><div style="position:relative"><select style="width:100%;padding:12px 14px;border:1px solid var(--border-color-strong);border-radius:8px;font-size:14px;appearance:none;background:#fff"><option>Selecione a colocação</option><option>1º lugar</option><option>2º lugar</option><option>3º lugar</option><option>2 melhores equipes (coletivas)</option></select><i class="fas fa-angle-down" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--text-secondary);pointer-events:none"></i></div></div>
+                </div>
+                <div style="font-size:12.5px;color:var(--text-secondary);line-height:1.45;margin-top:10px"><i class="fas fa-circle-info" style="color:var(--info);margin-right:5px"></i>As categorias e competições disponíveis são carregadas do edital conforme a modalidade selecionada (Lista de Competições oficial). A modalidade, a competição e a colocação definem sua classificação.</div>
+                <sc-if value="{{ modInfoShow }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex;align-items:flex-start;gap:8px;background:var(--info-bg);border-left:3px solid var(--info);border-radius:8px;padding:10px 12px;margin-top:10px"><i class="fas fa-wand-magic-sparkles" style="color:var(--info);font-size:14px;margin-top:1px"></i><span style="font-size:12px;color:var(--text-default);line-height:1.45">{{ modInfo }}</span></div>
+                </sc-if>
+              </div>
+              <!-- elegibilidade de renda (critério eliminatório) -->
+              <div style="padding:16px;border:1px solid var(--gray-10);border-radius:10px;margin-bottom:14px">
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><i class="fas fa-scale-balanced" style="color:var(--interactive)"></i><span style="font-weight:600;font-size:14px;color:var(--text-strong)">Elegibilidade de renda</span><span style="font-size:10px;font-weight:700;color:#a4530a;background:var(--warning-bg);padding:2px 8px;border-radius:100px">ELIMINATÓRIO</span></div>
+                <div style="font-size:12.5px;color:var(--text-secondary);margin-bottom:12px;line-height:1.45">{{ rendaHint }}</div>
+                <sc-for list="{{ rendaItems }}" as="r" hint-placeholder-count="5">
+                  <div style="padding:12px 0;border-bottom:1px solid var(--gray-10)">
+                    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+                      <div style="font-size:13.5px;font-weight:600;color:var(--text-default)">{{ r.q }}</div>
+                      <div style="display:flex;gap:8px;flex-shrink:0"><button onClick="{{ r.onSim }}" style="{{ r.simStyle }}">Sim</button><button onClick="{{ r.onNao }}" style="{{ r.naoStyle }}">Não</button></div>
+                    </div>
+                    <sc-if value="{{ r.hasHint }}" hint-placeholder-val="{{ false }}">
+                      <div style="{{ r.hintWrap }}"><i class="{{ r.hintIcon }}" style="font-size:14px;margin-top:1px;color:{{ r.hintIconColor }}"></i><span style="font-size:12px;color:var(--text-default);line-height:1.45">{{ r.hint }}</span></div>
+                    </sc-if>
+                    <sc-if value="{{ r.showValue }}" hint-placeholder-val="{{ false }}">
+                      <div style="display:grid;grid-template-columns:1fr 1.4fr;gap:10px;margin-top:10px;padding:12px;background:var(--gray-2);border-radius:8px">
+                        <div><div style="font-size:12px;font-weight:600;color:var(--text-default);margin-bottom:4px">Valor mensal (R$) <span style="color:var(--danger)">*</span></div><div style="position:relative"><span style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text-secondary);font-size:13px">R$</span><input inputmode="decimal" placeholder="0,00" value="{{ r.valorStr }}" onInput="{{ r.onValor }}" style="width:100%;padding:10px 12px 10px 34px;border:1px solid var(--border-color-strong);border-radius:8px;font-size:14px;font-variant-numeric:tabular-nums" /></div></div>
+                        <div><div style="font-size:12px;font-weight:600;color:var(--text-default);margin-bottom:4px">Fonte / origem <span style="color:var(--danger)">*</span></div><input placeholder="{{ r.fontePlaceholder }}" style="width:100%;padding:10px 12px;border:1px solid var(--border-color-strong);border-radius:8px;font-size:14px" /></div>
+                      </div>
+                    </sc-if>
+                  </div>
+                </sc-for>
+                <sc-if value="{{ rendaBloqueio }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex;align-items:flex-start;gap:10px;background:var(--danger-bg);border-left:3px solid var(--danger);border-radius:8px;padding:12px 14px;margin-top:12px">
+                    <i class="fas fa-circle-xmark" style="color:var(--danger);font-size:16px;margin-top:1px"></i>
+                    <div style="font-size:12.5px;color:var(--text-default);line-height:1.45">Com renda de natureza esportiva, você <b>não é elegível para esta bolsa</b>. Troque para a <b>Bolsa de Relevância</b> (que analisa a renda familiar) para prosseguir.</div>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ rendaTetoExcedido }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex;align-items:flex-start;gap:10px;background:var(--danger-bg);border-left:3px solid var(--danger);border-radius:8px;padding:12px 14px;margin-top:12px">
+                    <i class="fas fa-circle-xmark" style="color:var(--danger);font-size:16px;margin-top:1px"></i>
+                    <div style="font-size:12.5px;color:var(--text-default);line-height:1.45">A soma das suas rendas não-esportivas (<b>{{ rendaSomaFmt }}/ano</b>) ultrapassa o <b>teto de {{ rendaTetoFmt }}/ano</b> da sua faixa etária ({{ rendaFaixa }}) — item 2.2.5 do edital. Por isso você <b>não é elegível para esta bolsa</b>. A <b>Bolsa de Relevância</b> analisa a renda familiar per capita e pode ser o caminho.</div>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ rendaRelevShow }}" hint-placeholder-val="{{ false }}">
+                  <div style="{{ rendaRelevBoxStyle }}">
+                    <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+                      <span style="font-size:12.5px;font-weight:700;color:var(--text-strong)"><i class="fas fa-calculator" style="margin-right:6px;color:var(--interactive)"></i>Cálculo de renda — Relevância</span>
+                      <span style="font-size:11px;color:var(--text-secondary)">Limite da faixa: <b>{{ rendaRelevTetoFmt }}</b>/ano</span>
+                    </div>
+                    <div style="height:8px;background:var(--gray-10);border-radius:100px;overflow:hidden"><div style="{{ rendaRelevBarStyle }}"></div></div>
+                    <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+                      <span style="font-size:12px;color:var(--text-default)">Soma das suas rendas declaradas: <b>{{ rendaRelevSomaFmt }}</b>/ano</span>
+                    </div>
+                    <sc-if value="{{ rendaRelevExcedido }}" hint-placeholder-val="{{ false }}">
+                      <div style="font-size:12px;color:var(--text-default);line-height:1.45"><i class="fas fa-circle-xmark" style="color:var(--danger);margin-right:5px"></i>A soma ultrapassa o limite anual da sua faixa etária (item 3.1.3-II c/c 2.2.5). Por esta análise de renda individual, você <b>não é elegível</b>. A renda familiar per capita (item 2.2.6) é aferida no formulário socioeconômico (Anexo VIII).</div>
+                    </sc-if>
+                  </div>
+                </sc-if>
+                <div style="font-size:12px;color:var(--text-secondary);line-height:1.45;margin-top:12px"><i class="fas fa-circle-info" style="color:var(--info);margin-right:5px"></i>Informe os <b>valores reais</b> de cada renda. Na <b>Relevância</b>, todas as rendas são <b>somadas</b> e comparadas ao limite anual da faixa (item 3.1.3-II c/c 2.2.5). Na bolsa <b>padrão</b>, a renda esportiva (salário esportivo ou outra Bolsa Atleta) é incompatível (item 3.2.2) e as rendas não-esportivas têm teto por faixa (item 3.3). Rendas previdenciárias/assistenciais (pensão, BPC) e a própria bolsa <b>não entram na conta</b> (itens 3.2.3 e 2.2.8).</div>
+              </div>
+              <sc-if value="{{ perCapitaShow }}" hint-placeholder-val="{{ false }}">
+                <div style="border:2px solid var(--interactive);border-radius:12px;margin-bottom:16px;margin-top:4px;background:#fff;overflow:hidden">
+                  <div style="display:flex;align-items:center;gap:10px;background:var(--interactive-light);padding:14px 16px;border-bottom:1px solid var(--interactive)"><i class="fas fa-people-roof" style="color:var(--interactive);font-size:18px"></i><div style="flex:1"><div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><span style="font-weight:700;font-size:15px;color:var(--text-strong)">2 · Composição familiar e renda per capita</span><span style="font-size:10px;font-weight:700;color:#a4530a;background:var(--warning-bg);padding:2px 8px;border-radius:100px">ELIMINATÓRIO · RELEVÂNCIA</span></div><div style="font-size:11.5px;color:var(--interactive);font-weight:600;margin-top:2px">A renda dos pais/responsáveis é declarada aqui</div></div></div>
+                  <div style="padding:16px">
+                  <div style="font-size:12.5px;color:var(--text-secondary);margin-bottom:12px;line-height:1.45">Liste <b>todas as pessoas do domicílio</b> (inclusive quem não tem renda, com R$ 0,00). A renda familiar é somada e dividida pelo nº de pessoas — o valor per capita não pode ultrapassar o limite da faixa (Anexo VIII, itens 2.2.6 e 4.4). Para menores, a renda dos pais entra aqui.</div>
+                  <sc-for list="{{ familiaItems }}" as="f" hint-placeholder-count="3">
+                    <div style="display:grid;grid-template-columns:1.3fr 1fr auto;gap:8px;align-items:center;margin-bottom:8px">
+                      <input placeholder="Parentesco (ex.: Mãe, Pai, Irmão)" value="{{ f.parentesco }}" onInput="{{ f.onParentesco }}" style="width:100%;padding:10px 12px;border:1px solid var(--border-color-strong);border-radius:8px;font-size:13.5px" />
+                      <div style="position:relative"><span style="position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--text-secondary);font-size:12px">R$</span><input inputmode="decimal" placeholder="0,00" value="{{ f.renda }}" onInput="{{ f.onRenda }}" style="width:100%;padding:10px 10px 10px 32px;border:1px solid var(--border-color-strong);border-radius:8px;font-size:13.5px;font-variant-numeric:tabular-nums" /></div>
+                      <sc-if value="{{ f.podeRemover }}" hint-placeholder-val="{{ true }}">
+                        <button onClick="{{ f.onRemove }}" title="Remover" style="width:38px;height:38px;border:1px solid var(--border-color);border-radius:8px;background:#fff;color:var(--danger);cursor:pointer;font-size:14px"><i class="fas fa-trash-can"></i></button>
+                      </sc-if>
+                    </div>
+                  </sc-for>
+                  <button onClick="{{ addFamiliar }}" style="margin-top:4px;padding:9px 14px;border:1px dashed var(--interactive);border-radius:8px;background:var(--interactive-light);color:var(--interactive);font-weight:600;font-size:13px;cursor:pointer;font-family:inherit"><i class="fas fa-plus" style="margin-right:6px"></i>Adicionar familiar</button>
+                  <div style="{{ perCapitaBoxStyle }}">
+                    <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+                      <span style="font-size:12.5px;font-weight:700;color:var(--text-strong)"><i class="fas fa-calculator" style="margin-right:6px;color:var(--interactive)"></i>Renda per capita</span>
+                      <span style="font-size:11px;color:var(--text-secondary)">Limite da faixa: <b>{{ perCapitaLimiteFmt }}</b>/ano</span>
+                    </div>
+                    <div style="height:8px;background:var(--gray-10);border-radius:100px;overflow:hidden"><div style="{{ perCapitaBarStyle }}"></div></div>
+                    <div style="display:flex;flex-wrap:wrap;gap:4px 16px;font-size:12px;color:var(--text-default)">
+                      <span>Pessoas no domicílio: <b>{{ perCapitaMembros }}</b></span>
+                      <span>Renda familiar: <b>{{ perCapitaSomaFmt }}</b>/ano</span>
+                      <span>Per capita: <b>{{ perCapitaValFmt }}</b>/ano</span>
+                    </div>
+                    <sc-if value="{{ perCapitaExcedido }}" hint-placeholder-val="{{ false }}">
+                      <div style="font-size:12px;color:var(--text-default);line-height:1.45"><i class="fas fa-circle-xmark" style="color:var(--danger);margin-right:5px"></i>A renda familiar per capita ultrapassa o limite da faixa (itens 2.2.6/4.4). Por este critério, <b>não é elegível para a Relevância</b>.</div>
+                    </sc-if>
+                  </div>
+                  </div>
+                </div>
+              </sc-if>
               <sc-for list="{{ docsElegib }}" as="d" hint-placeholder-count="2">
-                <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;border:1px solid var(--gray-10);border-radius:10px;background:var(--gray-2);margin-bottom:10px">
-                  <div style="min-width:0"><div style="font-weight:600;font-size:14px;color:var(--text-strong)">{{ d.lbl }}</div><div style="font-size:12.5px;color:var(--text-secondary);margin-top:2px;line-height:1.45">{{ d.note }}</div></div>
-                  <button style="padding:8px 14px;border-radius:100px;border:1px solid var(--interactive);background:#fff;color:var(--interactive);font-weight:700;font-size:13px;cursor:pointer;white-space:nowrap"><i class="fas fa-cloud-arrow-up"></i> Enviar</button>
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;border:1px solid var(--gray-10);border-radius:10px;background:var(--gray-2);margin-bottom:10px;flex-wrap:wrap">
+                  <div style="min-width:180px;flex:1"><div style="font-weight:600;font-size:14px;color:var(--text-strong)">{{ d.lbl }}</div><div style="font-size:12.5px;color:var(--text-secondary);margin-top:2px;line-height:1.45">{{ d.note }}</div></div>
+                  <div style="display:flex;gap:8px;flex-shrink:0">
+                    <button style="padding:8px 14px;border-radius:100px;border:1px solid var(--border-color-strong);background:#fff;color:var(--text-default);font-weight:700;font-size:13px;cursor:pointer;white-space:nowrap;font-family:inherit"><i class="fas fa-download"></i> Baixar modelo</button>
+                    <button style="padding:8px 14px;border-radius:100px;border:1px solid var(--interactive);background:var(--interactive-light);color:var(--interactive);font-weight:700;font-size:13px;cursor:pointer;white-space:nowrap;font-family:inherit"><i class="fas fa-cloud-arrow-up"></i> Enviar</button>
+                  </div>
                 </div>
               </sc-for>
-              <!-- escolaridade -->
-              <div style="margin-top:6px;padding:14px 16px;border:1px solid var(--gray-10);border-radius:10px">
-                <div style="font-weight:600;font-size:14px;color:var(--text-strong);margin-bottom:10px">Está cursando ou já concluiu os estudos?</div>
+              <!-- escolaridade (obrigatório informar por opção) -->
+              <div style="margin-top:6px;padding:16px;border:1px solid var(--gray-10);border-radius:10px">
+                <div style="font-weight:600;font-size:14px;color:var(--text-strong);margin-bottom:2px">Está cursando ou já concluiu os estudos? <span style="color:var(--danger)">*</span></div>
+                <div style="font-size:12px;color:var(--text-secondary);margin-bottom:10px">Declaração da instituição de ensino — Escola (Anexo V). Obrigatório estar matriculado ou ter concluído o ensino médio.</div>
                 <div style="display:flex;gap:10px;margin-bottom:6px">
-                  <button style="padding:9px 18px;border-radius:100px;border:1px solid var(--interactive);background:var(--interactive-light);color:var(--interactive);font-weight:600;font-size:14px;cursor:pointer">Cursando</button>
-                  <button style="padding:9px 18px;border-radius:100px;border:1px solid var(--border-color);background:#fff;color:var(--text-default);font-weight:600;font-size:14px;cursor:pointer">Concluído</button>
+                  <button onClick="{{ setEscCursando }}" style="{{ escCursandoStyle }}">Cursando</button>
+                  <button onClick="{{ setEscConcluido }}" style="{{ escConcluidoStyle }}">Concluído</button>
                 </div>
-                <div style="font-size:12.5px;color:var(--text-secondary);line-height:1.45">Cursando → Declaração de instituição de ensino (modelo, deve conter nome, CPF e "matriculado"). Concluído → certificado/diploma. Fora do padrão vai para revisão manual.</div>
+                <sc-if value="{{ escNenhum }}" hint-placeholder-val="{{ true }}">
+                  <div style="font-size:12.5px;color:var(--text-secondary);line-height:1.45;margin-top:6px">Selecione uma opção para informar os dados e o documento exigidos.</div>
+                </sc-if>
+                <sc-if value="{{ escCursando }}" hint-placeholder-val="{{ false }}">
+                  <div style="margin-top:12px;display:grid;gap:12px">
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+                      <div><div style="font-size:13px;font-weight:600;color:var(--text-default);margin-bottom:6px">Instituição de ensino</div><input placeholder="Nome da escola / universidade" style="width:100%;padding:11px 13px;border:1px solid var(--border-color-strong);border-radius:8px;font-size:14px" /></div>
+                      <div><div style="font-size:13px;font-weight:600;color:var(--text-default);margin-bottom:6px">Série / ano / curso</div><input placeholder="Ex.: 2º ano do Ensino Médio" style="width:100%;padding:11px 13px;border:1px solid var(--border-color-strong);border-radius:8px;font-size:14px" /></div>
+                    </div>
+                    <div style="display:flex;gap:8px;flex-wrap:wrap">
+                      <button style="flex:1;min-width:150px;display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;border:1px solid var(--border-color-strong);border-radius:10px;background:#fff;color:var(--text-default);font-weight:700;font-size:13.5px;cursor:pointer;font-family:inherit"><i class="fas fa-download"></i> Baixar modelo de declaração escolar</button>
+                      <button style="flex:1;min-width:150px;display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;border:1.5px dashed var(--interactive);border-radius:10px;background:var(--interactive-light);color:var(--interactive);font-weight:700;font-size:13.5px;cursor:pointer;font-family:inherit"><i class="fas fa-cloud-arrow-up"></i> Anexar declaração de matrícula</button>
+                    </div>
+                    <div style="font-size:11.5px;color:var(--text-secondary);line-height:1.45"><i class="fas fa-circle-info" style="color:var(--info);margin-right:5px"></i>Fora do padrão, o documento vai para revisão manual.</div>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ escConcluido }}" hint-placeholder-val="{{ false }}">
+                  <div style="margin-top:12px;display:grid;gap:12px">
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+                      <div><div style="font-size:13px;font-weight:600;color:var(--text-default);margin-bottom:6px">Instituição de ensino</div><input placeholder="Nome da escola / universidade" style="width:100%;padding:11px 13px;border:1px solid var(--border-color-strong);border-radius:8px;font-size:14px" /></div>
+                      <div><div style="font-size:13px;font-weight:600;color:var(--text-default);margin-bottom:6px">Ano de conclusão</div><input placeholder="Ex.: 2024" style="width:100%;padding:11px 13px;border:1px solid var(--border-color-strong);border-radius:8px;font-size:14px" /></div>
+                    </div>
+                    <button style="display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;border:1.5px dashed var(--interactive);border-radius:10px;background:var(--interactive-light);color:var(--interactive);font-weight:700;font-size:14px;cursor:pointer;font-family:inherit"><i class="fas fa-cloud-arrow-up"></i> Anexar certificado ou diploma de conclusão</button>
+                    <div style="font-size:11.5px;color:var(--text-secondary);line-height:1.45"><i class="fas fa-circle-info" style="color:var(--info);margin-right:5px"></i>Fora do padrão, o documento vai para revisão manual.</div>
+                  </div>
+                </sc-if>
               </div>
               <div style="display:flex;align-items:flex-start;gap:12px;background:var(--warning-bg);border-left:3px solid var(--warning);border-radius:8px;padding:12px 14px;margin-top:12px">
                 <i class="fas fa-signature" style="color:#a4530a;font-size:16px;margin-top:1px"></i>
                 <div style="font-size:12.5px;color:var(--text-default);line-height:1.45">Assinaturas aceitas: <b>gov.br</b>, <b>ICP-Brasil</b> ou manuscrita escaneada. Imagem de assinatura colada é recusada (item 15 do edital).</div>
               </div>
+              <!-- documentos adicionais de Relevância -->
+              <sc-if value="{{ isRelev }}" hint-placeholder-val="{{ false }}">
+                <div style="margin-top:12px;display:grid;gap:10px">
+                  <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;border:1px solid var(--gray-10);border-radius:10px;background:var(--gray-2);flex-wrap:wrap">
+                    <div style="min-width:180px;flex:1"><div style="font-weight:600;font-size:14px;color:var(--text-strong)">Formulário de análise socioeconômica (Anexo VIII)</div><div style="font-size:12.5px;color:var(--text-secondary);margin-top:2px">Renda familiar — atletas de Relevância.</div></div>
+                    <div style="display:flex;gap:8px;flex-shrink:0"><button style="padding:8px 14px;border-radius:100px;border:1px solid var(--border-color-strong);background:#fff;color:var(--text-default);font-weight:700;font-size:13px;cursor:pointer;white-space:nowrap;font-family:inherit"><i class="fas fa-download"></i> Baixar modelo</button><button style="padding:8px 14px;border-radius:100px;border:1px solid var(--interactive);background:var(--interactive-light);color:var(--interactive);font-weight:700;font-size:13px;cursor:pointer;white-space:nowrap;font-family:inherit"><i class="fas fa-cloud-arrow-up"></i> Enviar</button></div>
+                  </div>
+                  <sc-if value="{{ isGeralRelev }}" hint-placeholder-val="{{ true }}">
+                  <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;border:1px solid var(--gray-10);border-radius:10px;background:var(--gray-2);flex-wrap:wrap">
+                    <div style="min-width:180px;flex:1"><div style="font-weight:600;font-size:14px;color:var(--text-strong)">Declaração da entidade nacional — Confederação (Anexo IX)</div><div style="font-size:12.5px;color:var(--text-secondary);margin-top:2px">Comprova o resultado de relevância nacional/internacional.</div></div>
+                    <div style="display:flex;gap:8px;flex-shrink:0"><button style="padding:8px 14px;border-radius:100px;border:1px solid var(--border-color-strong);background:#fff;color:var(--text-default);font-weight:700;font-size:13px;cursor:pointer;white-space:nowrap;font-family:inherit"><i class="fas fa-download"></i> Baixar modelo</button><button style="padding:8px 14px;border-radius:100px;border:1px solid var(--interactive);background:var(--interactive-light);color:var(--interactive);font-weight:700;font-size:13px;cursor:pointer;white-space:nowrap;font-family:inherit"><i class="fas fa-cloud-arrow-up"></i> Enviar</button></div>
+                  </div>
+                  </sc-if>
+                </div>
+              </sc-if>
             </sc-if>
             <!-- i4 · Vínculo com São Paulo -->
             <sc-if value="{{ show.i4 }}" hint-placeholder-val="{{ false }}">
@@ -852,60 +1112,98 @@
                 </div>
               </sc-if>
               <sc-if value="{{ show.i4geral }}" hint-placeholder-val="{{ true }}">
-                <div style="display:grid;gap:12px">
-                  <div style="display:grid;grid-template-columns:2fr 1fr;gap:12px">
-                    <div><div style="font-size:13px;font-weight:600;color:var(--text-default);margin-bottom:6px">Logradouro</div><input style="width:100%;padding:12px 14px;border:1px solid var(--border-color-strong);border-radius:8px;font-size:14px" /></div>
-                    <div><div style="font-size:13px;font-weight:600;color:var(--text-default);margin-bottom:6px">Número</div><input style="width:100%;padding:12px 14px;border:1px solid var(--border-color-strong);border-radius:8px;font-size:14px" /></div>
-                  </div>
-                  <div style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px">
-                    <div><div style="font-size:13px;font-weight:600;color:var(--text-default);margin-bottom:6px">Cidade</div><input value="São Paulo" style="width:100%;padding:12px 14px;border:1px solid var(--border-color-strong);border-radius:8px;font-size:14px" /></div>
-                    <div><div style="font-size:13px;font-weight:600;color:var(--text-default);margin-bottom:6px">UF</div><input value="SP" style="width:100%;padding:12px 14px;border:1px solid var(--border-color-strong);border-radius:8px;font-size:14px" /></div>
-                    <div><div style="font-size:13px;font-weight:600;color:var(--text-default);margin-bottom:6px">CEP</div><input value="01310-100" style="width:100%;padding:12px 14px;border:1px solid var(--success);border-radius:8px;font-size:14px" /></div>
-                  </div>
-                  <div style="padding-top:6px;font-size:13px;font-weight:600;color:var(--text-default)">O comprovante de residência está em seu nome ou de seus responsáveis legais?</div>
-                  <div style="display:flex;gap:10px">
-                    <button style="padding:9px 18px;border-radius:100px;border:1px solid var(--interactive);background:var(--interactive-light);color:var(--interactive);font-weight:600;font-size:14px;cursor:pointer">Sim</button>
-                    <button style="padding:9px 18px;border-radius:100px;border:1px solid var(--border-color);background:#fff;color:var(--text-default);font-weight:600;font-size:14px;cursor:pointer">Não</button>
-                  </div>
-                  <button style="display:flex;align-items:center;justify-content:center;gap:8px;padding:13px;border:1.5px dashed var(--interactive);border-radius:10px;background:var(--interactive-light);color:var(--interactive);font-weight:700;font-size:14px;cursor:pointer"><i class="fas fa-cloud-arrow-up"></i> Anexar comprovante de residência</button>
-                  <div style="display:flex;align-items:flex-start;gap:12px;background:var(--info-bg);border-left:3px solid var(--info);border-radius:8px;padding:12px 14px">
-                    <i class="fas fa-circle-info" style="color:var(--info);font-size:16px;margin-top:1px"></i>
-                    <div style="font-size:12.5px;color:var(--text-default);line-height:1.45">Comprovante em nome de terceiro exige declaração do proprietário registrada em cartório. Se você não mora em São Paulo, o vínculo é verificado pela declaração do clube (sede e treino em SP).</div>
-                  </div>
+                <div style="display:flex;align-items:flex-start;gap:12px;background:var(--info-bg);border-left:3px solid var(--info);border-radius:8px;padding:12px 14px;margin-bottom:14px">
+                  <i class="fas fa-circle-info" style="color:var(--info);font-size:16px;margin-top:1px"></i>
+                  <div style="font-size:12.5px;color:var(--text-default);line-height:1.45">O vínculo com São Paulo é <b>obrigatório para enviar a inscrição</b> e pode ser comprovado de duas formas: pela sua <b>residência</b> na cidade ou pelo <b>clube</b> em que treina, desde que tenha <b>sede e treino em São Paulo</b>.</div>
                 </div>
+                <sc-if value="{{ vinSoResidencia }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex;align-items:flex-start;gap:10px;background:var(--warning-bg);border-left:3px solid var(--warning);border-radius:8px;padding:10px 12px;margin-bottom:14px"><i class="fas fa-triangle-exclamation" style="color:#a4530a;font-size:15px;margin-top:1px"></i><span style="font-size:12.5px;color:var(--text-default);line-height:1.45">Sua modalidade não possui clube — por isso o vínculo com São Paulo deve ser comprovado <b>por residência na cidade</b> (item 6.11 do edital).</span></div>
+                </sc-if>
+                <sc-if value="{{ vinComOpcao }}" hint-placeholder-val="{{ true }}">
+                  <div style="font-size:13px;font-weight:600;color:var(--text-default);margin-bottom:8px">Como você comprova seu vínculo com a cidade de São Paulo?</div>
+                  <div style="display:flex;gap:10px;margin-bottom:16px">
+                    <button onClick="{{ setVinResidencia }}" style="{{ vinTabResid }}"><i class="fas fa-house"></i> Moro em São Paulo</button>
+                    <button onClick="{{ setVinClube }}" style="{{ vinTabClube }}"><i class="fas fa-people-group"></i> Treino em clube com sede em SP</button>
+                  </div>
+                </sc-if>
+
+                <!-- vínculo por residência -->
+                <sc-if value="{{ vinResidencia }}" hint-placeholder-val="{{ true }}">
+                  <div style="display:grid;gap:12px">
+                    <div style="display:grid;grid-template-columns:2fr 1fr;gap:12px">
+                      <div><div style="font-size:13px;font-weight:600;color:var(--text-default);margin-bottom:6px">Logradouro</div><input style="width:100%;padding:12px 14px;border:1px solid var(--border-color-strong);border-radius:8px;font-size:14px" /></div>
+                      <div><div style="font-size:13px;font-weight:600;color:var(--text-default);margin-bottom:6px">Número</div><input style="width:100%;padding:12px 14px;border:1px solid var(--border-color-strong);border-radius:8px;font-size:14px" /></div>
+                    </div>
+                    <div style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px">
+                      <div><div style="font-size:13px;font-weight:600;color:var(--text-default);margin-bottom:6px">Cidade</div><input value="São Paulo" style="width:100%;padding:12px 14px;border:1px solid var(--border-color-strong);border-radius:8px;font-size:14px" /></div>
+                      <div><div style="font-size:13px;font-weight:600;color:var(--text-default);margin-bottom:6px">UF</div><input value="SP" style="width:100%;padding:12px 14px;border:1px solid var(--border-color-strong);border-radius:8px;font-size:14px" /></div>
+                      <div><div style="font-size:13px;font-weight:600;color:var(--text-default);margin-bottom:6px">CEP <span style="color:var(--danger)">*</span></div><input value="{{ cepResid }}" onInput="{{ setCepResid }}" placeholder="00000-000" inputmode="numeric" style="width:100%;padding:12px 14px;border:1px solid {{ cepResidInfo.border }};border-radius:8px;font-size:14px;font-variant-numeric:tabular-nums" /></div>
+                    </div>
+                    <sc-if value="{{ cepResidInfo.show }}" hint-placeholder-val="{{ true }}">
+                      <div style="{{ cepResidInfo.wrap }}"><i class="{{ cepResidInfo.icon }}" style="font-size:14px;margin-top:1px;color:{{ cepResidInfo.ic }}"></i><span style="font-size:12.5px;color:var(--text-default);line-height:1.45">{{ cepResidInfo.msg }}</span></div>
+                    </sc-if>
+                    <div style="padding-top:6px;font-size:13px;font-weight:600;color:var(--text-default)">O comprovante de residência está em seu nome ou de seus responsáveis legais?</div>
+                    <div style="display:flex;gap:10px">
+                      <button onClick="{{ setCompSim }}" style="{{ compSimStyle }}">Sim</button>
+                      <button onClick="{{ setCompNao }}" style="{{ compNaoStyle }}">Não</button>
+                    </div>
+                    <sc-if value="{{ compProprio }}" hint-placeholder-val="{{ true }}">
+                      <button style="display:flex;align-items:center;justify-content:center;gap:8px;padding:13px;border:1.5px dashed var(--interactive);border-radius:10px;background:var(--interactive-light);color:var(--interactive);font-weight:700;font-size:14px;cursor:pointer;font-family:inherit"><i class="fas fa-cloud-arrow-up"></i> Anexar comprovante de residência (em seu nome)</button>
+                    </sc-if>
+                    <sc-if value="{{ vinResidenciaTerceiro }}" hint-placeholder-val="{{ false }}">
+                      <div style="border:1px solid var(--gray-10);border-radius:10px;padding:14px 16px;background:var(--gray-2)">
+                        <div style="font-weight:600;font-size:13.5px;color:var(--text-strong);margin-bottom:6px">Comprovante em nome de terceiro</div>
+                        <div style="font-size:12.5px;color:var(--text-secondary);line-height:1.5;margin-bottom:12px">Baixe o modelo de <b>declaração de residência do titular</b>, preencha, reconheça firma em cartório e anexe junto com o comprovante em nome do titular.</div>
+                        <div style="display:grid;gap:10px">
+                          <button style="display:flex;align-items:center;justify-content:center;gap:8px;padding:11px;border:1px solid var(--interactive);border-radius:100px;background:#fff;color:var(--interactive);font-weight:700;font-size:13.5px;cursor:pointer;font-family:inherit"><i class="fas fa-download"></i> Baixar modelo — Declaração de residência do titular</button>
+                          <button style="display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;border:1.5px dashed var(--interactive);border-radius:10px;background:var(--interactive-light);color:var(--interactive);font-weight:700;font-size:14px;cursor:pointer;font-family:inherit"><i class="fas fa-cloud-arrow-up"></i> Anexar declaração (firma reconhecida) + comprovante do titular</button>
+                        </div>
+                      </div>
+                    </sc-if>
+                  </div>
+                </sc-if>
+
+                <!-- vínculo por clube -->
+                <sc-if value="{{ vinClube }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:grid;gap:12px">
+                    <div><div style="font-size:13px;font-weight:600;color:var(--text-default);margin-bottom:6px">Nome do clube / entidade de prática</div><input placeholder="Entidade em que você treina" style="width:100%;padding:12px 14px;border:1px solid var(--border-color-strong);border-radius:8px;font-size:14px" /></div>
+                    <div style="display:grid;grid-template-columns:2fr 1fr;gap:12px">
+                      <div><div style="font-size:13px;font-weight:600;color:var(--text-default);margin-bottom:6px">Endereço da sede</div><input placeholder="Logradouro, número — São Paulo/SP" style="width:100%;padding:12px 14px;border:1px solid var(--border-color-strong);border-radius:8px;font-size:14px" /></div>
+                      <div><div style="font-size:13px;font-weight:600;color:var(--text-default);margin-bottom:6px">CEP da sede <span style="color:var(--danger)">*</span></div><input value="{{ cepClube }}" onInput="{{ setCepClube }}" placeholder="00000-000" inputmode="numeric" style="width:100%;padding:12px 14px;border:1px solid {{ cepClubeInfo.border }};border-radius:8px;font-size:14px;font-variant-numeric:tabular-nums" /></div>
+                    </div>
+                    <sc-if value="{{ cepClubeInfo.show }}" hint-placeholder-val="{{ false }}">
+                      <div style="{{ cepClubeInfo.wrap }}"><i class="{{ cepClubeInfo.icon }}" style="font-size:14px;margin-top:1px;color:{{ cepClubeInfo.ic }}"></i><span style="font-size:12.5px;color:var(--text-default);line-height:1.45">{{ cepClubeInfo.msg }}</span></div>
+                    </sc-if>
+                    <div><div style="font-size:13px;font-weight:600;color:var(--text-default);margin-bottom:6px">Local de treino</div><input placeholder="Onde você treina (deve ser em São Paulo)" style="width:100%;padding:12px 14px;border:1px solid var(--border-color-strong);border-radius:8px;font-size:14px" /></div>
+                    <button style="display:flex;align-items:center;justify-content:center;gap:8px;padding:13px;border:1.5px dashed var(--interactive);border-radius:10px;background:var(--interactive-light);color:var(--interactive);font-weight:700;font-size:14px;cursor:pointer;font-family:inherit"><i class="fas fa-cloud-arrow-up"></i> Anexar declaração do clube (sede e treino em SP)</button>
+                    <div style="display:flex;align-items:flex-start;gap:12px;background:var(--warning-bg);border-left:3px solid var(--warning);border-radius:8px;padding:12px 14px">
+                      <i class="fas fa-triangle-exclamation" style="color:#a4530a;font-size:16px;margin-top:1px"></i>
+                      <div style="font-size:12.5px;color:var(--text-default);line-height:1.45">O clube precisa ter <b>sede em São Paulo</b> — não basta apenas treinar na cidade. A declaração do clube é obrigatória para comprovar o vínculo por esta via.</div>
+                    </div>
+                  </div>
+                </sc-if>
               </sc-if>
-            </sc-if>
-            <!-- i5 · Remuneração -->
-            <sc-if value="{{ show.i5 }}" hint-placeholder-val="{{ false }}">
-              <div style="font-size:17px;font-weight:700;color:var(--text-strong);margin-bottom:4px">Remuneração</div>
-              <div style="font-size:13px;color:var(--text-secondary);margin-bottom:14px">Formulário que espelha a declaração de não patrocínio. Responda para cada fonte de renda.</div>
-              <sc-for list="{{ rendaPerguntas }}" as="r" hint-placeholder-count="5">
-                <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 0;border-bottom:1px solid var(--gray-10)">
-                  <div style="font-size:13.5px;font-weight:600;color:var(--text-default)">{{ r }}</div>
-                  <div style="display:flex;gap:8px;flex-shrink:0"><span style="padding:6px 14px;border-radius:100px;border:1px solid var(--border-color);font-size:13px;color:var(--text-secondary)">Sim</span><span style="padding:6px 14px;border-radius:100px;border:1px solid var(--interactive);background:var(--interactive-light);color:var(--interactive);font-size:13px;font-weight:600">Não</span></div>
-                </div>
-              </sc-for>
-              <!-- marcador de Relevância -->
-              <div style="display:flex;gap:10px;align-items:flex-start;font-size:13.5px;color:var(--text-default);cursor:pointer;line-height:1.5;margin-top:14px" onClick="{{ toggleRelev }}"><input type="checkbox" checked="{{ isRelev }}" style="margin-top:3px;pointer-events:none" /><span>Desejo concorrer também como <b>Bolsa de Relevância</b> (destaque nacional/internacional). Exige formulário socioeconômico no lugar da declaração de não patrocínio.</span></div>
-              <sc-if value="{{ isRelev }}" hint-placeholder-val="{{ false }}">
-                <div style="margin-top:12px;display:grid;gap:10px">
-                  <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;border:1px solid var(--gray-10);border-radius:10px;background:var(--gray-2)">
-                    <div><div style="font-weight:600;font-size:14px;color:var(--text-strong)">Formulário de análise socioeconômica</div><div style="font-size:12.5px;color:var(--text-secondary);margin-top:2px">Modelo oficial — atletas de Relevância.</div></div>
-                    <button style="padding:8px 14px;border-radius:100px;border:1px solid var(--interactive);background:#fff;color:var(--interactive);font-weight:700;font-size:13px;cursor:pointer;white-space:nowrap"><i class="fas fa-cloud-arrow-up"></i> Enviar</button>
-                  </div>
-                  <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;border:1px solid var(--gray-10);border-radius:10px;background:var(--gray-2)">
-                    <div><div style="font-weight:600;font-size:14px;color:var(--text-strong)">Declaração da entidade nacional (Confederação)</div><div style="font-size:12.5px;color:var(--text-secondary);margin-top:2px">Comprova o resultado nacional/internacional.</div></div>
-                    <button style="padding:8px 14px;border-radius:100px;border:1px solid var(--interactive);background:#fff;color:var(--interactive);font-weight:700;font-size:13px;cursor:pointer;white-space:nowrap"><i class="fas fa-cloud-arrow-up"></i> Enviar</button>
-                  </div>
-                </div>
-              </sc-if>
-              <div style="font-size:12.5px;color:var(--text-secondary);line-height:1.45;margin-top:14px">Se algum limite de renda for ultrapassado, é possível abrir mão de uma das rendas para se enquadrar, caso seja contemplado.</div>
             </sc-if>
           </div>
 
+          <!-- declaração de veracidade (última etapa, obrigatória p/ enviar) -->
+          <sc-if value="{{ show.iLast }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-top:16px;border:1px solid {{ veracidadeBorder }};border-radius:12px;padding:16px;background:{{ veracidadeBg }}">
+              <label onClick="{{ toggleVeracidade }}" style="display:flex;gap:12px;align-items:flex-start;cursor:pointer">
+                <span style="{{ veracidadeBox }}"><i class="fas fa-check" style="{{ veracidadeCheck }}"></i></span>
+                <span style="font-size:13px;color:var(--text-default);line-height:1.55">Declaro, sob as penas da lei, que <b>todas as informações e documentos apresentados são verdadeiros</b>. Estou ciente de que a <b>omissão ou falsidade</b> de qualquer informação implica o <b>indeferimento ou o cancelamento da bolsa</b>, a <b>devolução integral dos valores recebidos</b> (corrigidos) e a <b>responsabilização civil e penal</b>, nos termos do Decreto nº 62.908/2023 e da legislação aplicável.</span>
+              </label>
+            </div>
+          </sc-if>
+
           <div style="display:flex;gap:10px;margin-top:16px">
             <button onClick="{{ prevInsc }}" style="flex:1;padding:14px;border:1px solid var(--border-color);border-radius:100px;background:#fff;color:var(--text-default);font-weight:600;font-size:15px;cursor:pointer">Voltar</button>
-            <button onClick="{{ nextInsc }}" style="flex:2;padding:14px;border:0;border-radius:100px;background:var(--interactive);color:#fff;font-weight:700;font-size:15px;cursor:pointer">Avançar</button>
+            <sc-if value="{{ show.iNotLast }}" hint-placeholder-val="{{ true }}">
+              <button onClick="{{ nextInsc }}" style="flex:2;padding:14px;border:0;border-radius:100px;background:var(--interactive);color:#fff;font-weight:700;font-size:15px;cursor:pointer">Avançar</button>
+            </sc-if>
+            <sc-if value="{{ show.iLast }}" hint-placeholder-val="{{ false }}">
+              <button onClick="{{ finalizarInscricao }}" style="flex:2;padding:14px;border:0;border-radius:100px;background:var(--success);color:#fff;font-weight:700;font-size:15px;cursor:pointer;font-family:inherit"><i class="fas fa-paper-plane"></i> Enviar inscrição</button>
+            </sc-if>
           </div>
           <button onClick="{{ salvarRascunho }}" style="width:100%;margin-top:10px;display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;border:1px dashed var(--border-color);border-radius:100px;background:transparent;color:var(--text-secondary);font-weight:600;font-size:13.5px;font-family:inherit;cursor:pointer"><i class="fas fa-floppy-disk"></i> Salvar rascunho e continuar depois</button>
         </div>
@@ -996,13 +1294,13 @@
           <h1 style="font-size:24px;font-weight:700;color:var(--text-strong);margin:0 0 18px">Resultado</h1>
           <div style="background:#fff;border:1px solid var(--gray-10);border-radius:12px;box-shadow:var(--surface-shadow-sm);padding:24px;text-align:center;margin-bottom:16px">
             <div style="width:64px;height:64px;border-radius:50%;background:var(--success-bg);color:var(--success);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:26px"><i class="fas fa-trophy"></i></div>
-            <div style="font-size:13px;color:var(--text-secondary)">Classificação inicial — Bolsa Geral · Judô</div>
+            <div style="font-size:13px;color:var(--text-secondary)">Classificação inicial — {{ jornadaBolsa }}</div>
             <div style="font-size:22px;font-weight:800;color:var(--text-strong);margin:4px 0">3ª posição · Contemplado</div>
             <span style="display:inline-flex;align-items:center;gap:6px;background:var(--success-bg);color:var(--success);font-size:13px;font-weight:700;padding:5px 14px;border-radius:100px"><i class="fas fa-circle-check"></i> Dentro da cota</span>
           </div>
           <div style="display:flex;align-items:center;gap:12px;background:var(--info-bg);border-left:3px solid var(--info);border-radius:8px;padding:14px 16px;margin-bottom:16px">
             <i class="fas fa-gavel" style="color:var(--info);font-size:17px"></i>
-            <div style="font-size:13.5px;color:var(--text-default)">Não concorda com o resultado? O prazo de recurso vai até <b>22/07/2026</b>.</div>
+            <div style="font-size:13.5px;color:var(--text-default);line-height:1.5">As listas são publicadas no <b>Diário Oficial da Cidade de São Paulo</b>. Da lista classificatória inicial cabe recurso ao Secretário, em até <b>15 dias</b> (Anexo X), até <b>22/07/2026</b>.</div>
           </div>
           <button onClick="{{ openRecurso }}" style="width:100%;padding:15px;border:1px solid var(--interactive);border-radius:100px;background:#fff;color:var(--interactive);font-weight:700;font-size:15px;cursor:pointer;margin-bottom:10px">Interpor recurso</button>
           <button onClick="{{ goTermo }}" style="width:100%;padding:16px;border:0;border-radius:100px;background:var(--interactive);color:#fff;font-weight:700;font-size:15px;cursor:pointer">Continuar para o Termo de Adesão</button>
@@ -1015,7 +1313,7 @@
           <h1 style="font-size:24px;font-weight:700;color:var(--text-strong);margin:0 0 16px">Termo de Adesão</h1>
           <div style="display:flex;align-items:center;gap:14px;background:var(--danger-bg);border-left:3px solid var(--danger);border-radius:8px;padding:16px;margin-bottom:16px">
             <i class="fas fa-clock" style="color:var(--danger);font-size:22px"></i>
-            <div><div style="font-weight:700;color:var(--text-strong);font-size:15px">Faltam 22 dias</div><div style="font-size:13px;color:var(--text-secondary)">Envie o termo assinado até 30 dias, ou será desclassificado.</div></div>
+            <div><div style="font-weight:700;color:var(--text-strong);font-size:15px">Faltam 22 dias</div><div style="font-size:13px;color:var(--text-secondary)">Envie o Termo de Adesão (Anexo XI) assinado em até 30 dias da lista final, ou será desclassificado. Da desclassificação cabe recurso em 15 dias (Anexo X).</div></div>
           </div>
           <div style="background:#fff;border:1px solid var(--gray-10);border-radius:12px;box-shadow:var(--surface-shadow-sm);padding:20px;margin-bottom:16px">
             <div style="font-size:15px;font-weight:700;color:var(--text-strong);margin-bottom:14px">Dados bancários (Banco do Brasil)</div>
@@ -1733,12 +2031,36 @@
       <sc-if value="{{ show.pubLanding }}" hint-placeholder-val="{{ false }}">
         <div class="landing-bleed">
           <!-- hero -->
-          <div style="background:var(--blue-warm-vivid-90);color:#fff;padding:48px 24px">
-            <div style="max-width:900px;margin:0 auto">
+          <div style="position:relative;overflow:hidden;background:var(--blue-warm-vivid-90);color:#fff;padding:48px 24px">
+            <!-- decoração atletismo (self-contained: pista + corredor) -->
+            <div style="position:absolute;inset:0;pointer-events:none;overflow:hidden" aria-hidden="true">
+              <svg viewBox="0 0 500 400" preserveAspectRatio="xMaxYMax slice" style="position:absolute;right:0;top:0;height:100%;width:min(60%,640px)">
+                <g fill="none" stroke="#ffffff" stroke-width="10" opacity="0.09">
+                  <circle cx="470" cy="430" r="150"/>
+                  <circle cx="470" cy="430" r="215"/>
+                  <circle cx="470" cy="430" r="280"/>
+                  <circle cx="470" cy="430" r="345"/>
+                  <circle cx="470" cy="430" r="410"/>
+                </g>
+              </svg>
+              <i class="fas fa-person-running" style="position:absolute;right:6%;bottom:-24px;font-size:min(46vw,300px);line-height:1;color:rgba(255,255,255,0.10)"></i>
+              <div style="position:absolute;inset:0;background:linear-gradient(90deg,var(--blue-warm-vivid-90) 0%,var(--blue-warm-vivid-90) 34%,rgba(11,31,69,0.35) 72%,rgba(11,31,69,0) 100%)"></div>
+            </div>
+            <div style="max-width:900px;margin:0 auto;position:relative;z-index:1">
               <div style="font-size:13px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--yellow-vivid-20);margin-bottom:10px">SEME · Prefeitura de São Paulo</div>
               <h1 style="font-size:38px;font-weight:800;line-height:1.15;margin:0 0 12px;color:#fff">Bolsa Atleta Rei Pelé</h1>
               <div style="font-size:17px;color:var(--gray-20);line-height:1.55;max-width:620px;margin-bottom:24px">Apoio financeiro a atletas de São Paulo. Descubra se você é elegível e faça sua inscrição de forma 100% digital.</div>
-              <button onClick="{{ entrarGov }}" style="display:inline-flex;align-items:center;gap:10px;padding:14px 28px;border:0;border-radius:100px;background:var(--yellow-vivid-20);color:var(--blue-warm-vivid-90);font-weight:800;font-size:16px;cursor:pointer"><i class="fas fa-right-to-bracket"></i> Entrar com gov.br</button>
+              <button onClick="{{ entrarGov }}" style="display:inline-flex;align-items:center;gap:10px;padding:14px 28px;border:0;border-radius:100px;background:var(--yellow-vivid-20);color:var(--blue-warm-vivid-90);font-weight:800;font-size:16px;cursor:pointer"><i class="fas fa-user-plus"></i> Inscreva-se no programa</button>
+              <div style="font-size:13.5px;color:var(--gray-20);margin-top:10px">O acesso é feito com sua conta <b>gov.br</b>.</div>
+              <details style="margin-top:12px;max-width:620px">
+                <summary style="cursor:pointer;font-size:13.5px;color:#fff;font-weight:600;display:inline-flex;align-items:center;gap:8px"><i class="fas fa-circle-question"></i> Como entrar com o gov.br? (passo a passo)</summary>
+                <div style="background:rgba(255,255,255,.12);border-radius:10px;padding:14px 16px;margin-top:10px;font-size:13px;line-height:1.6;color:#fff">
+                  1. Clique em <b>Inscreva-se no programa</b> — você será direcionado ao gov.br.<br>
+                  2. Informe seu CPF e a senha do gov.br.<br>
+                  3. Se ainda <b>não tem conta</b>, crie uma gratuitamente em <b>gov.br</b> e retorne para continuar.<br>
+                  4. Para <b>atletas menores de idade</b>, o responsável legal também fará a autenticação com o gov.br dele durante a inscrição.
+                </div>
+              </details>
             </div>
           </div>
           <div style="max-width:900px;margin:0 auto;padding:32px 24px 8px">
@@ -1774,28 +2096,98 @@
                 <div style="font-size:13.5px;color:var(--text-default);line-height:1.9">Residir em SP ou treinar na capital · 8 a 25 anos · competição na lista do edital · frequência ≥ 80% · não receber patrocínio de PJ.</div>
               </div>
             </div>
+            <!-- como funciona a inscrição (fluxo cadastral) -->
+            <div style="font-size:20px;font-weight:700;color:var(--text-strong);margin:20px 0 4px">Como funciona a inscrição</div>
+            <div style="font-size:13.5px;color:var(--text-secondary);margin-bottom:16px">Da entrada com o gov.br ao pagamento — tudo 100% digital, com validação na hora.</div>
+            <div class="gcols g-3" style="margin-bottom:28px">
+              <sc-for list="{{ pubFluxo }}" as="p" hint-placeholder-count="6">
+                <div style="position:relative;background:#fff;border:1px solid var(--gray-10);border-radius:12px;box-shadow:var(--surface-shadow-sm);padding:18px">
+                  <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+                    <span style="width:30px;height:30px;border-radius:50%;background:var(--interactive);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;flex-shrink:0">{{ p.n }}</span>
+                    <i class="{{ p.ic }}" style="color:var(--interactive);font-size:16px"></i>
+                    <span style="font-weight:700;color:var(--text-strong);font-size:14.5px">{{ p.t }}</span>
+                  </div>
+                  <div style="font-size:13px;color:var(--text-secondary);line-height:1.5">{{ p.d }}</div>
+                </div>
+              </sc-for>
+            </div>
+            <!-- acesso e responsabilidade legal (CPF do atleta; menor => responsável legal) -->
+            <div style="background:#fff;border:1px solid var(--interactive);border-radius:12px;box-shadow:var(--surface-shadow-sm);padding:0;overflow:hidden;margin-bottom:28px">
+              <div style="display:flex;align-items:center;gap:10px;background:var(--interactive-light);padding:14px 18px;border-bottom:1px solid var(--interactive)"><i class="fas fa-shield-halved" style="color:var(--interactive);font-size:18px"></i><span style="font-weight:700;color:var(--text-strong);font-size:15px">Acesso e responsabilidade legal</span></div>
+              <div style="padding:18px">
+                <div style="display:flex;gap:12px;align-items:flex-start;margin-bottom:14px"><i class="fas fa-id-card" style="color:var(--interactive);font-size:16px;margin-top:2px"></i><div style="font-size:13.5px;color:var(--text-default);line-height:1.55">O acesso e a inscrição são feitos com o <b>CPF do próprio atleta</b>, que é o titular da bolsa — mesmo quando menor de idade. A identificação é feita pela conta <b>gov.br</b> do atleta.</div></div>
+                <div style="display:flex;gap:12px;align-items:flex-start"><i class="fas fa-user-shield" style="color:var(--interactive);font-size:16px;margin-top:2px"></i><div style="font-size:13.5px;color:var(--text-default);line-height:1.55"><b>Atleta menor de 18 anos:</b> além do login do atleta, é exigida a <b>validação do responsável legal</b> — o pai, mãe ou representante legal autentica-se com o <b>próprio gov.br</b>, apresenta documento de identidade e a <b>comprovação do vínculo de responsabilidade legal</b> sobre o menor (ex.: certidão de nascimento, termo de guarda ou tutela) e assina a <b>Declaração de anuência do responsável legal</b> (Anexo VII), assumindo a responsabilidade jurídica pelos atos do menor no programa (item 3.1.1-VIII do edital).</div></div>
+              </div>
+            </div>
+
             <!-- materiais do edital -->
             <div style="font-size:20px;font-weight:700;color:var(--text-strong);margin:8px 0 14px">Documentos e materiais do edital</div>
             <div class="gcols g-2" style="margin-bottom:28px">
-              <a href="https://sp156.prefeitura.sp.gov.br/portal/servicos/informacao?servico=4836" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--gray-10);border-radius:10px;box-shadow:var(--surface-shadow-sm);padding:16px;text-decoration:none"><i class="fas fa-file-signature" style="color:var(--interactive);font-size:18px"></i><span style="font-size:14px;font-weight:600;color:var(--text-strong)">Fazer inscrição — Portal SP156</span></a>
+              <a href="https://prefeitura.sp.gov.br/web/esportes/w/bolsa_atleta" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--gray-10);border-radius:10px;box-shadow:var(--surface-shadow-sm);padding:16px;text-decoration:none"><i class="fas fa-file-lines" style="color:var(--interactive);font-size:18px"></i><span style="font-size:14px;font-weight:600;color:var(--text-strong)">Anexos e formulários (I a XVI)</span></a>
               <a href="https://prefeitura.sp.gov.br/documents/d/esportes/edital-bolsa-atleta-2026-rev5-pdf" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--gray-10);border-radius:10px;box-shadow:var(--surface-shadow-sm);padding:16px;text-decoration:none"><i class="fas fa-file-contract" style="color:var(--interactive);font-size:18px"></i><span style="font-size:14px;font-weight:600;color:var(--text-strong)">Edital 01/2026 (com Errata 1)</span></a>
               <a href="https://prefeitura.sp.gov.br/documents/d/esportes/manual-bolsa-atleta-rei-pele-2026-2-pdf" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--gray-10);border-radius:10px;box-shadow:var(--surface-shadow-sm);padding:16px;text-decoration:none"><i class="fas fa-book" style="color:var(--interactive);font-size:18px"></i><span style="font-size:14px;font-weight:600;color:var(--text-strong)">Manual de Inscrição 2026</span></a>
               <a href="https://prefeitura.sp.gov.br/documents/d/esportes/cronograma-previsto-edital-bolsa-atleta-01_2026-pdf" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--gray-10);border-radius:10px;box-shadow:var(--surface-shadow-sm);padding:16px;text-decoration:none"><i class="fas fa-calendar-days" style="color:var(--interactive);font-size:18px"></i><span style="font-size:14px;font-weight:600;color:var(--text-strong)">Cronograma Previsto 2026</span></a>
               <a href="https://prefeitura.sp.gov.br/documents/d/esportes/edital-bolsa-atleta-2026-modalidades-pdf" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--gray-10);border-radius:10px;box-shadow:var(--surface-shadow-sm);padding:16px;text-decoration:none"><i class="fas fa-list-check" style="color:var(--interactive);font-size:18px"></i><span style="font-size:14px;font-weight:600;color:var(--text-strong)">Lista de Competições 01/2026</span></a>
               <a href="https://prefeitura.sp.gov.br/web/esportes/w/bolsa_atleta/325739" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--gray-10);border-radius:10px;box-shadow:var(--surface-shadow-sm);padding:16px;text-decoration:none"><i class="fas fa-circle-question" style="color:var(--interactive);font-size:18px"></i><span style="font-size:14px;font-weight:600;color:var(--text-strong)">Perguntas Frequentes</span></a>
+              <div onClick="{{ openEditais }}" role="button" tabindex="0" style="display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--gray-10);border-radius:10px;box-shadow:var(--surface-shadow-sm);padding:16px;cursor:pointer"><i class="fas fa-folder-open" style="color:var(--interactive);font-size:18px"></i><span style="font-size:14px;font-weight:600;color:var(--text-strong)">Editais anteriores (2025, 2024 e 2023)</span><i class="fas fa-angle-right" style="margin-left:auto;color:var(--text-secondary)"></i></div>
+              <div onClick="{{ openAtas }}" role="button" tabindex="0" style="display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--gray-10);border-radius:10px;box-shadow:var(--surface-shadow-sm);padding:16px;cursor:pointer"><i class="fas fa-file-signature" style="color:var(--interactive);font-size:18px"></i><span style="font-size:14px;font-weight:600;color:var(--text-strong)">Atas de reunião da comissão</span><i class="fas fa-angle-right" style="margin-left:auto;color:var(--text-secondary)"></i></div>
             </div>
 
-            <!-- foto do programa (o usuário solta a imagem oficial) -->
-            <div style="border-radius:12px;overflow:hidden;height:280px;margin-bottom:28px;border:1px solid var(--gray-10)">
-              <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="pub-programa" shape="rect" placeholder="Foto do programa (solte a imagem oficial)" hint-size="100%,100%"></x-import>
+            <!-- regras e termos completos do edital -->
+            <div style="font-size:20px;font-weight:700;color:var(--text-strong);margin:8px 0 4px">Regras e termos do edital</div>
+            <div style="font-size:13.5px;color:var(--text-secondary);margin-bottom:16px">Um resumo completo das principais regras do Edital 01/2026. Clique para expandir cada tópico.</div>
+            <div style="margin-bottom:28px">
+              <sc-for list="{{ pubRegras }}" as="g" hint-placeholder-count="6">
+                <details style="background:#fff;border:1px solid var(--gray-10);border-radius:10px;box-shadow:var(--surface-shadow-sm);margin-bottom:10px;overflow:hidden">
+                  <summary style="cursor:pointer;list-style:none;display:flex;align-items:center;gap:12px;padding:16px 18px;font-weight:700;color:var(--text-strong);font-size:14.5px"><span style="width:34px;height:34px;border-radius:8px;background:var(--interactive-light);color:var(--interactive);display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="{{ g.ic }}"></i></span><span style="flex:1">{{ g.t }}</span><i class="fas fa-angle-down" style="color:var(--text-secondary)"></i></summary>
+                  <div style="padding:0 18px 16px 64px">
+                    <sc-for list="{{ g.itens }}" as="it" hint-placeholder-count="5">
+                      <div style="display:flex;gap:10px;align-items:flex-start;padding:6px 0;font-size:13px;color:var(--text-default);line-height:1.5"><i class="fas fa-circle-check" style="color:var(--success);font-size:13px;margin-top:3px;flex-shrink:0"></i><span>{{ it }}</span></div>
+                    </sc-for>
+                  </div>
+                </details>
+              </sc-for>
             </div>
 
-            <div style="text-align:center;padding:8px 0 28px"><button onClick="{{ goTransparencia }}" style="padding:12px 24px;border:1px solid var(--interactive);border-radius:100px;background:#fff;color:var(--interactive);font-weight:700;font-size:14px;cursor:pointer"><i class="fas fa-chart-pie"></i> Ver Portal da Transparência</button></div>
+            <!-- atendimento assistido + acessibilidade (ATA 24/07: públicos com dificuldade de navegação; atleta estrangeiro sem CPF) -->
+            <div style="font-size:20px;font-weight:700;color:var(--text-strong);margin:8px 0 4px">Precisa de ajuda para se inscrever?</div>
+            <div style="font-size:13.5px;color:var(--text-secondary);margin-bottom:16px">A inscrição é digital, mas ninguém fica de fora: há atendimento presencial, recursos de acessibilidade e um caminho para atletas estrangeiros.</div>
+            <div class="gcols g-3" style="margin-bottom:20px">
+              <sc-for list="{{ pubAtendimento }}" as="a" hint-placeholder-count="3">
+                <div style="background:#fff;border:1px solid var(--gray-10);border-radius:12px;box-shadow:var(--surface-shadow-sm);padding:20px;display:flex;flex-direction:column">
+                  <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><span style="width:38px;height:38px;border-radius:8px;background:var(--interactive-light);color:var(--interactive);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0"><i class="{{ a.ic }}"></i></span><span style="font-weight:700;color:var(--text-strong);font-size:14.5px">{{ a.t }}</span></div>
+                  <div style="font-size:13px;color:var(--text-secondary);line-height:1.5;flex:1">{{ a.d }}</div>
+                  <sc-if value="{{ a.acao }}" hint-placeholder-val="{{ false }}">
+                    <button onClick="{{ openEstrangeiro }}" style="margin-top:12px;align-self:flex-start;padding:9px 16px;border:1px solid var(--interactive);border-radius:100px;background:#fff;color:var(--interactive);font-weight:600;font-size:13px;cursor:pointer;font-family:inherit">Ver caminho facilitado <i class="fas fa-angle-right" style="margin-left:4px"></i></button>
+                  </sc-if>
+                </div>
+              </sc-for>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:10px 20px;background:var(--interactive-light);border-radius:12px;padding:16px 20px;margin-bottom:28px;font-size:13.5px;color:var(--text-default)">
+              <span><i class="fas fa-phone" style="color:var(--interactive);margin-right:7px"></i>Central <b>156</b></span>
+              <span><i class="fas fa-envelope" style="color:var(--interactive);margin-right:7px"></i>bolsa.atleta@prefeitura.sp.gov.br</span>
+              <span><i class="fas fa-location-dot" style="color:var(--interactive);margin-right:7px"></i>Atendimento presencial nos CEUs e no Poupatempo</span>
+            </div>
+
+            <!-- chamada final para inscrição -->
+            <div style="background:var(--blue-warm-vivid-90);border-radius:16px;padding:36px 28px;margin-bottom:28px;text-align:center">
+              <div style="font-size:24px;font-weight:800;color:#fff;margin-bottom:8px">Pronto para representar São Paulo?</div>
+              <div style="font-size:15px;color:var(--gray-20);line-height:1.5;max-width:520px;margin:0 auto 20px">As inscrições do Edital 01/2026 vão até <b style="color:#fff">24/06 às 14h</b>. Verifique sua elegibilidade e inscreva-se — leva poucos minutos.</div>
+              <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center">
+                <button onClick="{{ entrarGov }}" style="display:inline-flex;align-items:center;gap:10px;padding:14px 28px;border:0;border-radius:100px;background:var(--yellow-vivid-20);color:var(--blue-warm-vivid-90);font-weight:800;font-size:15px;cursor:pointer"><i class="fas fa-user-plus"></i> Inscreva-se no programa</button>
+                <button onClick="{{ goTransparencia }}" style="display:inline-flex;align-items:center;gap:8px;padding:14px 24px;border:1px solid rgba(255,255,255,.5);border-radius:100px;background:transparent;color:#fff;font-weight:700;font-size:14px;cursor:pointer"><i class="fas fa-chart-pie"></i> Ver Portal da Transparência</button>
+              </div>
+            </div>
 
             <!-- rodapé institucional -->
             <div style="background:var(--blue-warm-vivid-90);color:var(--gray-20);border-radius:12px 12px 0 0;padding:28px 32px;margin:0 -32px -26px">
               <div style="font-weight:700;color:#fff;font-size:16px;margin-bottom:10px">Secretaria Municipal de Esportes e Lazer</div>
               <div style="font-size:13.5px;line-height:1.7">Alameda Iraé, 35 — Moema · 04075-000 · São Paulo/SP · Tel. (11) 3396-6400<br>E-mail do programa: <b style="color:#fff">bolsa.atleta@prefeitura.sp.gov.br</b> · Central 156</div>
+              <div style="display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:16px;padding-top:16px;border-top:1px solid rgba(255,255,255,.2);font-size:13px">
+                <span onClick="{{ openPrivacidade }}" role="button" tabindex="0" style="cursor:pointer;color:#fff;font-weight:600"><i class="fas fa-user-shield" style="margin-right:6px"></i>Política de Privacidade</span>
+                <span onClick="{{ openPrivacidade }}" role="button" tabindex="0" style="cursor:pointer;color:#fff;font-weight:600"><i class="fas fa-file-lines" style="margin-right:6px"></i>Termos de Uso</span>
+                <span style="color:var(--gray-20)">Tratamento de dados conforme a LGPD (Lei 13.709/2018)</span>
+              </div>
             </div>
           </div>
         </div>
@@ -1877,6 +2269,16 @@
           <h1 style="font-size:24px;font-weight:700;color:var(--text-strong);margin:0 0 4px">Renovação 2027</h1>
           <div style="font-size:14px;color:var(--text-secondary);margin-bottom:18px">Seus dados já vêm preenchidos. Reenvie apenas o que expirou.</div>
           <div style="display:flex;align-items:center;gap:14px;background:var(--info-bg);border-left:3px solid var(--info);border-radius:8px;padding:14px 16px;margin-bottom:16px"><i class="fas fa-circle-info" style="color:var(--info);font-size:17px"></i><div style="font-size:13.5px;color:var(--text-default)">Dados pessoais, vínculo e modalidade foram reaproveitados do ciclo 2026.</div></div>
+          <details style="margin-bottom:16px;background:#fff;border:1px solid var(--gray-10);border-radius:12px;box-shadow:var(--surface-shadow-sm);padding:14px 16px">
+            <summary style="cursor:pointer;font-size:13.5px;font-weight:700;color:var(--text-strong);display:inline-flex;align-items:center;gap:8px"><i class="fas fa-book" style="color:var(--interactive)"></i> Regras de renovação (item 11 do edital)</summary>
+            <div style="margin-top:10px;font-size:12.5px;color:var(--text-default);line-height:1.6">
+              A bolsa pode ser renovada <b>uma única vez, por igual período</b>, com <b>novo resultado esportivo</b> do ano seguinte:<br>
+              • <b>Geral:</b> 1º, 2º ou 3º lugar em competição estadual oficial de 2026.<br>
+              • <b>Centro Olímpico:</b> resultado que atribua no mínimo 1 ponto (sistema do item 18).<br>
+              • <b>Relevância:</b> novo resultado estadual <b>e</b> nacional/internacional (1º–3º). Só com resultado estadual, renova como Geral (se atender à renda).<br>
+              O pedido é enviado <b>junto com a prestação de contas</b>, em até <b>30 dias após a última parcela</b>.
+            </div>
+          </details>
           <div style="display:grid;gap:12px;margin-bottom:20px">
             <sc-for list="{{ renovDocs }}" as="d" hint-placeholder-count="4">
               <div style="display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--gray-10);border-radius:12px;box-shadow:var(--surface-shadow-sm);padding:16px"><i class="{{ d.icon }}" style="color:{{ d.cor }};font-size:19px"></i><div style="flex:1"><div style="font-weight:700;color:var(--text-strong);font-size:14px">{{ d.nome }}</div><div style="font-size:12.5px;color:var(--text-secondary)">{{ d.sub }}</div></div><span style="{{ d.badge }}">{{ d.status }}</span></div>
@@ -1913,7 +2315,7 @@
             </sc-for>
           </div>
 
-          <div style="display:flex;align-items:flex-start;gap:12px;background:var(--info-bg);border-left:3px solid var(--info);border-radius:8px;padding:12px 14px;margin-bottom:16px"><i class="fas fa-circle-info" style="color:var(--info);font-size:16px;margin-top:1px"></i><div style="font-size:12.5px;color:var(--text-default);line-height:1.45">Regras: mesma modalidade, intervalo entre clubes de até 15 dias e vínculo mantido com a cidade de São Paulo.</div></div>
+          <div style="display:flex;align-items:flex-start;gap:12px;background:var(--info-bg);border-left:3px solid var(--info);border-radius:8px;padding:12px 14px;margin-bottom:16px"><i class="fas fa-circle-info" style="color:var(--info);font-size:16px;margin-top:1px"></i><div style="font-size:12.5px;color:var(--text-default);line-height:1.5">A conversão <b>COTP → Geral</b> (item 12.7) exige resultado esportivo que habilite à Bolsa Geral e deve ser pedida em até <b>30 dias</b> do desligamento do Centro Olímpico, pelo <b>Anexo XII</b>. Na troca de clube, mantêm-se a mesma modalidade, o clube com sede em São Paulo e o vínculo com a cidade.</div></div>
           <button onClick="{{ enviarAlteracao }}" style="width:100%;padding:15px;border:0;border-radius:100px;background:var(--interactive);color:#fff;font-weight:700;font-size:15px;font-family:inherit;cursor:pointer"><i class="fas fa-right-left"></i> Solicitar alteração</button>
         </div>
       </sc-if>
@@ -1924,7 +2326,14 @@
           <h1 style="font-size:24px;font-weight:700;color:var(--text-strong);margin:0 0 4px">Desligamento do programa</h1>
           <div style="font-size:14px;color:var(--text-secondary);line-height:1.55;margin-bottom:18px">Você pode solicitar o desligamento voluntário do Bolsa Atleta Rei Pelé. A solicitação será analisada e publicada no Diário Oficial.</div>
 
-          <div style="display:flex;align-items:flex-start;gap:12px;background:var(--warning-bg);border-left:3px solid var(--warning);border-radius:8px;padding:14px 16px;margin-bottom:16px"><i class="fas fa-triangle-exclamation" style="color:#a4530a;font-size:18px;margin-top:1px"></i><div style="font-size:13px;color:var(--text-default);line-height:1.5">Após o desligamento, será aberta a <b>prestação de contas</b> do período em que você recebeu a bolsa. Os pagamentos são suspensos a partir da solicitação.</div></div>
+          <div style="display:flex;align-items:flex-start;gap:12px;background:var(--warning-bg);border-left:3px solid var(--warning);border-radius:8px;padding:14px 16px;margin-bottom:16px"><i class="fas fa-triangle-exclamation" style="color:#a4530a;font-size:18px;margin-top:1px"></i><div style="font-size:13px;color:var(--text-default);line-height:1.5">Após o desligamento, será aberta a <b>prestação de contas</b> do período em que você recebeu a bolsa. Os pagamentos são suspensos a partir da solicitação. O pedido é formalizado pelo <b>Anexo XIII</b>.</div></div>
+
+          <details style="margin-bottom:16px;background:#fff;border:1px solid var(--gray-10);border-radius:12px;box-shadow:var(--surface-shadow-sm);padding:14px 16px">
+            <summary style="cursor:pointer;font-size:13.5px;font-weight:700;color:var(--text-strong);display:inline-flex;align-items:center;gap:8px"><i class="fas fa-circle-info" style="color:var(--interactive)"></i> Hipóteses de cancelamento de ofício (item 12.4 do edital)</summary>
+            <div style="margin-top:10px;font-size:12.5px;color:var(--text-default);line-height:1.6">
+              A SEME pode cancelar a bolsa quando houver: abandono dos treinos por mais de 15 dias sem justificativa; dispensa pela entidade sem retorno em 15 dias; reprovação escolar; inaptidão por motivo médico, técnico ou disciplinar; perda do vínculo esportivo ou de residência em São Paulo; deixar de treinar/competir na <b>mesma modalidade</b> que gerou a bolsa; ou passar a receber rendas em desacordo com o edital. Nesses casos, o atleta deve comunicar a Comissão em até 15 dias.
+            </div>
+          </details>
 
           <div style="background:#fff;border:1px solid var(--gray-10);border-radius:12px;box-shadow:var(--surface-shadow-sm);padding:20px;margin-bottom:16px">
             <div style="font-size:13px;font-weight:600;color:var(--text-default);margin-bottom:6px">Motivo do desligamento</div>
@@ -2147,7 +2556,7 @@
       <sc-if value="{{ show.aPrestacao }}" hint-placeholder-val="{{ false }}">
         <div style="max-width:600px;margin:0 auto">
           <h1 style="font-size:24px;font-weight:700;color:var(--text-strong);margin:0 0 4px">Prestação de contas</h1>
-          <div style="font-size:14px;color:var(--text-secondary);margin-bottom:16px">Obrigatória após desligamento (30 dias) ou para renovação (12 meses).</div>
+          <div style="font-size:14px;color:var(--text-secondary);margin-bottom:16px">Obrigatória em até <b>30 dias corridos após o recebimento da última parcela</b> (item 10.1). A não apresentação ou reprovação obriga a restituir os valores recebidos.</div>
           <div style="display:flex;align-items:center;gap:12px;background:var(--info-bg);border-left:3px solid var(--info);border-radius:8px;padding:14px 16px;margin-bottom:16px"><i class="fas fa-circle-info" style="color:var(--info)"></i><div style="font-size:13.5px;color:var(--text-default)">Envie os documentos abaixo. O sistema confere automaticamente se todos os itens obrigatórios estão atestados.</div></div>
           <div style="display:grid;gap:12px;margin-bottom:18px">
             <sc-for list="{{ pcItens }}" as="i" hint-placeholder-count="4">
@@ -2299,8 +2708,10 @@
       <div style="flex:1;display:flex;justify-content:center;padding:40px 20px">
         <div class="sso-grid" style="width:100%;max-width:1120px">
         <div class="sso-banner" style="position:relative;border:1px solid var(--gray-10);border-radius:6px;background:var(--gray-2);overflow:hidden;display:flex;min-height:520px">
-          <div style="position:relative;width:46%;flex-shrink:0;min-height:520px">
-            <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="sso-cidadao" shape="rect" placeholder="Foto do cidadão (opcional)" hint-size="100%,100%"></x-import>
+          <div style="position:relative;width:46%;flex-shrink:0;min-height:520px;background:linear-gradient(160deg,#1351b4,#0c3a86);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px;text-align:center">
+            <i class="fas fa-fingerprint" style="font-size:72px;color:rgba(255,255,255,.92);margin-bottom:20px"></i>
+            <div style="font-size:22px;font-weight:800;color:#fff;line-height:1.3;margin-bottom:10px">Sua identidade digital</div>
+            <div style="font-size:14.5px;color:rgba(255,255,255,.85);line-height:1.5;max-width:280px">Um único login, seguro, para acessar os serviços públicos digitais do Brasil.</div>
             <div style="position:absolute;top:0;bottom:0;right:-1px;width:50px;background:var(--yellow-vivid-20)"></div>
           </div>
           <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:32px 40px">
@@ -2359,6 +2770,81 @@
           <button onClick="{{ closeModalData }}" style="padding:12px 22px;border:1px solid var(--border-color);border-radius:100px;background:#fff;color:var(--text-default);font-weight:600;font-size:14px;cursor:pointer">Cancelar</button>
           <button onClick="{{ confirmModal }}" style="padding:12px 24px;border:0;border-radius:100px;background:var(--interactive);color:#fff;font-weight:700;font-size:14px;cursor:pointer">{{ mdConfirm }}</button>
         </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- Modal: listas públicas (editais anteriores / atas da comissão) -->
+  <sc-if value="{{ pubModalShow }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;inset:0;background:var(--surface-overlay);z-index:80;display:flex;align-items:center;justify-content:center;padding:20px">
+      <div style="background:#fff;border-radius:12px;box-shadow:var(--surface-shadow-lg);max-width:520px;width:100%;padding:24px;max-height:85vh;overflow:auto">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:4px">
+          <div style="font-size:18px;font-weight:700;color:var(--text-strong)">{{ pubModalTitulo }}</div>
+          <button onClick="{{ closePubModal }}" aria-label="Fechar" style="width:34px;height:34px;border:1px solid var(--border-color);border-radius:8px;background:#fff;color:var(--text-secondary);cursor:pointer;font-size:15px;flex-shrink:0"><i class="fas fa-xmark"></i></button>
+        </div>
+        <div style="font-size:13px;color:var(--text-secondary);line-height:1.45;margin-bottom:16px">{{ pubModalSub }}</div>
+        <sc-for list="{{ pubModalItens }}" as="it" hint-placeholder-count="3">
+          <a href="{{ it.url }}" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:12px;background:var(--gray-2);border:1px solid var(--gray-10);border-radius:10px;padding:14px 16px;margin-bottom:10px;text-decoration:none">
+            <i class="fas fa-file-pdf" style="color:var(--interactive);font-size:18px"></i>
+            <div style="flex:1"><div style="font-size:14px;font-weight:600;color:var(--text-strong)">{{ it.titulo }}</div><div style="font-size:12.5px;color:var(--text-secondary);margin-top:2px">{{ it.sub }}</div></div>
+            <i class="fas fa-arrow-up-right-from-square" style="color:var(--text-secondary);font-size:13px"></i>
+          </a>
+        </sc-for>
+        <div style="font-size:11.5px;color:var(--text-secondary);line-height:1.45;margin-top:6px"><i class="fas fa-circle-info" style="color:var(--info);margin-right:5px"></i>Documentos oficiais ficam disponíveis no portal da Prefeitura de São Paulo.</div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- Modal: atleta estrangeiro sem CPF (caminho facilitado — ATA 24/07) -->
+  <sc-if value="{{ pubModalEstrangeiroShow }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;inset:0;background:var(--surface-overlay);z-index:80;display:flex;align-items:center;justify-content:center;padding:20px">
+      <div style="background:#fff;border-radius:12px;box-shadow:var(--surface-shadow-lg);max-width:540px;width:100%;padding:24px;max-height:85vh;overflow:auto">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:4px">
+          <div style="display:flex;align-items:center;gap:10px"><span style="width:40px;height:40px;border-radius:50%;background:var(--interactive-light);color:var(--interactive);display:flex;align-items:center;justify-content:center;font-size:18px"><i class="fas fa-passport"></i></span><div style="font-size:18px;font-weight:700;color:var(--text-strong)">Atleta estrangeiro sem CPF</div></div>
+          <button onClick="{{ closePubModal }}" aria-label="Fechar" style="width:34px;height:34px;border:1px solid var(--border-color);border-radius:8px;background:#fff;color:var(--text-secondary);cursor:pointer;font-size:15px;flex-shrink:0"><i class="fas fa-xmark"></i></button>
+        </div>
+        <div style="font-size:13.5px;color:var(--text-secondary);line-height:1.5;margin:8px 0 16px">O acesso à plataforma é feito pelo gov.br, que exige CPF. Se você é atleta estrangeiro e ainda não tem CPF, há um caminho facilitado — nos moldes do que existia no SP156:</div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;gap:12px;align-items:flex-start"><span style="width:26px;height:26px;border-radius:50%;background:var(--interactive);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;flex-shrink:0">1</span><div style="font-size:13.5px;color:var(--text-default);line-height:1.5"><b>Obtenha o CPF (gratuito).</b> Estrangeiros podem solicitar o CPF na Receita Federal, em repartições consulares brasileiras ou nos Correios/Poupatempo, apresentando passaporte ou documento de identidade do país de origem.</div></div>
+          <div style="display:flex;gap:12px;align-items:flex-start"><span style="width:26px;height:26px;border-radius:50%;background:var(--interactive);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;flex-shrink:0">2</span><div style="font-size:13.5px;color:var(--text-default);line-height:1.5"><b>Crie sua conta gov.br</b> com o CPF e conclua a inscrição normalmente. O clube ou a federação pode apoiar no processo.</div></div>
+          <div style="display:flex;gap:12px;align-items:flex-start"><span style="width:26px;height:26px;border-radius:50%;background:var(--interactive);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;flex-shrink:0">3</span><div style="font-size:13.5px;color:var(--text-default);line-height:1.5"><b>Atendimento assistido.</b> Se precisar de ajuda, procure a Central 156 ou o atendimento presencial da SEME — a equipe orienta a obtenção do CPF e o preenchimento da inscrição.</div></div>
+        </div>
+        <div style="font-size:12px;color:var(--text-secondary);line-height:1.45;margin-top:16px;background:var(--warning-bg);border-radius:8px;padding:12px 14px"><i class="fas fa-triangle-exclamation" style="color:#a4530a;margin-right:6px"></i>Regra em estudo pela SEME: os requisitos de vínculo com São Paulo e de residência/treino na capital continuam valendo para atletas estrangeiros.</div>
+        <div style="display:flex;justify-content:flex-end;margin-top:18px"><button onClick="{{ closePubModal }}" style="padding:11px 22px;border:0;border-radius:100px;background:var(--interactive);color:#fff;font-weight:700;font-size:14px;cursor:pointer">Entendi</button></div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- Modal: política de privacidade / termos (LGPD, item 1.7) -->
+  <sc-if value="{{ pubModalPrivacidadeShow }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;inset:0;background:var(--surface-overlay);z-index:80;display:flex;align-items:center;justify-content:center;padding:20px">
+      <div style="background:#fff;border-radius:12px;box-shadow:var(--surface-shadow-lg);max-width:600px;width:100%;padding:24px;max-height:85vh;overflow:auto">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:4px">
+          <div style="display:flex;align-items:center;gap:10px"><span style="width:40px;height:40px;border-radius:50%;background:var(--interactive-light);color:var(--interactive);display:flex;align-items:center;justify-content:center;font-size:18px"><i class="fas fa-user-shield"></i></span><div style="font-size:18px;font-weight:700;color:var(--text-strong)">Política de Privacidade e Termos de Uso</div></div>
+          <button onClick="{{ closePubModal }}" aria-label="Fechar" style="width:34px;height:34px;border:1px solid var(--border-color);border-radius:8px;background:#fff;color:var(--text-secondary);cursor:pointer;font-size:15px;flex-shrink:0"><i class="fas fa-xmark"></i></button>
+        </div>
+        <div style="font-size:13px;color:var(--text-secondary);margin:8px 0 16px;line-height:1.5">Esta plataforma coleta e trata dados pessoais para a execução do Programa Bolsa Atleta Rei Pelé, conforme a Lei Geral de Proteção de Dados (Lei nº 13.709/2018) — item 1.7 do edital.</div>
+        <div style="font-weight:700;color:var(--text-strong);font-size:14px;margin-bottom:6px">Quais dados coletamos</div>
+        <div style="font-size:13px;color:var(--text-default);line-height:1.55;margin-bottom:14px">Dados de identificação do atleta e do responsável legal (nome, CPF, data de nascimento, contato e endereço), dados esportivos (modalidade, resultados, vínculo), dados de renda e socioeconômicos (para análise de elegibilidade) e documentos comprobatórios.</div>
+        <div style="font-weight:700;color:var(--text-strong);font-size:14px;margin-bottom:6px">Como usamos</div>
+        <div style="font-size:13px;color:var(--text-default);line-height:1.55;margin-bottom:14px">Exclusivamente para análise, concessão, pagamento e fiscalização da bolsa. <b>É vedada a utilização para finalidade diversa</b> da execução do programa (item 1.7). O acesso é restrito às equipes autorizadas da SEME.</div>
+        <div style="font-weight:700;color:var(--text-strong);font-size:14px;margin-bottom:6px">Seus direitos (LGPD)</div>
+        <div style="font-size:13px;color:var(--text-default);line-height:1.55;margin-bottom:14px">Você pode solicitar acesso, correção, portabilidade e informações sobre o tratamento dos seus dados junto à SEME e ao Encarregado de Dados (DPO) da Prefeitura. Dados de menores são tratados com o consentimento do responsável legal.</div>
+        <div style="font-weight:700;color:var(--text-strong);font-size:14px;margin-bottom:6px">Cookies</div>
+        <div style="font-size:13px;color:var(--text-default);line-height:1.55;margin-bottom:18px">Usamos cookies essenciais para o funcionamento do login gov.br e da sessão. Cookies não essenciais (métricas) só são usados com o seu consentimento, que pode ser revisto a qualquer momento.</div>
+        <div style="display:flex;justify-content:flex-end"><button onClick="{{ closePubModal }}" style="padding:11px 22px;border:0;border-radius:100px;background:var(--interactive);color:#fff;font-weight:700;font-size:14px;cursor:pointer">Entendi</button></div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- Banner de cookies (LGPD) -->
+  <sc-if value="{{ cookieShow }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;left:16px;right:16px;bottom:16px;z-index:70;background:#fff;border:1px solid var(--gray-10);border-radius:12px;box-shadow:var(--surface-shadow-lg);padding:18px 20px;max-width:960px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;gap:14px">
+      <i class="fas fa-cookie-bite" style="color:var(--interactive);font-size:22px"></i>
+      <div style="flex:1;min-width:240px;font-size:13px;color:var(--text-default);line-height:1.5">Usamos cookies para o funcionamento da plataforma e, com o seu consentimento, para métricas de uso. Seus dados são tratados conforme a <span onClick="{{ openPrivacidade }}" role="button" tabindex="0" style="color:var(--interactive);font-weight:600;cursor:pointer;text-decoration:underline">Política de Privacidade</span> (LGPD).</div>
+      <div style="display:flex;gap:10px;flex-shrink:0">
+        <button onClick="{{ rejeitarCookies }}" style="padding:11px 18px;border:1px solid var(--border-color-strong);border-radius:100px;background:#fff;color:var(--text-default);font-weight:600;font-size:13.5px;cursor:pointer;font-family:inherit">Apenas essenciais</button>
+        <button onClick="{{ aceitarCookies }}" style="padding:11px 20px;border:0;border-radius:100px;background:var(--interactive);color:#fff;font-weight:700;font-size:13.5px;cursor:pointer;font-family:inherit">Aceitar todos</button>
       </div>
     </div>
   </sc-if>
@@ -2486,7 +2972,13 @@ class Component extends DCLogic {
     /* jornada do atleta: começa do zero — sem inscrição enviada e sem bolsa ativa */
     inscrito: false, bolsaAtiva: false, relev: false, rascunho: false, respAutenticado: false,
     jornada: 'novo', demoOpen: false,
-    filaSel: [], solAba: 'hist', modalData: null, convocar: 30, busca: '', filtroFlag: false, caixa: 'recebidas', respStatus: 'Aguardando complemento de informações' };
+    /* multi-inscrição: cada atleta pode ter VÁRIAS inscrições, 1 protocolo por bolsa */
+    inscricoes: [], inscViewId: null, novaBolsa: 'geral', modalidade: '', categoria: '',
+    vinculoTipo: 'residencia', compProprio: true,
+    rendaResp: [null,null,null,null,null,null], rendaValores: ['','','','','',''], escolaridade: null, veracidade: false,
+    familia: [{ parentesco:'Próprio (atleta)', renda:'' },{ parentesco:'Mãe', renda:'' },{ parentesco:'Pai', renda:'' }],
+    cepResid: '01310-100', cepClube: '',
+    filaSel: [], solAba: 'hist', modalData: null, convocar: 30, busca: '', filtroFlag: false, caixa: 'recebidas', respStatus: 'Aguardando complemento de informações', pubModal: null, cookieConsent: null };
 
   PROFILES = [
     { id:'seme', short:'SEME — Analista', name:'SEME — Backoffice', role:'Ana Ribeiro · Analista DGEA', area:'SEME · Backoffice', icon:'fas fa-building-columns', home:'seme-home' },
@@ -2515,7 +3007,7 @@ class Component extends DCLogic {
       { header:'Inscrição', minPhase:0 },
       { label:'Início', icon:'fas fa-house', screen:'atleta-dashboard', minPhase:0 },
       { label:'Elegibilidade', icon:'fas fa-clipboard-question', screen:'atleta-elegibilidade', minPhase:0, maxPhase:0 },
-      { label:'Minha inscrição', icon:'fas fa-file-signature', screen:'atleta-inscricao', minPhase:0 },
+      { label:'Minhas inscrições', icon:'fas fa-folder-tree', screen:'atleta-inscricoes', minPhase:0 },
       { label:'Ficha do atleta', icon:'fas fa-id-card-clip', screen:'atleta-ficha', minPhase:1 },
       { label:'Documentos', icon:'fas fa-folder-open', screen:'atleta-documentos', minPhase:1 },
       { label:'Resultado', icon:'fas fa-trophy', screen:'atleta-resultado', minPhase:2 },
@@ -2557,6 +3049,55 @@ class Component extends DCLogic {
     { id:'2024', label:'Edital 01/2024', status:'Encerrado' },
   ];
 
+  /* ===== 4 tipos de bolsa — cada um gera 1 protocolo independente ===== */
+  BOLSAS = [
+    { key:'geral', nome:'Bolsa Geral', icon:'fas fa-medal', cor:'var(--interactive)',
+      tagline:'Resultado esportivo — 1º a 3º lugar em competição do edital',
+      desc:'Para atletas de 8 a 25 anos com pódio (1º, 2º ou 3º lugar) em competição indicada pelo edital; coletivas: 2 melhores equipes. Não pode receber patrocínio de PJ nem renda esportiva.',
+      relev:false, cotp:false },
+    { key:'geral-rel', nome:'Bolsa Geral – Relevância', icon:'fas fa-star', cor:'var(--success)',
+      tagline:'Destaque nacional/internacional — enquadramento de relevância',
+      desc:'Atletas de destaque nacional ou internacional. Análise socioeconômica (renda familiar) no lugar da declaração de não patrocínio. Sem limite máximo de idade.',
+      relev:true, cotp:false },
+    { key:'cotp', nome:'Bolsa Centro Olímpico (COTP)', icon:'fas fa-dumbbell', cor:'var(--info)',
+      tagline:'Atletas vinculados ao Centro Olímpico de Treinamento e Pesquisa',
+      desc:'Vínculo comprovado pelo treinamento no COTP (declaração ADECO). Dispensa comprovante de residência. 50% das bolsas do programa são reservadas ao COTP.',
+      relev:false, cotp:true },
+    { key:'cotp-rel', nome:'Bolsa COTP – Relevância', icon:'fas fa-trophy', cor:'var(--warning)',
+      tagline:'Relevância para atletas do Centro Olímpico',
+      desc:'Enquadramento de relevância para atletas do COTP. Combina o vínculo ADECO com a análise socioeconômica da relevância.',
+      relev:true, cotp:true },
+  ];
+
+  /* ===== dados do EDITAL 01/2026 (item 17 — Tabela de Modalidades e Competições) — categorias/provas/competições e entidade por modalidade ===== */
+  EDITAL_MOD = {
+    'Atletismo': { ent:'Federação Paulista de Atletismo (FPA)', comp:['Campeonato Paulista Loteria Caixa de Atletismo'], cat:['Adulto','Sub-23','Sub-20','Sub-18','Sub-16','Sub-14'], provas:['100 m rasos','200 m','400 m','800 m','1.500 m','5.000 m','110 m c/ barreiras','Salto em distância','Salto em altura','Salto triplo','Arremesso de peso','Lançamento de dardo','Revezamento 4x100 m'] },
+    'Águas Abertas': { ent:'Federação Aquática Paulista (FAP)', comp:['Campeonato Paulista de Verão'], cat:['Petiz (11–12)','Infantil (13–14)','Juvenil (15–16)','Junior (17–19)','Master 1 (20+)'] },
+    'Badminton': { ent:'Federação de Badminton e Parabadminton do Estado de SP (FEBASP)', comp:['Ranking Anual Final'], cat:['Sub-9','Sub-11','Sub-13','Sub-15','Sub-17','Sub-19','Aesp'] },
+    'Basquete 3x3': { ent:'Federação Paulista de Basketball (FPB)', comp:['Campeonato Estadual 3x3'], cat:['Sub-18 M','Sub-18 F','Sub-23 M','Sub-23 F','Adulto M','Adulto F'] },
+    'Basquete 5x5': { ent:'Federação Paulista de Basketball (FPB)', comp:['Campeonato Estadual'], cat:['Sub-12','Sub-13','Sub-14','Sub-15','Sub-16','Sub-18','Sub-20','Adulto (Divisão Especial)'] },
+    'Beisebol': { ent:'Federação Paulista de Beisebol e Softbol (FPBS)', comp:['Campeonato Paulista','Taça Federação Paulista'], cat:['Pré-Infantil','Infantil','Pré-Junior','Júnior','Adultos'] },
+    'Boxe': { ent:'Federação Estadual de Boxe de São Paulo (FEBOXESP)', comp:['Campeonato Paulista de Boxe'], cat:['Infantil','Cadete','Juvenil','Elite'], provas:['48 kg','50 kg','51 kg','54 kg','57 kg','60 kg','63 kg','66 kg','70 kg','75 kg','80 kg','+80 kg'] },
+    'Ciclismo': { ent:'Federação Paulista de Ciclismo (FPC)', comp:['Campeonato Paulista de Estrada','Campeonato Paulista de MTB XCM'], cat:['Mirim','Infanto-Juvenil','Júnior','Sub-23','Sub-30'] },
+    'Escalada Esportiva': { ent:'Federação de Escalada Esportiva de São Paulo (FEESP)', comp:['Ranking Paulista de Boulder','Campeonato Paulista de Guiada'], cat:['Sub-10','Sub-12','Sub-15','Sub-17','Sub-19','Principal'] },
+    'Esgrima': { ent:'Federação Paulista de Esgrima (FPE)', comp:['Campeonato Paulista Adulto','Campeonato Paulista Pré-Cadete, Cadete e Juvenil','Campeonato Paulista Infantil'], cat:['U9','U11','U13','U15','U17','U20','Adulto'], provas:['Florete','Sabre','Espada'] },
+    'Futebol': { ent:'Federação Paulista de Futebol (FPF)', comp:['Campeonato Paulista de Futebol'], cat:['Sub-11','Sub-12','Sub-13','Sub-14','Sub-15','Sub-17','Sub-20','Sub-21'] },
+    'Ginástica Artística': { ent:'Federação Paulista de Ginástica (FPG)', comp:['Campeonato Estadual de Ginástica Artística'], cat:['Pré-Infantil','Infantil','Juvenil','Adulto'], provas:['Solo','Salto','Trave','Barras assimétricas','Barra fixa','Cavalo com alças','Argolas','Paralelas'] },
+    'Ginástica Rítmica': { ent:'Federação Paulista de Ginástica (FPG)', comp:['Campeonato Estadual de Ginástica Rítmica'], cat:['Pré-infantil','Infantil','Juvenil','Adulto','Conjuntos e Trios'] },
+    'Handebol': { ent:'Federação Paulista de Handebol (FPHB)', comp:['Campeonato Paulista "Super Paulistão"'], cat:['Mirim','Infantil','Cadete','Juvenil','Júnior','Adulto'] },
+    'Hipismo': { ent:'Federação Paulista de Hipismo (FPH)', comp:['Campeonato Paulista de Salto','Campeonato Paulista de Adestramento','Campeonato Paulista de CCE'], cat:['Mini Mirim','Mirim','Júnior','Sênior'] },
+    'Hóquei no gelo': { ent:'Confederação Brasileira de Desportos no Gelo (CBDG)', comp:['Campeonato Brasileiro de Hockey no Gelo'], cat:['Sub-16 (Equipe M/F)','Sub-23 (Equipe M/F)','Adulto (Equipe M/F)'] },
+    'Judô': { ent:'Federação Paulista de Judô (FPJ)', comp:['Copa Cidade SP — Divisão Especial','Copa Cidade SP — Aspirante'], cat:['Sub-9','Sub-11','Sub-13','Sub-15','Sub-18','Sênior'], provas:['Super Ligeiro','Meio Ligeiro','Ligeiro','Meio Médio','Médio','Meio Pesado','Pesado','Super Pesado'] },
+    'Karatê': { ent:'Federação Paulista de Karatê (FPK)', comp:['Ranking Anual FPK'], cat:['Sub-10','Sub-12','Sub-14','Cadete','Junior','Sub-21','Sênior'], provas:['Kata','Kumite'] },
+    'Natação': { ent:'Federação Aquática Paulista (FAP)', comp:['Campeonato Paulista de Natação','Campeonato SP de Natação'], cat:['Petiz (11–12)','Infantil (13–14)','Juvenil (15–16)','Junior','Sênior'], provas:['50 m livre','100 m livre','200 m livre','400 m livre','100 m costas','100 m peito','100 m borboleta','200 m medley'] },
+    'Remo': { ent:'Confederação Brasileira de Remo (CBR)', comp:['Regata Interclubes de Barcos','Interclubes de Jovens'], cat:['Sub-15','Sub-17','Sub-19','Sub-23','Sênior'] },
+    'Skate': { ent:'Federação Paulista de Skate (FPS)', comp:['Circuito Paulista de Skate Park','Circuito Paulista de Skate Street'], cat:['Amador','Mirim','Profissional'], provas:['Park','Street'], semClube:true },
+    'Taekwondo': { ent:'Federação Paulista de Taekwondo', comp:['Ranking Estadual'], cat:['Infantil','Cadete','Juvenil','Sub-21','Adulto'], provas:['Faixa de peso conforme categoria'] },
+    'Tênis': { ent:'Federação Paulista de Tênis (FPT)', comp:['Campeonato Estadual Kids','Campeonato Estadual Infanto Juvenil'], cat:['10 anos','12 anos','14 anos','16 anos','18 anos','Absoluto'] },
+    'Vôlei de Praia': { ent:'Federação Paulista de Vôlei (FPV)', comp:['CPVP — Circuito Paulista de Vôlei de Praia'], cat:['Sub-15 M/F','Sub-17 M/F','Sub-19 M/F','Adulto M/F'] },
+    'Outra': { ent:'Conforme o edital / federação da modalidade', comp:['Conforme a Lista de Competições do edital'], cat:['Conforme o edital'] },
+  };
+
   SCREENS = {
     'seme-home':{ title:'Visão geral' },
     'seme-edital':{ title:'Edital e ciclo', etapa:'Etapa 2', icon:'fas fa-file-contract' },
@@ -2570,6 +3111,8 @@ class Component extends DCLogic {
     'seme-relatorios':{ title:'Relatórios e BI', etapa:'Etapa 7', icon:'fas fa-chart-line' },
     'atleta-dashboard':{ title:'Início', etapa:'Etapa 5', icon:'fas fa-house' },
     'atleta-elegibilidade':{ title:'Elegibilidade', etapa:'Etapa 5', icon:'fas fa-clipboard-question' },
+    'atleta-inscricoes':{ title:'Minhas inscrições', etapa:'Etapa 5', icon:'fas fa-folder-tree' },
+    'atleta-nova':{ title:'Nova inscrição', etapa:'Etapa 5', icon:'fas fa-plus' },
     'atleta-inscricao':{ title:'Minha inscrição', etapa:'Etapa 5', icon:'fas fa-file-signature' },
     'atleta-documentos':{ title:'Documentos', etapa:'Etapa 5', icon:'fas fa-folder-open' },
     'atleta-resultado':{ title:'Resultado', etapa:'Etapa 5', icon:'fas fa-trophy' },
@@ -2607,7 +3150,7 @@ class Component extends DCLogic {
     { icon:'fas fa-file-pen', text:'Errata 2 publicada no Edital 01/2026', time:'há 3 h' },
   ];
 
-  go(screen){ this.setState({ screen, open:null, sidebarOpen:false }); window.scrollTo&&window.scrollTo(0,0); const m=document.querySelector('.main'); if(m) m.scrollTop=0; }
+  go(screen){ this.setState({ screen, open:null, sidebarOpen:false }); window.scrollTo&&window.scrollTo(0,0); const m=document.querySelector('.main'); if(m) m.scrollTop=0; try{ this._setHash && this._setHash(this.state.profile, screen); }catch(e){} }
   toggleSidebar(){ this.setState(s=>({ sidebarOpen:!s.sidebarOpen })); }
   componentDidMount(){
     this._clickHandler = (e)=>{
@@ -2660,13 +3203,24 @@ class Component extends DCLogic {
     this._enhance();
     this._mo = new MutationObserver(()=>{ if(this._raf) return; this._raf = requestAnimationFrame(()=>{ this._raf=null; this._enhance(); }); });
     this._mo.observe(document.body, {childList:true, subtree:true});
+    // ===== roteamento por hash: a URL reflete perfil/tela e é navegável (voltar/avançar, deep-link) =====
+    try{
+      this._setHash = (profile, screen)=>{ try{ const h='#/'+profile+'/'+screen; if(location.hash!==h){ this._hashLock=true; location.hash=h; clearTimeout(this._hashT); this._hashT=setTimeout(()=>{ this._hashLock=false; }, 60); } }catch(e){} };
+      this._applyHash = ()=>{ try{ if(this._hashLock) return; const parts=(location.hash||'').replace(/^#\/?/,'').split('/'); const prof=parts[0]; const scr=parts[1];
+        const pObj=this.PROFILES.find(p=>p.id===prof); if(!pObj) return; const screen=(scr && this.SCREENS[scr])?scr:pObj.home;
+        if(this.state.profile!==prof || this.state.screen!==screen) this.setState({ profile:prof, screen, open:null, sidebarOpen:false }); }catch(e){} };
+      this._hashHandler = ()=>this._applyHash();
+      window.addEventListener('hashchange', this._hashHandler);
+      if(location.hash && location.hash.length>2){ this._applyHash(); } else { this._setHash(this.state.profile, this.state.screen); }
+    }catch(e){}
   }
   componentWillUnmount(){
     if(this._clickHandler) document.removeEventListener('click', this._clickHandler, true);
     if(this._keyHandler) document.removeEventListener('keydown', this._keyHandler, true);
+    if(this._hashHandler) window.removeEventListener('hashchange', this._hashHandler);
     if(this._mo) this._mo.disconnect();
   }
-  switchProfile(id){ const p = this.PROFILES.find(x=>x.id===id); this.setState({ profile:id, screen:p.home, open:null }); }
+  switchProfile(id){ const p = this.PROFILES.find(x=>x.id===id); this.setState({ profile:id, screen:p.home, open:null }); try{ this._setHash && this._setHash(id, p.home); }catch(e){} }
   toggle(name){ this.setState(s=>({ open: s.open===name ? null : name })); }
   closeAll(){ this.setState({ open:null }); }
   setStep(n){ this.setState({ editalStep:n }); }
@@ -2678,7 +3232,13 @@ class Component extends DCLogic {
   publicar(){ this.setState({ modal:'publicar' }); }
   confirmPublicar(){ this.setState({ modal:null }); this.showToast('Edital 01/2026 publicado. Versão registrada na auditoria.'); this.go('seme-edital'); }
   setInsc(n){ this.setState({ inscStep:n }); const m=document.querySelector('.main'); if(m) m.scrollTop=0; }
-  nextInsc(){ this.setState(s=>({ inscStep: Math.min(5, s.inscStep+1) })); const m=document.querySelector('.main'); if(m) m.scrollTop=0; }
+  nextInsc(){
+    // ao sair da etapa 3 (elegibilidade), exige tudo preenchido e sem bloqueio eliminatório antes de avançar
+    if(this.state.inscStep===3){
+      const faltas=this._faltasStep3(); if(faltas.length){ this.showToast('Complete antes de avançar: '+faltas.join(' · ')+'.'); return; }
+      const bloq=this._bloqueioStep3(); if(bloq){ this.showToast(bloq); return; }
+    }
+    this.setState(s=>({ inscStep: Math.min(4, s.inscStep+1) })); const m=document.querySelector('.main'); if(m) m.scrollTop=0; }
   prevInsc(){ this.setState(s=>({ inscStep: Math.max(1, s.inscStep-1) })); }
   chooseTipo(t){ this.setState({ chosenTipo:t, inscStep:1, relev:false, screen:'atleta-inscricao', sidebarOpen:false }); const m=document.querySelector('.main'); if(m) m.scrollTop=0; }
   toggleRelev(){ this.setState(s=>({ relev:!s.relev })); }
@@ -2686,6 +3246,95 @@ class Component extends DCLogic {
   continuarRascunho(){ this.setState({ screen:'atleta-inscricao', sidebarOpen:false }); const m=document.querySelector('.main'); if(m) m.scrollTop=0; }
   autenticarResp(){ this.setState({ respAutenticado:true }); this.showToast('Responsável legal autenticado via gov.br.'); }
   toggleDemo(){ this.setState(s=>({ demoOpen:!s.demoOpen })); }
+  /* ===== multi-inscrição: 1 protocolo por bolsa ===== */
+  _proto(){ return 'BA-2026-' + String(100000 + Math.floor(Math.random()*899999)); }
+  bolsaByKey(k){ return this.BOLSAS.find(b=>b.key===k) || this.BOLSAS[0]; }
+  setVinculo(t){ this.setState({ vinculoTipo:t }); }
+  setCompProprio(v){ this.setState({ compProprio:v }); }
+  setRenda(i,v){ this.setState(s=>{ const a=[...s.rendaResp]; a[i]=v; return { rendaResp:a }; }); }
+  setRendaValor(i,e){ const raw=e.target.value; this.setState(s=>{ const a=[...s.rendaValores]; a[i]=raw; return { rendaValores:a }; }); }
+  _parseBR(s){ return parseFloat(String(s||'').replace(/\./g,'').replace(',','.').replace(/[^0-9.]/g,''))||0; }
+  // teto de renda não-esportiva (salário não-esportivo + renda estudantil), item 2.2.5 c/c 3.3, por faixa etária do atleta
+  _rendaTeto(){ const nasc=new Date(2008,8,14), hoje=new Date(2026,6,28); let idade=hoje.getFullYear()-nasc.getFullYear(); const mm=hoje.getMonth()-nasc.getMonth(); if(mm<0||(mm===0&&hoje.getDate()<nasc.getDate())) idade--;
+    const anual = idade<=17?18702.96:(idade<=21?37406.16:56109.36); const faixa = idade<=17?'8 a 17 anos':(idade<=21?'18 a 21 anos':'22 anos ou mais'); return { idade, anual, faixa }; }
+  _rendaTetoInfo(){ const {anual,faixa}=this._rendaTeto(); const soma=([1,2].reduce((s,i)=> this.state.rendaResp[i]==='sim' ? s+this._parseBR(this.state.rendaValores[i]) : s, 0))*12;
+    const b=this.bolsaByKey(this.state.novaBolsa||'geral'); return { anual, faixa, somaAnual:soma, excedido: !b.relev && soma>anual }; }
+  // Relevância: TODAS as rendas somadas ×12 (item 3.1.3-II c/c 2.8.1), comparadas ao limite anual da faixa (item 2.2.5). A renda familiar per capita (2.2.6) é aferida no Anexo VIII.
+  _rendaRelevInfo(){ const {anual,faixa}=this._rendaTeto(); const soma=(this.state.rendaResp.reduce((s,v,i)=> v==='sim' ? s+this._parseBR(this.state.rendaValores[i]) : s, 0))*12;
+    const b=this.bolsaByKey(this.state.novaBolsa||'geral'); return { anual, faixa, somaAnual:soma, isRelev:!!b.relev, algumSim:this.state.rendaResp.some(x=>x==='sim'), excedido: !!b.relev && soma>anual }; }
+  // padrão: outra Bolsa Atleta (federal/estadual/municipal) é renda esportiva incompatível (item 3.2.2) — barra igual ao salário esportivo
+  _rendaEsportivaBloqueio(){ const b=this.bolsaByKey(this.state.novaBolsa||'geral'); return !b.relev && [0,3,4,5].some(i=>this.state.rendaResp[i]==='sim'); }
+  // Relevância: renda familiar per capita (Anexo VIII, itens 2.2.6 e 4.4) — soma da renda de todos do domicílio ÷ nº de pessoas
+  addFamiliar(){ this.setState(s=>({ familia:[...s.familia, { parentesco:'', renda:'' }] })); }
+  removeFamiliar(i){ this.setState(s=>({ familia: s.familia.filter((_,j)=>j!==i) })); }
+  setFamiliarParentesco(i,e){ const v=e.target.value; this.setState(s=>{ const a=s.familia.map((m,j)=>j===i?{...m,parentesco:v}:m); return { familia:a }; }); }
+  setFamiliarRenda(i,e){ const v=e.target.value; this.setState(s=>{ const a=s.familia.map((m,j)=>j===i?{...m,renda:v}:m); return { familia:a }; }); }
+  _perCapitaLimite(){ const {idade}=this._rendaTeto(); return idade<=17?37405.92:(idade<=21?74812.32:112218.72); }
+  _perCapitaInfo(){ const b=this.bolsaByKey(this.state.novaBolsa||'geral'); const membros=this.state.familia.length||1;
+    const somaMensal=this.state.familia.reduce((s,m)=>s+this._parseBR(m.renda),0); const somaAnual=somaMensal*12; const perCapita=somaAnual/membros; const limite=this._perCapitaLimite();
+    return { isRelev:!!b.relev, membros, somaAnual, perCapita, limite, excedido: !!b.relev && perCapita>limite }; }
+  setEscolaridade(v){ this.setState({ escolaridade:v }); }
+  toggleVeracidade(){ this.setState(s=>({ veracidade:!s.veracidade })); }
+  setCepResid(e){ this.setState({ cepResid:e.target.value }); }
+  setCepClube(e){ this.setState({ cepClube:e.target.value }); }
+  _cepSP(cep){ const d=(cep||'').replace(/\D/g,''); if(d.length<8) return 'incompleto'; const n=parseInt(d.slice(0,8),10); return ((n>=1000000&&n<=5999999)||(n>=8000000&&n<=8499999))?'ok':'fora'; }
+  irInscricoes(){ this.setState({ screen:'atleta-inscricoes', inscViewId:null, sidebarOpen:false }); const m=document.querySelector('.main'); if(m) m.scrollTop=0; }
+  novaInscricao(){ this.setState({ screen:'atleta-nova', sidebarOpen:false, novaBolsa:null }); const m=document.querySelector('.main'); if(m) m.scrollTop=0; }
+  escolherBolsa(key){ const b=this.bolsaByKey(key);
+    this.setState({ novaBolsa:key, chosenTipo:b.nome, relev:b.relev, inscStep:1, modalidade:'', categoria:'', respAutenticado:false,
+      rendaResp:[null,null,null,null,null,null], rendaValores:['','','','','',''], familia:[{ parentesco:'Próprio (atleta)', renda:'' },{ parentesco:'Mãe', renda:'' },{ parentesco:'Pai', renda:'' }], escolaridade:null, veracidade:false, screen:'atleta-inscricao', sidebarOpen:false });
+    const m=document.querySelector('.main'); if(m) m.scrollTop=0; }
+  // campos obrigatórios da etapa 3 (elegibilidade) que ainda faltam preencher
+  _faltasStep3(){ const f=[];
+    if(!this.state.modalidade || !this.EDITAL_MOD[this.state.modalidade]) f.push('Modalidade');
+    if(!this.state.escolaridade) f.push('Escolaridade (cursando/concluído)');
+    if(!this.state.rendaResp.every(x=>x!=null)) f.push('Elegibilidade de renda (responda todas)');
+    if(this.state.rendaResp.some((v,i)=> v==='sim' && this._parseBR(this.state.rendaValores[i])<=0)) f.push('Valor mensal das rendas marcadas "Sim"');
+    return f; }
+  // bloqueio ELIMINATÓRIO da etapa 3 (retorna a mensagem, ou null se ok)
+  _bloqueioStep3(){
+    if(this._rendaEsportivaBloqueio()) return 'Renda de natureza esportiva (salário esportivo ou outra Bolsa Atleta) é incompatível com esta bolsa (item 3.2.2). Considere a Relevância.';
+    const _teto=this._rendaTetoInfo(); if(_teto.excedido) return 'Sua renda não-esportiva ultrapassa o teto anual da faixa ('+_teto.faixa+'). Você não é elegível para esta bolsa; considere a Relevância.';
+    const _relev=this._rendaRelevInfo(); if(_relev.excedido) return 'Na Relevância, a soma das suas rendas ultrapassa o limite anual da faixa ('+_relev.faixa+') — item 3.1.3-II. Não elegível por renda.';
+    const _pc=this._perCapitaInfo();
+    if(_pc.isRelev && this.state.familia.some(m=>!m.parentesco.trim())) return 'Preencha o parentesco de todos os membros do domicílio (composição familiar — Anexo VIII).';
+    if(_pc.excedido) return 'A renda familiar per capita ultrapassa o limite da faixa (itens 2.2.6/4.4). Não elegível para a Relevância.';
+    return null; }
+  finalizarInscricao(){
+    const b=this.bolsaByKey(this.state.novaBolsa||'geral');
+    // etapa 3 (elegibilidade) — se algo falta ou bloqueia, volta pro step 3
+    const faltas3=this._faltasStep3();
+    if(faltas3.length){ this.showToast('Faltam campos na Elegibilidade: '+faltas3.join(' · ')+'.'); this.setState({ inscStep:3 }); return; }
+    const bloq=this._bloqueioStep3();
+    if(bloq){ this.showToast(bloq); this.setState({ inscStep:3 }); return; }
+    // etapa 4 (envio) — veracidade
+    if(!this.state.veracidade){ this.showToast('Marque a declaração de veracidade para enviar.'); this.setState({ inscStep:4 }); return; }
+    const nova={ id:'i'+Date.now(), protocolo:this._proto(), bolsaKey:b.key, bolsa:b.nome, cor:b.cor, icon:b.icon,
+      modalidade:this.state.modalidade, categoria:this.state.categoria||'—', jornada:'analise', enviadaEm:'27/07/2026' };
+    this.setState(s=>({ inscricoes:[...s.inscricoes, nova], inscViewId:null, inscrito:true, veracidade:false, screen:'atleta-inscricoes', sidebarOpen:false }));
+    this.showToast('Inscrição enviada. Protocolo '+nova.protocolo+' gerado.');
+    const m=document.querySelector('.main'); if(m) m.scrollTop=0;
+  }
+  verInscricao(id){ const it=this.state.inscricoes.find(x=>x.id===id); if(!it) return;
+    this.setState({ inscViewId:id, jornada:it.jornada, chosenTipo:it.bolsa, inscrito:true, bolsaAtiva:it.jornada==='ativa', screen:'atleta-dashboard', sidebarOpen:false });
+    const m=document.querySelector('.main'); if(m) m.scrollTop=0; }
+  setInscJornada(j){ // demo: muda o status da inscrição em visualização (ou cria uma se não houver)
+    this.setState(s=>{
+      let ins=[...s.inscricoes]; let vid=s.inscViewId;
+      if(!vid || !ins.find(x=>x.id===vid)){ const b=this.bolsaByKey('geral'); const nv={ id:'i'+Date.now(), protocolo:this._proto(), bolsaKey:b.key, bolsa:b.nome, cor:b.cor, icon:b.icon, modalidade:'Judô', categoria:'Adulto', jornada:j, enviadaEm:'20/06/2026' }; ins.push(nv); vid=nv.id; }
+      else { ins=ins.map(x=>x.id===vid?{...x, jornada:j}:x); }
+      return { inscricoes:ins, inscViewId:vid, jornada:j, inscrito:true, bolsaAtiva:j==='ativa', demoOpen:false, screen:'atleta-dashboard', sidebarOpen:false };
+    });
+    const m=document.querySelector('.main'); if(m) m.scrollTop=0;
+  }
+  popularExemplos(){ // demo: semeia 3 inscrições em status variados p/ mostrar o hub
+    const mk=(k,j,mod,cat,dt)=>{ const b=this.bolsaByKey(k); return { id:'i'+k+Date.now()+Math.floor(Math.random()*999), protocolo:this._proto(), bolsaKey:b.key, bolsa:b.nome, cor:b.cor, icon:b.icon, modalidade:mod, categoria:cat, jornada:j, enviadaEm:dt }; };
+    const ins=[ mk('geral','pendencia','Judô','Adulto · até 60 kg','20/06/2026'), mk('cotp','analise','Atletismo','100 m rasos','21/06/2026'), mk('geral-rel','final','Natação','100 m livre','19/06/2026') ];
+    this.setState({ inscricoes:ins, inscViewId:null, inscrito:true, demoOpen:false, screen:'atleta-inscricoes', sidebarOpen:false });
+    this.showToast('Exemplos carregados: 3 inscrições em status diferentes.');
+    const m=document.querySelector('.main'); if(m) m.scrollTop=0;
+  }
+  limparInscricoes(){ this.setState({ inscricoes:[], inscViewId:null, inscrito:false, bolsaAtiva:false, jornada:'novo', demoOpen:false, screen:'atleta-inscricoes' }); this.showToast('Inscrições limpas — começando do zero.'); }
   setJornada(j){
     const inscrito = j!=='novo';
     const bolsaAtiva = j==='ativa';
@@ -2703,6 +3352,9 @@ class Component extends DCLogic {
   openModal(d){ this.setState({ modalData:d }); }
   confirmModal(){ const d=this.state.modalData||{}; this.setState({ modalData:null, filaSel: d.clearSel?[]:this.state.filaSel }); if(d.toast) this.showToast(d.toast); if(d.screen) this.go(d.screen); }
   closeModalData(){ this.setState({ modalData:null }); }
+  openPubModal(k){ this.setState({ pubModal:k }); }
+  closePubModal(){ this.setState({ pubModal:null }); }
+  setCookie(v){ this.setState({ cookieConsent:v }); this.showToast(v==='aceito'?'Preferências de cookies salvas: todos aceitos.':'Preferências salvas: apenas cookies essenciais.'); }
 
   renderVals(){
     const profile = this.state.profile;
@@ -2793,7 +3445,7 @@ class Component extends DCLogic {
     const chip = (bg,fg)=>({ display:'inline-block',padding:'3px 9px',borderRadius:'6px',fontSize:'11.5px',fontWeight:700,background:bg,color:fg });
 
     const built = new Set(['seme-home','seme-edital','seme-edital-novo','seme-regras',
-      'atleta-dashboard','atleta-elegibilidade','atleta-inscricao','atleta-documentos','atleta-resultado','atleta-termo','atleta-pagamentos','atleta-notificacoes',
+      'atleta-dashboard','atleta-elegibilidade','atleta-inscricoes','atleta-nova','atleta-inscricao','atleta-documentos','atleta-resultado','atleta-termo','atleta-pagamentos','atleta-notificacoes',
       'seme-operacao','seme-planilha','seme-solicitacao','seme-resultados','seme-recursos','seme-financeiro','seme-chamadas',
       'fed-dashboard','fed-habilitacao','fed-competicoes','fed-podio','fed-frequencia','fed-comunicacao',
       'adeco-dashboard','adeco-atletas','adeco-ranking','adeco-comunicacao',
@@ -2808,12 +3460,13 @@ class Component extends DCLogic {
       w1:this.state.editalStep===1, w2:this.state.editalStep===2, w3:this.state.editalStep===3, w4:this.state.editalStep===4,
       w5:this.state.editalStep===5, w6:this.state.editalStep===6, w7:this.state.editalStep===7, w8:this.state.editalStep===8,
       aDash: screen==='atleta-dashboard', aEleg: screen==='atleta-elegibilidade', aInsc: screen==='atleta-inscricao',
-      aInscWizard: screen==='atleta-inscricao' && !this.state.inscrito, aInscResumo: screen==='atleta-inscricao' && this.state.inscrito,
+      aInscricoes: screen==='atleta-inscricoes', aNova: screen==='atleta-nova',
+      aInscWizard: screen==='atleta-inscricao', aInscResumo: false,
       respNaoAuth: !this.state.respAutenticado,
-      aDashNovo: screen==='atleta-dashboard' && !this.state.inscrito, aDashStatus: screen==='atleta-dashboard' && this.state.inscrito,
+      aDashNovo: screen==='atleta-dashboard' && this.state.inscViewId==null, aDashStatus: screen==='atleta-dashboard' && this.state.inscViewId!=null,
       aDocs: screen==='atleta-documentos', aResult: screen==='atleta-resultado', aTermo: screen==='atleta-termo',
       aPag: screen==='atleta-pagamentos', aNotif: screen==='atleta-notificacoes',
-      i1:is===1, i2:is===2, i3:is===3, i4:is===4, i5:is===5,
+      i1:is===1, i2:is===2, i3:is===3, i4:is===4, iLast: is===4, iNotLast: is!==4,
       i4geral: is===4 && !(/COTP|Centro Olímpico/.test(this.state.chosenTipo)),
       modalPublicar: this.state.modal==='publicar', modalEnviar: this.state.modal==='enviar', modalRecurso: this.state.modal==='recurso', modalRenda: this.state.modal==='renda-analise',
       modalDeslig: this.state.modal==='deslig', modalSuspender: this.state.modal==='suspender',
@@ -2955,6 +3608,28 @@ class Component extends DCLogic {
       hasWarn: !!jr.warn, warnText: jr.warn,
       hasCta: !!jr.cta, ctaLabel: jr.cta && jr.cta.label, onCta: jr.cta ? (()=>this.go(jr.cta.to)) : (()=>{}),
     };
+    // ===== multi-inscrição: hub, cards e escolha de bolsa =====
+    const STCHIP = {
+      analise:{t:'Em análise',bg:'var(--info-bg)',fg:'var(--info)'}, pendencia:{t:'Pendência',bg:'var(--warning-bg)',fg:'#a4530a'},
+      reiteracao:{t:'Reiteração',bg:'var(--info-bg)',fg:'var(--info)'}, classificacao:{t:'Em andamento',bg:'var(--info-bg)',fg:'var(--info)'},
+      contemplado:{t:'Contemplado (parcial)',bg:'var(--success-bg)',fg:'var(--success)'}, naocontemplado:{t:'Não contemplado',bg:'var(--gray-5)',fg:'var(--text-secondary)'},
+      recurso:{t:'Em recurso',bg:'var(--warning-bg)',fg:'#a4530a'}, final:{t:'Classificado',bg:'var(--success-bg)',fg:'var(--success)'},
+      termoenviado:{t:'Termo em validação',bg:'var(--info-bg)',fg:'var(--info)'}, termopendencia:{t:'Termo — corrigir',bg:'var(--warning-bg)',fg:'#a4530a'},
+      desclassificado:{t:'Desclassificado',bg:'var(--danger-bg)',fg:'var(--danger)'}, ativa:{t:'Bolsa ativa',bg:'var(--success-bg)',fg:'var(--success)'},
+    };
+    const curInsc = this.state.inscricoes.find(x=>x.id===this.state.inscViewId) || null;
+    const temInscricoes = this.state.inscricoes.length>0;
+    const inscricoesView = this.state.inscricoes.map(it=>{ const st=STCHIP[it.jornada]||STCHIP.analise; const isView=it.id===this.state.inscViewId; return {
+      id:it.id, protocolo:it.protocolo, bolsa:it.bolsa, modalidade:it.modalidade, categoria:it.categoria, enviadaEm:it.enviadaEm, icon:it.icon,
+      statusLabel:st.t, statusStyle: chip(st.bg,st.fg), onOpen:()=>this.verInscricao(it.id),
+      iconWrap:{ width:'42px',height:'42px',borderRadius:'10px',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0,background:'var(--interactive-light)',color:it.cor,fontSize:'18px' },
+      cardStyle:{ display:'block',width:'100%',textAlign:'left',background:'#fff',border: isView?'2px solid var(--interactive)':'1px solid var(--gray-10)',borderRadius:'12px',boxShadow:'var(--surface-shadow-sm)',padding:'18px',cursor:'pointer',fontFamily:'inherit' } };
+    });
+    const bolsasView = this.BOLSAS.map(b=>({ key:b.key, nome:b.nome, tagline:b.tagline, desc:b.desc, icon:b.icon,
+      onChoose:()=>this.escolherBolsa(b.key),
+      iconWrap:{ width:'44px',height:'44px',borderRadius:'10px',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0,background:'var(--interactive-light)',color:b.cor,fontSize:'19px' } }));
+    const jornadaProtocolo = curInsc ? curInsc.protocolo : 'BA-2026-004821';
+    const jornadaBolsa = curInsc ? (curInsc.bolsa + ' · ' + curInsc.modalidade) : (this.state.chosenTipo + ' · Judô');
     const tlLabels = ['Enviada','Em análise','Classificação inicial','Recurso','Resultado final','Termo de adesão','Pagamento — 12 parcelas'];
     const tlDates  = ['20/06/2026','em andamento','prev. 10/08/2026','18 a 22/07','05/08/2026','30 dias após','set/2026'];
     const curIdx = jr.tl;
@@ -2976,7 +3651,7 @@ class Component extends DCLogic {
     ];
 
     const tiposAtleta = [
-      { nome:'Bolsa Geral', desc:'1º–3º lugar em competição indicada pelo edital; coletivas: 2 melhores equipes. Atletas de 8 a 25 anos.', tag:'Recomendado para você', tagShow:true },
+      { nome:'Bolsa Geral', desc:'1º–3º lugar em competição indicada pelo edital; coletivas: 2 melhores equipes. Atletas de 8 a 25 anos.', tag:'', tagShow:false },
       { nome:'Bolsa Centro Olímpico (COTP)', desc:'Para atletas vinculados ao Centro Olímpico de Treinamento e Pesquisa. Vínculo comprovado pelo treinamento no COTP.', tag:'', tagShow:false },
     ].map(t=>{ const chosen=t.nome===this.state.chosenTipo; return { ...t, onChoose:()=>this.chooseTipo(t.nome), chosen,
       cardStyle:{ background:'#fff', border: chosen?'2px solid var(--interactive)':'1px solid var(--gray-10)', borderRadius:'10px', boxShadow:'var(--surface-shadow-sm)', padding:'18px' },
@@ -2985,25 +3660,158 @@ class Component extends DCLogic {
         background: chosen?'var(--interactive)':'#fff', color: chosen?'#fff':'var(--interactive)' } }; });
 
     // ---- por tipo de bolsa ----
-    const isCOTP = /COTP|Centro Olímpico/.test(this.state.chosenTipo);
-    const isRelev = this.state.relev;
-    const tipoCurto = isCOTP ? 'Bolsa Centro Olímpico (COTP)' : 'Bolsa Geral';
-    const tipoCard = {
-      nome: tipoCurto,
-      desc: isCOTP ? 'Atletas do Centro Olímpico de Treinamento e Pesquisa. O vínculo com São Paulo é comprovado pelo treinamento no COTP.' : '1º–3º lugar em competição indicada pelo edital. Atletas de 8 a 25 anos.',
-      icon: isCOTP ? 'fas fa-dumbbell' : 'fas fa-medal',
-    };
-    // documentos da elegibilidade básica (etapa 3), por tipo
-    const docsElegib = (isCOTP
-      ? [
-          { lbl:'Declaração da Associação Desportiva Centro Olímpico (ADECO)', note:'Modelo oficial + upload. Comprova o vínculo com o COTP e o resultado esportivo.' },
-        ]
-      : [
-          { lbl:'Declaração da entidade estadual de administração do esporte (Federação)', note:'Modelo oficial + upload. Fora do padrão, o envio é recusado.' },
-          { lbl:'Declaração de entidade de prática do esporte (Clube)', note:'Modelo oficial + upload. Fora do padrão, o envio é recusado.' },
-        ]
-    );
-    const inscSteps = ['Dados pessoais','Tipo de bolsa','Elegibilidade','Vínculo com SP','Remuneração'].map((label,i)=>{ const n=i+1; const active=n===is; const done=n<is; return {
+    const _bAtual = this.bolsaByKey(this.state.novaBolsa || (/COTP|Centro Olímpico/.test(this.state.chosenTipo) ? (this.state.relev?'cotp-rel':'cotp') : (this.state.relev?'geral-rel':'geral')));
+    const isCOTP = _bAtual.cotp;
+    const isRelev = _bAtual.relev;
+    const tipoCurto = _bAtual.nome;
+    const tipoCard = { nome: _bAtual.nome, desc: _bAtual.desc, icon: _bAtual.icon };
+    // ===== regras por MODALIDADE (docs reativos) =====
+    const _mod = (this.state.modalidade||'');
+    const modData = this.EDITAL_MOD[_mod] || null;
+    const modSel = !!modData;
+    const modKeys = Object.keys(this.EDITAL_MOD);
+    const modCategorias = modData ? modData.cat : [];
+    const modProvas = (modData && modData.provas) ? modData.provas : [];
+    const modTemProvas = modProvas.length>0;
+    const modCompeticoes = modData ? modData.comp : [];
+    const modEntidade = modData ? modData.ent : '';
+    const modSemClube = !!(modData && modData.semClube);
+    const modSemFedEstadual = !!(modData && /Confedera/.test(modData.ent));
+    const modInfo = modSemClube ? ('Skate: o vínculo é comprovado apenas pela federação — a declaração de clube não é exigida. Entidade: '+modEntidade+'.')
+                  : (modSemFedEstadual ? ('Modalidade sem federação estadual — a declaração é emitida pela confederação nacional. Entidade: '+modEntidade+'.')
+                  : (modSel ? ('Entidade responsável pela indicação: '+modEntidade+'.') : ''));
+    const modInfoShow = !!modInfo;
+    // ===== documentos dinâmicos por tipo de bolsa (edital 01/2026, item 3.1.4 — Anexos exatos) =====
+    const isGeralRelev = _bAtual.key==='geral-rel';
+    const isCotpRelev = _bAtual.key==='cotp-rel';
+    const docsBolsa = (function(){
+      const L=[ 'Documento de identidade e CPF (do gov.br)' ];
+      if(isCOTP){
+        L.push('Declaração da Associação Desportiva Centro Olímpico – ADECO (Anexo III)');
+        L.push('Declaração da instituição de ensino — Escola (Anexo V)');
+      } else {
+        L.push('Comprovante de residência + Declaração de residência (Anexo I)');
+        L.push(modSemFedEstadual ? 'Declaração da confederação nacional (no lugar da federação estadual)' : 'Declaração da federação estadual (Anexo II)');
+        if(!modSemClube) L.push('Declaração da entidade de prática — clube (Anexo IV)');
+        L.push('Declaração da instituição de ensino — Escola (Anexo V)');
+      }
+      if(isRelev){
+        L.push('Formulário de análise socioeconômica (Anexo VIII)');
+        if(isGeralRelev) L.push('Declaração da entidade nacional — confederação (Anexo IX)');
+      } else {
+        L.push('Declaração de não recebimento de patrocínio (Anexo VI)');
+      }
+      L.push('Anuência do responsável legal (Anexo VII) — se menor de 18 anos');
+      return L;
+    })();
+    const rendaHint = isRelev
+      ? 'A Relevância tem DUAS verificações de renda: (1) as SUAS rendas, do atleta (abaixo), e (2) a renda familiar per capita — a composição da família fica no bloco logo abaixo destas perguntas. Comece pelas suas rendas:'
+      : 'Esta bolsa não pode ser acumulada com renda de natureza esportiva; renda de outra natureza é permitida dentro do teto do edital. Informe as fontes de renda:';
+    const vinSoResidencia = modSemClube; // edital item 6.11: modalidade sem clube → vínculo obrigatoriamente por residência
+    const vinResidencia = vinSoResidencia || this.state.vinculoTipo==='residencia';
+    const vinClube = !vinSoResidencia && this.state.vinculoTipo==='clube';
+    const compProprio = this.state.compProprio;
+    const vinTabBase = { flex:'1', padding:'11px', borderRadius:'10px', fontWeight:600, fontSize:'13.5px', cursor:'pointer', fontFamily:'inherit', textAlign:'center' };
+    const vinTabResid = vinResidencia ? {...vinTabBase, border:'1.5px solid var(--interactive)', background:'var(--interactive-light)', color:'var(--interactive)'} : {...vinTabBase, border:'1px solid var(--border-color)', background:'#fff', color:'var(--text-default)'};
+    const vinTabClube = vinClube ? {...vinTabBase, border:'1.5px solid var(--interactive)', background:'var(--interactive-light)', color:'var(--interactive)'} : {...vinTabBase, border:'1px solid var(--border-color)', background:'#fff', color:'var(--text-default)'};
+    const simBase = { padding:'9px 18px', borderRadius:'100px', fontWeight:600, fontSize:'14px', cursor:'pointer', fontFamily:'inherit' };
+    const compSimStyle = compProprio ? {...simBase, border:'1px solid var(--interactive)', background:'var(--interactive-light)', color:'var(--interactive)'} : {...simBase, border:'1px solid var(--border-color)', background:'#fff', color:'var(--text-default)'};
+    const compNaoStyle = !compProprio ? {...simBase, border:'1px solid var(--interactive)', background:'var(--interactive-light)', color:'var(--interactive)'} : {...simBase, border:'1px solid var(--border-color)', background:'#fff', color:'var(--text-default)'};
+    // ===== renda interativa (regra do edital ao clicar) =====
+    const _rBase = { padding:'6px 16px', borderRadius:'100px', fontSize:'13px', fontWeight:600, cursor:'pointer', fontFamily:'inherit' };
+    const _rSel = {..._rBase, border:'1px solid var(--interactive)', background:'var(--interactive-light)', color:'var(--interactive)'};
+    const _rOff = {..._rBase, border:'1px solid var(--border-color)', background:'#fff', color:'var(--text-secondary)'};
+    const _hintTone = { danger:{border:'var(--danger)',bg:'var(--danger-bg)',ic:'var(--danger)',icon:'fas fa-circle-xmark'}, warn:{border:'var(--warning)',bg:'var(--warning-bg)',ic:'#a4530a',icon:'fas fa-triangle-exclamation'}, info:{border:'var(--info)',bg:'var(--info-bg)',ic:'var(--info)',icon:'fas fa-circle-info'} };
+    const rendaRules = [
+      { q:'Recebe salário/remuneração de entidade esportiva?', kind:'elim', fonte:'Nome da entidade esportiva' },
+      { q:'Recebe salário de entidade não esportiva (trabalho)?', kind:'teto', fonte:'Empregador / atividade (ex.: CLT, autônomo)' },
+      { q:'Recebe renda de natureza estudantil/acadêmica?', kind:'teto', fonte:'Ex.: Pé-de-Meia, Bolsa Escola, iniciação científica' },
+      { q:'Recebe Bolsa Atleta Federal?', kind:'acum', fonte:'Ministério do Esporte' },
+      { q:'Recebe Bolsa Atleta Estadual?', kind:'acum', fonte:'Governo do Estado' },
+      { q:'Recebe Bolsa Atleta de outro município?', kind:'acum', fonte:'Município' },
+    ];
+    const _tetoInfo = this._rendaTetoInfo();
+    const rendaItems = rendaRules.map((r,i)=>{ const v=this.state.rendaResp[i]; const sim=v==='sim', nao=v==='nao';
+      let hint='', tone='info';
+      if(sim){
+        if(r.kind==='elim' && !isRelev){ hint='Renda de natureza esportiva torna você inelegível para esta bolsa. Considere a Bolsa de Relevância.'; tone='danger'; }
+        else if(r.kind==='elim'){ hint='Na Relevância, a renda esportiva entra na soma das rendas (limite da faixa, item 3.1.3-II). Informe o valor.'; tone='info'; }
+        else if(r.kind==='teto'){ if(isRelev){ hint='Na Relevância, entra na soma das rendas comparada ao limite da faixa (item 3.1.3-II). Informe o valor.'; tone='info'; } else if(_tetoInfo.excedido){ hint='A soma das suas rendas não-esportivas ultrapassa o teto anual da sua faixa etária (item 2.2.5). Isso torna você inelegível para esta bolsa.'; tone='danger'; } else { hint='Permitido, desde que a soma das rendas não-esportivas respeite o teto anual do edital para a sua faixa (item 2.2.5 c/c 3.3).'; tone='info'; } }
+        else if(!isRelev){ hint='Outra Bolsa Atleta é renda esportiva: para a bolsa padrão o recebimento é incompatível (item 3.2.2). Considere a Relevância.'; tone='danger'; }
+        else { hint='Na Relevância, é permitido acumular outra Bolsa Atleta (item 2.8.1), mas entra na soma das rendas (limite da faixa). Informe o valor.'; tone='info'; }
+      }
+      const tt=_hintTone[tone];
+      return { q:r.q, simStyle: sim?_rSel:_rOff, naoStyle: nao?_rSel:_rOff, onSim:()=>this.setRenda(i,'sim'), onNao:()=>this.setRenda(i,'nao'),
+        hasHint: !!hint, hint, hintIcon: tt.icon, showValue: sim, fontePlaceholder: r.fonte, valorStr: this.state.rendaValores[i], onValor:(e)=>this.setRendaValor(i,e),
+        hintWrap:{ display:'flex', alignItems:'flex-start', gap:'8px', background:tt.bg, borderLeft:'3px solid '+tt.border, borderRadius:'8px', padding:'9px 12px', marginTop:'8px' }, hintIconColor: tt.ic }; });
+    // se marcou Sim em alguma fonte de renda, o valor é obrigatório; se marcou Não em tudo, precisa declarar ausência de renda
+    const rendaAlgumSim = this.state.rendaResp.some(x=>x==='sim');
+    const rendaTudoRespondido = this.state.rendaResp.every(x=>x!=null);
+    const _ver = this.state.veracidade;
+    const veracidadeBox = { width:'22px', height:'22px', borderRadius:'6px', flexShrink:0, display:'flex', alignItems:'center', justifyContent:'center', marginTop:'1px', border: _ver?'0':'2px solid var(--border-color-strong)', background: _ver?'var(--interactive)':'#fff' };
+    const veracidadeCheck = { color:'#fff', fontSize:'12px', display: _ver?'block':'none' };
+    const veracidadeBorder = _ver?'var(--interactive)':'var(--gray-10)';
+    const veracidadeBg = _ver?'var(--interactive-light)':'#fff';
+    // ===== validação de CEP (São Paulo capital) — vínculo por residência e por clube =====
+    const _cepInfo=(cep)=>{ const st=this._cepSP(cep);
+      if(st==='ok') return { border:'var(--success)', show:true, msg:'CEP em São Paulo/SP — vínculo com a cidade confirmado.', icon:'fas fa-circle-check', ic:'var(--success)', wrap:{ display:'flex', alignItems:'flex-start', gap:'8px', background:'var(--success-bg)', borderRadius:'8px', padding:'8px 12px', marginTop:'8px' } };
+      if(st==='fora') return { border:'var(--danger)', show:true, msg:'CEP fora da cidade de São Paulo. Por esta via, o endereço precisa ser em SP.', icon:'fas fa-circle-xmark', ic:'var(--danger)', wrap:{ display:'flex', alignItems:'flex-start', gap:'8px', background:'var(--danger-bg)', borderRadius:'8px', padding:'8px 12px', marginTop:'8px' } };
+      return { border:'var(--border-color-strong)', show:false, msg:'', icon:'', ic:'', wrap:{ display:'none' } }; };
+    const cepResidInfo=_cepInfo(this.state.cepResid);
+    const cepClubeInfo=_cepInfo(this.state.cepClube);
+    const rendaBloqueio = this._rendaEsportivaBloqueio();
+    const _fmtBRL = (n)=> n.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+    const rendaTetoExcedido = _tetoInfo.excedido;
+    const rendaSomaFmt = 'R$ '+_fmtBRL(_tetoInfo.somaAnual);
+    const rendaTetoFmt = 'R$ '+_fmtBRL(_tetoInfo.anual);
+    const rendaFaixa = _tetoInfo.faixa;
+    // ===== Relevância: cálculo ao vivo da soma de TODAS as rendas vs limite da faixa (item 3.1.3-II) =====
+    const _relevInfo = this._rendaRelevInfo();
+    const rendaRelevShow = _relevInfo.isRelev && _relevInfo.algumSim;
+    const rendaRelevExcedido = _relevInfo.excedido;
+    const rendaRelevSomaFmt = 'R$ '+_fmtBRL(_relevInfo.somaAnual);
+    const rendaRelevTetoFmt = 'R$ '+_fmtBRL(_relevInfo.anual);
+    const rendaRelevPct = Math.min(100, _relevInfo.anual>0 ? Math.round(_relevInfo.somaAnual/_relevInfo.anual*100) : 0);
+    const rendaRelevBarStyle = { width: rendaRelevPct+'%', height:'100%', borderRadius:'100px', background: rendaRelevExcedido?'var(--danger)':'var(--success)', transition:'width .2s' };
+    const rendaRelevBoxStyle = { display:'flex', flexDirection:'column', gap:'8px', background: rendaRelevExcedido?'var(--danger-bg)':'var(--info-bg)', borderLeft:'3px solid '+(rendaRelevExcedido?'var(--danger)':'var(--info)'), borderRadius:'8px', padding:'12px 14px', marginTop:'12px' };
+    // ===== Relevância: composição familiar e renda per capita (Anexo VIII, itens 2.2.6/4.4) =====
+    const _pcInfo = this._perCapitaInfo();
+    const perCapitaShow = _pcInfo.isRelev;
+    const familiaItems = this.state.familia.map((m,i)=>({ parentesco:m.parentesco, renda:m.renda,
+      onParentesco:(e)=>this.setFamiliarParentesco(i,e), onRenda:(e)=>this.setFamiliarRenda(i,e),
+      onRemove:()=>this.removeFamiliar(i), podeRemover: this.state.familia.length>1 }));
+    const perCapitaMembros = _pcInfo.membros;
+    const perCapitaSomaFmt = 'R$ '+_fmtBRL(_pcInfo.somaAnual);
+    const perCapitaValFmt = 'R$ '+_fmtBRL(_pcInfo.perCapita);
+    const perCapitaLimiteFmt = 'R$ '+_fmtBRL(_pcInfo.limite);
+    const perCapitaExcedido = _pcInfo.excedido;
+    const perCapitaPct = Math.min(100, _pcInfo.limite>0 ? Math.round(_pcInfo.perCapita/_pcInfo.limite*100) : 0);
+    const perCapitaBarStyle = { width: perCapitaPct+'%', height:'100%', borderRadius:'100px', background: perCapitaExcedido?'var(--danger)':'var(--success)', transition:'width .2s' };
+    const perCapitaBoxStyle = { display:'flex', flexDirection:'column', gap:'8px', background: perCapitaExcedido?'var(--danger-bg)':'var(--info-bg)', borderLeft:'3px solid '+(perCapitaExcedido?'var(--danger)':'var(--success)'), borderRadius:'8px', padding:'12px 14px', marginTop:'12px' };
+    // ===== escolaridade interativa (documento obrigatório por opção) =====
+    const escCursando = this.state.escolaridade==='cursando';
+    const escConcluido = this.state.escolaridade==='concluido';
+    const escNenhum = !escCursando && !escConcluido;
+    const _eBase = { padding:'9px 18px', borderRadius:'100px', fontWeight:600, fontSize:'14px', cursor:'pointer', fontFamily:'inherit' };
+    const escCursandoStyle = escCursando ? {..._eBase, border:'1px solid var(--interactive)', background:'var(--interactive-light)', color:'var(--interactive)'} : {..._eBase, border:'1px solid var(--border-color)', background:'#fff', color:'var(--text-default)'};
+    const escConcluidoStyle = escConcluido ? {..._eBase, border:'1px solid var(--interactive)', background:'var(--interactive-light)', color:'var(--interactive)'} : {..._eBase, border:'1px solid var(--border-color)', background:'#fff', color:'var(--text-default)'};
+    // documentos da elegibilidade básica (etapa 3), por tipo E por modalidade
+    const docsElegib = (function(){
+      if(isCOTP) return [ { lbl:'Declaração da Associação Desportiva Centro Olímpico – ADECO (Anexo III)', note:'Modelo oficial + upload. Comprova o vínculo com o COTP e o resultado esportivo.' } ];
+      const L=[];
+      if(modSemFedEstadual){
+        L.push({ lbl:'Declaração da confederação nacional (Anexo II)', note:'Sua modalidade não tem federação estadual — o documento é emitido pela confederação nacional, no modelo oficial. Deve conter a frequência de treino e eventual renda de custeio (item 3.2.1).' });
+      } else {
+        L.push({ lbl:'Declaração da entidade estadual de administração do esporte — Federação (Anexo II)', note:'Modelo oficial + upload. Deve declarar que a federação está filiada à confederação (item 3.4). Fora do padrão, o envio é recusado.' });
+      }
+      if(!modSemClube){
+        L.push({ lbl:'Declaração de entidade de prática do esporte — Clube (Anexo IV)', note:'Modelo oficial + upload. Comprova o vínculo com o clube em que você treina.' });
+      } else {
+        L.push({ lbl:'Declaração da federação — plena atividade esportiva (item 3.7)', note:'Sua modalidade não tem clube: a federação atesta que você está em plena atividade esportiva. Neste caso, o vínculo com SP é comprovado obrigatoriamente por residência (item 6.11).' });
+      }
+      return L;
+    })();
+    const inscSteps = ['Dados pessoais','Tipo de bolsa','Elegibilidade','Vínculo com SP'].map((label,i)=>{ const n=i+1; const active=n===is; const done=n<is; return {
       n, label, active, done, onClick:()=>this.setInsc(n),
       dotStyle:{ width:'32px',height:'32px',borderRadius:'50%',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'13.5px',fontWeight:700,flexShrink:0,
         background: active?'var(--interactive)':(done?'var(--success)':'#fff'), color:(active||done)?'#fff':'var(--text-secondary)', border:(active||done)?'0':'2px solid var(--gray-20)' },
@@ -3034,7 +3842,7 @@ class Component extends DCLogic {
     const atletaNotifs = [
       { icon:'fas fa-triangle-exclamation', tone:'#a4530a', bg:'var(--warning-bg)', text:'Pendência no Anexo II — reenvie a declaração da federação assinada.', time:'há 2 h' },
       { icon:'fas fa-hourglass-half', tone:'var(--interactive)', bg:'var(--interactive-light)', text:'Sua solicitação está em análise pela equipe do DGEA.', time:'há 1 dia' },
-      { icon:'fas fa-circle-check', tone:'var(--success)', bg:'var(--success-bg)', text:'Inscrição recebida — protocolo SP156-2026-004821.', time:'20/06/2026' },
+      { icon:'fas fa-circle-check', tone:'var(--success)', bg:'var(--success-bg)', text:'Inscrição recebida — protocolo gerado com sucesso.', time:'20/06/2026' },
     ];
 
     // ================= OPERAÇÃO (M4) =================
@@ -3257,6 +4065,90 @@ class Component extends DCLogic {
       { icon:'fas fa-star', nome:'Bolsa Geral – Relevância', desc:'Destaque nacional/internacional de 2025. Acumulável.' },
       { icon:'fas fa-trophy', nome:'Bolsa COTP – Relevância', desc:'Relevância para atletas do Centro Olímpico.' },
     ];
+    // como funciona a inscrição (fluxo cadastral — pedido na ATA 24/07, seção 1.2)
+    const pubFluxo = [
+      { n:'1', ic:'fas fa-fingerprint', t:'Entre com o gov.br', d:'Login seguro e único. Atletas menores: o responsável legal também autentica.' },
+      { n:'2', ic:'fas fa-id-card', t:'Confirme seus dados', d:'Nome, CPF e nascimento vêm do gov.br; você completa contato e endereço.' },
+      { n:'3', ic:'fas fa-medal', t:'Escolha o tipo de bolsa', d:'Geral, Centro Olímpico ou Relevância — um protocolo por bolsa.' },
+      { n:'4', ic:'fas fa-scale-balanced', t:'Comprove a elegibilidade', d:'Modalidade, escolaridade e renda — critérios eliminatórios verificados na hora.' },
+      { n:'5', ic:'fas fa-location-dot', t:'Vínculo com São Paulo', d:'Comprove residir na cidade ou treinar na capital.' },
+      { n:'6', ic:'fas fa-paper-plane', t:'Envie e acompanhe', d:'Análise → resultado → termo de adesão → pagamento das 12 parcelas.' },
+    ];
+    // modais públicos: editais anteriores e atas da comissão (ATA 24/07)
+    const _editaisAnt = [
+      { titulo:'Edital 01/2025 — Bolsa Atleta Rei Pelé', sub:'Ciclo 2025 · 1.204 inscrições · Encerrado', url:'https://prefeitura.sp.gov.br/web/esportes/w/bolsa_atleta' },
+      { titulo:'Edital 01/2024 — Bolsa Atleta Rei Pelé', sub:'Ciclo 2024 · 1.087 inscrições · Encerrado', url:'https://prefeitura.sp.gov.br/web/esportes/w/bolsa_atleta' },
+      { titulo:'Edital 01/2023 — Bolsa Atleta Rei Pelé', sub:'Ciclo 2023 · Encerrado', url:'https://prefeitura.sp.gov.br/web/esportes/w/bolsa_atleta' },
+    ];
+    const _atasCom = [
+      { titulo:'Ata — Reunião de alinhamento (24/07/2026)', sub:'Jornada de inscrição, página pública e documentos por tipo de bolsa', url:'#' },
+      { titulo:'Ata — Reunião semanal (20/07/2026)', sub:'Acompanhamento dos entregáveis da OS', url:'#' },
+      { titulo:'Ata — Reunião de imersão (14/07/2026)', sub:'Diretrizes gerais e ambientes', url:'#' },
+      { titulo:'Ata — Abertura da comissão (09/03/2026)', sub:'Constituição da comissão e cronograma', url:'#' },
+    ];
+    const pubModalShow = this.state.pubModal==='editais' || this.state.pubModal==='atas';
+    const pubModalTitulo = this.state.pubModal==='editais' ? 'Editais de anos anteriores' : (this.state.pubModal==='atas' ? 'Atas de reunião da comissão' : '');
+    const pubModalSub = this.state.pubModal==='editais' ? 'Documentos oficiais dos ciclos anteriores do programa.' : (this.state.pubModal==='atas' ? 'Registros públicos das reuniões da Comissão do Bolsa Atleta.' : '');
+    const pubModalItens = this.state.pubModal==='editais' ? _editaisAnt : (this.state.pubModal==='atas' ? _atasCom : []);
+    // atendimento assistido + acessibilidade (ATA 24/07: públicos com dificuldade de navegação)
+    const pubAtendimento = [
+      { ic:'fas fa-hands-helping', t:'Atendimento assistido', d:'Ajuda presencial para fazer a inscrição nos CEUs esportivos, no Poupatempo e na Central 156 — para quem tem dificuldade com o meio digital.' },
+      { ic:'fas fa-universal-access', t:'Acessibilidade', d:'Plataforma com tradução em Libras (VLibras), compatível com leitores de tela, navegação por teclado e alto contraste, seguindo o padrão de acessibilidade gov.br (eMAG/WCAG).' },
+      { ic:'fas fa-passport', t:'Atleta estrangeiro (sem CPF)', d:'Não tem CPF? Há um caminho facilitado de inscrição, com apoio presencial. Veja como obter o CPF e concluir sua inscrição.', acao:true },
+    ];
+    const pubModalEstrangeiroShow = this.state.pubModal==='estrangeiro';
+    const pubModalPrivacidadeShow = this.state.pubModal==='privacidade';
+    // regras e termos completos do edital (para a "visão completa" da página pública)
+    const pubRegras = [
+      { ic:'fas fa-clipboard-check', t:'Quem pode se inscrever (requisitos)', itens:[
+        'Ter entre 8 e 25 anos no ato da aprovação (Relevância não tem idade máxima).',
+        'Estar vinculado a uma federação filiada à confederação da modalidade — ou à confederação, se não houver federação paulista.',
+        'Comprovar vínculo com São Paulo: residir na cidade OU treinar em entidade da capital.',
+        'Estar matriculado em instituição de ensino ou ter concluído o ensino médio.',
+        'Ter no mínimo 80% de frequência nos treinos/competições da modalidade.',
+        'Não cumprir punição da justiça desportiva.',
+        'Para menores de 18 anos: declaração de anuência do responsável legal (Anexo VII).',
+      ]},
+      { ic:'fas fa-scale-balanced', t:'Regras de renda (eliminatórias)', itens:[
+        'Bolsa padrão: não pode receber salário de entidade esportiva nem patrocínio de PJ; outra Bolsa Atleta (federal/estadual/municipal) é incompatível (item 3.2.2).',
+        'Renda não-esportiva (trabalho comum + estudantil) é permitida dentro do teto anual da faixa (item 2.2.5): R$ 18.702,96 (8–17) · R$ 37.406,16 (18–21) · R$ 56.109,36 (22+).',
+        'Relevância: pode acumular outras rendas, mas a soma das rendas do atleta (item 3.1.3-II) e a renda familiar per capita têm limites por faixa.',
+        'Teto de renda familiar per capita (Relevância, item 2.2.6): R$ 37.405,92 (8–17) · R$ 74.812,32 (18–21) · R$ 112.218,72 (22+).',
+        'Não entram na conta: auxílios previdenciários (pensão) e assistenciais (BPC), nem a própria bolsa (itens 3.2.3 e 2.2.8).',
+      ]},
+      { ic:'fas fa-medal', t:'Tipos de bolsa e valores', itens:[
+        'Bolsa Geral e Bolsa Centro Olímpico (COTP) — resultado esportivo em competição do edital.',
+        'Bolsa Geral–Relevância e COTP–Relevância — destaque nacional/internacional, com análise socioeconômica.',
+        'Valores mensais (12 parcelas): R$ 779,29 (8–17) · R$ 1.558,59 (18–21) · R$ 2.337,89 (22+).',
+        '50% das bolsas são reservadas a atletas do Centro Olímpico (item 1.9).',
+        'Um protocolo por tipo de bolsa; a Bolsa Geral tem precedência sobre a COTP quando aprovado em ambas.',
+      ]},
+      { ic:'fas fa-list-check', t:'Obrigações de quem recebe a bolsa', itens:[
+        'Manter treinamento regular e ≥ 80% de frequência.',
+        'Manter-se filiado à federação/confederação e sem punição desportiva.',
+        'Manter-se dentro dos limites de renda e patrocínio do edital.',
+        'Manter matrícula ativa e desempenho escolar (ou ensino médio concluído).',
+        'Manter residência na cidade OU treino na capital durante toda a bolsa.',
+        'Apresentar a prestação de contas em até 30 dias após a última parcela.',
+      ]},
+      { ic:'fas fa-ban', t:'Quando a bolsa pode ser cancelada', itens:[
+        'Abandono dos treinos por mais de 15 dias sem justificativa.',
+        'Dispensa pela entidade sem retorno em 15 dias.',
+        'Reprovação escolar ou inaptidão por motivo médico, técnico ou disciplinar.',
+        'Perda do vínculo esportivo ou da residência/treino em São Paulo.',
+        'Deixar de treinar/competir na mesma modalidade que gerou a bolsa.',
+        'Passar a receber rendas em desacordo com o edital.',
+        'Omissão ou falsidade de informação: indeferimento/cancelamento, devolução dos valores e responsabilização (Decreto nº 62.908/2023).',
+      ]},
+      { ic:'fas fa-calendar-check', t:'Resultados, recursos e pagamento', itens:[
+        'Resultados publicados no Diário Oficial da Cidade de São Paulo.',
+        'Prazo de recurso de 15 dias após cada publicação (Anexo X).',
+        'Termo de adesão em até 30 dias após a lista final (Anexo XI).',
+        'Pagamento em 12 parcelas mensais, por conta aberta no Banco do Brasil.',
+        'Renovação uma única vez, por igual período, com novo resultado esportivo (item 11).',
+      ]},
+    ];
+    const cookieShow = this.state.cookieConsent===null;
     const transpKpis = [
       { label:'Bolsas no ciclo', value:'168' },
       { label:'Investimento', value:'R$ 9,4 mi' },
@@ -3382,10 +4274,11 @@ class Component extends DCLogic {
     // ================= EVOLUÇÕES (docs) =================
     // Prestação de contas — checklist OCR
     const pcItens = [
-      { t:'Declaração da escola', d:'Atesta matrícula, não repetência e desempenho regular', ok:true },
-      { t:'Atestado do clube', d:'80% de frequência, sem punição, local de treino', ok:true },
-      { t:'Autodeclaração do atleta', d:'Uso correto dos recursos, não acúmulo de rendas', ok:true },
-      { t:'Comprovante de residência atualizado', d:'Mantém vínculo com São Paulo', ok:false, msg:'Cidade não identificada no comprovante' },
+      { t:'Declaração de utilização dos recursos (Anexo XVI)', d:'O atleta atesta que usou a bolsa em despesas pessoais e desportivas e não recebeu salário/patrocínio vedado', ok:true },
+      { t:'Declaração do clube — plena atividade (Anexo XIV)', d:'Modalidades sem clube: emitida pela federação/confederação', ok:true },
+      { t:'Declaração da instituição de ensino (Anexo XV)', d:'Atesta matrícula e desempenho regular, ou conclusão do ensino médio', ok:true },
+      { t:'Comprovante de residência + Declaração (Anexo I)', d:'Mantém o vínculo com São Paulo — quando não vinculado a clube na cidade', ok:false, msg:'Cidade não identificada no comprovante' },
+      { t:'Formulário de análise socioeconômica (Anexo VIII)', d:'Somente para Atleta de Relevância', ok:true },
     ].map(i=>({ ...i, icon: i.ok?'fas fa-circle-check':'fas fa-triangle-exclamation', cor: i.ok?'var(--success)':'#a4530a', badge: i.ok?chip('var(--success-bg)','var(--success)'):chip('var(--warning-bg)','#a4530a'), st: i.ok?'Atestado':'Revisar' }));
     const pcRenovacao = [
       { t:'Bolsa Geral', d:'Declaração da federação atestando novo resultado' },
@@ -3554,8 +4447,10 @@ class Component extends DCLogic {
       aprovarRenda:()=>{ this.setState({modal:null}); this.showToast('Reenquadramento aprovado. Tipo alterado para Relevância (auditado).'); },
       enviarChat:()=>this.showToast('Mensagem enviada ao atendimento.'),
       gerarRelatorio:()=>this.showToast('Relatório gerado — download CSV/XLSX/PDF iniciado.'),
-      pubTipos, transpKpis, contemplados,
+      pubTipos, pubFluxo, pubModalShow, pubModalTitulo, pubModalSub, pubModalItens, pubAtendimento, pubModalEstrangeiroShow, pubModalPrivacidadeShow, pubRegras, cookieShow, transpKpis, contemplados,
       entrarGov:()=>this.go('sso-login'), ssoEntrar:()=>this.switchProfile('atleta'), goPubLanding:()=>this.go('pub-landing'), goTransparencia:()=>this.go('pub-transparencia'),
+      openEditais:()=>this.openPubModal('editais'), openAtas:()=>this.openPubModal('atas'), openEstrangeiro:()=>this.openPubModal('estrangeiro'), openPrivacidade:()=>this.openPubModal('privacidade'), closePubModal:()=>this.closePubModal(),
+      aceitarCookies:()=>this.setCookie('aceito'), rejeitarCookies:()=>this.setCookie('essenciais'),
       showBreadcrumb: screen!=='pub-landing' && screen!=='sso-login',
       listaEspera, custoChamada, saldoChamada, saldoStyle, convocar: conv,
       goChamadas:()=>this.go('seme-chamadas'), setConvocar:(e)=>this.setState({convocar: parseInt(e.target.value)||0}),
@@ -3576,10 +4471,31 @@ class Component extends DCLogic {
       salvarRascunho:()=>this.salvarRascunho(), continuarRascunho:()=>this.continuarRascunho(),
       autenticarResp:()=>this.autenticarResp(), respAutenticado: this.state.respAutenticado,
       temRascunho: this.state.rascunho,
+      /* multi-inscrição */
+      inscricoesView, bolsasView, temInscricoes, semInscricoes: !temInscricoes, jornadaProtocolo, jornadaBolsa, docsBolsa, rendaHint,
+      homeDocs: ['Documento de identidade e CPF (via gov.br)','Declaração da federação ou confederação da sua modalidade','Declaração do clube — quando a modalidade exigir','Declaração ou diploma escolar (cursando ou concluído)','Comprovante de residência em São Paulo — ou declaração ADECO, no COTP','Declaração de não patrocínio — ou formulário socioeconômico, na Relevância'],
+      homeValores: [{faixa:'8 a 17 anos',valor:'R$ 779,29'},{faixa:'18 a 21 anos',valor:'R$ 1.558,59'},{faixa:'22 anos ou mais',valor:'R$ 2.337,89'}],
+      homePrazos: [{m:'Inscrições',d:'até 24/06/2026'},{m:'Resultado preliminar',d:'15/07/2026'},{m:'Prazo de recurso',d:'18 a 22/07/2026'},{m:'Resultado final',d:'05/08/2026'},{m:'Termo de adesão',d:'30 dias após a convocação'},{m:'Início do pagamento',d:'Setembro/2026'}],
+      modalidade: this.state.modalidade, modInfo, modInfoShow, isGeralRelev, vinSoResidencia, vinComOpcao: !vinSoResidencia,
+      modKeys, modCategorias, modProvas, modTemProvas, modCompeticoes, modEntidade, modSel,
+      modSemProvas: !modTemProvas, modProvaMsg: modSel ? 'Não se aplica a esta modalidade' : 'Selecione a modalidade primeiro',
+      modSelPlaceholder: modSel ? 'Selecione a categoria' : 'Selecione a modalidade primeiro',
+      modSelPlaceholderC: modSel ? 'Selecione a competição' : 'Selecione a modalidade primeiro',
+      vinResidencia, vinClube, compProprio, vinResidenciaTerceiro: !compProprio, vinTabResid, vinTabClube, compSimStyle, compNaoStyle,
+      setVinResidencia:()=>this.setVinculo('residencia'), setVinClube:()=>this.setVinculo('clube'),
+      setCompSim:()=>this.setCompProprio(true), setCompNao:()=>this.setCompProprio(false),
+      rendaItems, rendaBloqueio, rendaTetoExcedido, rendaSomaFmt, rendaTetoFmt, rendaFaixa, rendaRelevShow, rendaRelevExcedido, rendaRelevSomaFmt, rendaRelevTetoFmt, rendaRelevBarStyle, rendaRelevBoxStyle,
+      perCapitaShow, familiaItems, perCapitaMembros, perCapitaSomaFmt, perCapitaValFmt, perCapitaLimiteFmt, perCapitaExcedido, perCapitaBarStyle, perCapitaBoxStyle, escCursando, escConcluido, escNenhum, escCursandoStyle, escConcluidoStyle,
+      setEscCursando:()=>this.setEscolaridade('cursando'), setEscConcluido:()=>this.setEscolaridade('concluido'),
+      veracidade:_ver, toggleVeracidade:()=>this.toggleVeracidade(), veracidadeBox, veracidadeCheck, veracidadeBorder, veracidadeBg,
+      cepResid: this.state.cepResid, cepClube: this.state.cepClube, setCepResid:(e)=>this.setCepResid(e), setCepClube:(e)=>this.setCepClube(e), cepResidInfo, cepClubeInfo,
+      novaInscricao:()=>this.novaInscricao(), irInscricoes:()=>this.irInscricoes(),
+      finalizarInscricao:()=>this.finalizarInscricao(), popularExemplos:()=>this.popularExemplos(), limparInscricoes:()=>this.limparInscricoes(), addFamiliar:()=>this.addFamiliar(),
+      setModalidade:(e)=>this.setState({ modalidade:e.target.value }), setCategoria:(e)=>this.setState({ categoria:e.target.value }),
       passosNovo:[
         { n:1, t:'Elegibilidade', d:'Confira se você atende aos requisitos do edital.' },
         { n:2, t:'Tipo de bolsa', d:'Escolha entre Bolsa Geral ou Centro Olímpico (COTP).' },
-        { n:3, t:'Formulário guiado', d:'Dados, vínculo com São Paulo, documentos e renda — em 5 etapas.' },
+        { n:3, t:'Formulário guiado', d:'Dados, vínculo com São Paulo, documentos e renda — em 4 etapas.' },
         { n:4, t:'Acompanhamento', d:'Envie e acompanhe a análise, o resultado e o termo de adesão por aqui.' },
       ],
       goDocs:()=>this.go('atleta-documentos'), goResultado:()=>this.go('atleta-resultado'),
@@ -3608,14 +4524,15 @@ class Component extends DCLogic {
       demoOpen: this.state.demoOpen, toggleDemo:()=>this.toggleDemo(),
       isAtleta: this.state.profile==='atleta',
       demoStates: [
-        { key:'novo', label:'Sem inscrição' }, { key:'analise', label:'Em análise' },
+        { key:'popular', label:'★ Carregar 3 inscrições de exemplo' },
+        { key:'novo', label:'Limpar — começar do zero' }, { key:'analise', label:'Inscrição em análise' },
         { key:'pendencia', label:'Pendência documental' }, { key:'reiteracao', label:'Reiteração (reenvio)' },
         { key:'classificacao', label:'Aguardando classificação' },
         { key:'contemplado', label:'Contemplado (parcial)' }, { key:'naocontemplado', label:'Apto · não contemplado' },
         { key:'recurso', label:'Em recurso' }, { key:'final', label:'Classificado (resultado final)' },
         { key:'termoenviado', label:'Termo enviado (validação)' }, { key:'termopendencia', label:'Termo com pendência' },
         { key:'desclassificado', label:'Desclassificado' }, { key:'ativa', label:'Bolsa ativa' },
-      ].map(d=>{ const active=d.key===this.state.jornada; return { label:d.label, active, onClick:()=>this.setJornada(d.key),
+      ].map(d=>{ const active = d.key==='novo' ? !this.state.inscViewId && this.state.inscricoes.length===0 : d.key===this.state.jornada && !!this.state.inscViewId; return { label:d.label, active, onClick:()=>{ if(d.key==='popular') this.popularExemplos(); else if(d.key==='novo') this.limparInscricoes(); else this.setInscJornada(d.key); },
         rowStyle:{ display:'flex', alignItems:'center', gap:'10px', padding:'9px 12px', borderRadius:'8px', cursor:'pointer', fontSize:'13px', fontWeight: active?700:500,
           background: active?'var(--interactive-light)':'transparent', color: active?'var(--interactive)':'var(--text-default)' },
         dot:{ width:'8px', height:'8px', borderRadius:'50%', flexShrink:0, background: active?'var(--interactive)':'var(--gray-30)' } }; }),
