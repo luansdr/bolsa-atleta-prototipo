@@ -1461,7 +1461,7 @@
       <sc-if value="{{ show.planilha }}" hint-placeholder-val="{{ false }}">
         <div>
           <div class="stack-sm" style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:14px">
-            <div><h1 style="font-size:30px;font-weight:700;color:var(--text-strong);margin:2px 0 4px">Planilha de inscrições</h1><div style="font-size:14px;color:var(--text-secondary)">Visão consolidada de todos os candidatos — status, documentos e responsáveis, como na planilha de controle.</div></div>
+            <div><h1 style="font-size:30px;font-weight:700;color:var(--text-strong);margin:2px 0 4px">Planilha de inscrições</h1><div style="font-size:14px;color:var(--text-secondary)">Consolidado <b>por CPF</b> (um atleta por linha). Clique no atleta para ver seus <b>protocolos</b> — cada bolsa é um protocolo, analisado separadamente.</div></div>
             <div style="display:flex;gap:10px">
               <button onClick="{{ goOperacao }}" style="display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border:1px solid var(--border-color);border-radius:100px;background:#fff;color:var(--text-default);font-weight:600;font-size:13.5px;cursor:pointer"><i class="fas fa-list-check"></i> Fila de análise</button>
               <button style="display:inline-flex;align-items:center;gap:8px;padding:11px 20px;border:0;border-radius:100px;background:var(--interactive);color:#fff;font-weight:700;font-size:13.5px;cursor:pointer"><i class="fas fa-file-export"></i> Exportar planilha</button>
@@ -1501,24 +1501,39 @@
             <sc-for list="{{ planilhaFiltros }}" as="f" hint-placeholder-count="6"><button style="display:inline-flex;align-items:center;gap:7px;padding:8px 14px;border:1px solid var(--border-color);border-radius:100px;background:#fff;color:var(--text-default);font-size:13px;font-weight:500;cursor:pointer">{{ f }} <i class="fas fa-angle-down" style="font-size:11px;color:var(--text-secondary)"></i></button></sc-for>
           </div>
 
-          <!-- planilha (tabela densa, rolagem horizontal) -->
+          <!-- planilha AGRUPADA POR CPF — clique no atleta para ver os protocolos -->
           <div style="background:#fff;border:1px solid var(--gray-10);border-radius:8px;box-shadow:var(--surface-shadow-sm);overflow:hidden">
            <div class="tscroll">
-            <div style="min-width:1360px">
-              <div style="display:grid;grid-template-columns:96px 200px 90px 150px 130px 108px 108px 108px 108px 108px 108px 108px 108px 116px;gap:0;background:var(--gray-2);border-bottom:1px solid var(--gray-10);font-size:10.5px;font-weight:700;text-transform:uppercase;color:var(--text-secondary)">
-                <div style="padding:10px 12px">Protocolo</div><div style="padding:10px 12px">Atleta / CPF</div><div style="padding:10px 12px">Tipo</div><div style="padding:10px 12px">Modalidade</div><div style="padding:10px 12px">Status geral</div>
-                <sc-for list="{{ planilhaDocCols }}" as="c" hint-placeholder-count="8"><div style="padding:10px 8px;text-align:center">{{ c }}</div></sc-for>
-                <div style="padding:10px 12px">Responsável</div>
+            <div style="min-width:1030px">
+              <div style="display:grid;grid-template-columns:240px 120px 220px 130px 150px 1fr 40px;gap:0;background:var(--gray-2);border-bottom:1px solid var(--gray-10);font-size:10.5px;font-weight:700;text-transform:uppercase;color:var(--text-secondary)">
+                <div style="padding:10px 12px">Atleta / CPF</div><div style="padding:10px 12px">Faixa etária</div><div style="padding:10px 12px">Bolsas</div><div style="padding:10px 12px">Protocolos</div><div style="padding:10px 12px">Situação</div><div style="padding:10px 12px">Responsável</div><div style="padding:10px 8px"></div>
               </div>
-              <sc-for list="{{ planilhaRows }}" as="r" hint-placeholder-count="12">
-                <div onClick="{{ r.onOpen }}" style="display:grid;grid-template-columns:96px 200px 90px 150px 130px 108px 108px 108px 108px 108px 108px 108px 108px 116px;gap:0;border-bottom:1px solid var(--gray-5);align-items:center;cursor:pointer;font-size:12.5px">
-                  <div style="padding:11px 12px;font-variant-numeric:tabular-nums;color:var(--text-secondary)">{{ r.prot }}</div>
-                  <div style="padding:11px 12px;min-width:0"><div style="font-weight:600;color:var(--text-strong);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.nome }}</div><div style="font-size:11px;color:var(--text-secondary);font-variant-numeric:tabular-nums">{{ r.cpf }}</div></div>
-                  <div style="padding:11px 12px"><span style="font-weight:600;color:var(--text-default)">{{ r.tipoLabel }}</span><sc-if value="{{ r.relev }}" hint-placeholder-val="{{ false }}"><div style="font-size:10px;font-weight:700;color:var(--success)">Relevância</div></sc-if></div>
-                  <div style="padding:11px 12px;color:var(--text-default)"><div style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.mod }}</div><div style="font-size:10.5px;color:var(--text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.cat }}</div></div>
-                  <div style="padding:11px 12px"><span style="{{ r.geralStyle }}">{{ r.geralLabel }}</span></div>
-                  <sc-for list="{{ r.docCells }}" as="dc" hint-placeholder-count="8"><div style="padding:11px 6px;text-align:center"><span style="{{ dc.s }}">{{ dc.t }}</span></div></sc-for>
-                  <div style="padding:11px 12px;color:var(--text-secondary)">{{ r.resp }}</div>
+              <sc-for list="{{ planilhaAtletas }}" as="a" hint-placeholder-count="10">
+                <div style="border-bottom:1px solid var(--gray-5)">
+                  <div onClick="{{ a.onToggle }}" style="{{ a.rowStyle }}">
+                    <div style="padding:11px 12px;min-width:0"><div style="font-weight:600;color:var(--text-strong);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ a.nome }}</div><div style="font-size:11px;color:var(--text-secondary);font-variant-numeric:tabular-nums">{{ a.cpf }}</div></div>
+                    <div style="padding:11px 12px;color:var(--text-default)">{{ a.faixa }}</div>
+                    <div style="padding:11px 12px;color:var(--text-default);font-size:12.5px">{{ a.bolsasLabel }}</div>
+                    <div style="padding:11px 12px"><span style="display:inline-flex;align-items:center;gap:6px;font-weight:700;color:var(--interactive)"><i class="fas fa-folder-tree" style="font-size:12px"></i> {{ a.nProtLabel }}</span></div>
+                    <div style="padding:11px 12px"><span style="{{ a.aggStyle }}">{{ a.aggLabel }}</span></div>
+                    <div style="padding:11px 12px;color:var(--text-secondary)">{{ a.resp }}</div>
+                    <div style="padding:11px 8px;text-align:center;color:var(--text-secondary)"><i class="{{ a.chevron }}"></i></div>
+                  </div>
+                  <sc-if value="{{ a.aberto }}" hint-placeholder-val="{{ false }}">
+                    <div style="background:var(--gray-2);padding:8px 12px 12px 24px">
+                      <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--text-secondary);padding:6px 4px">Protocolos deste CPF — cada um é analisado separadamente</div>
+                      <sc-for list="{{ a.protos }}" as="p" hint-placeholder-count="2">
+                        <div style="display:grid;grid-template-columns:110px 180px 1fr 130px 150px 120px;gap:0;align-items:center;background:#fff;border:1px solid var(--gray-10);border-radius:8px;margin-bottom:8px;font-size:12.5px">
+                          <div style="padding:11px 12px;font-variant-numeric:tabular-nums;color:var(--text-secondary)">{{ p.prot }}</div>
+                          <div style="padding:11px 12px;font-weight:600;color:var(--text-default)">{{ p.tipo }}</div>
+                          <div style="padding:11px 12px;color:var(--text-default);min-width:0"><div style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ p.mod }}</div><div style="font-size:10.5px;color:var(--text-secondary)">{{ p.cat }}</div></div>
+                          <div style="padding:11px 12px"><span style="{{ p.geralStyle }}">{{ p.geralLabel }}</span></div>
+                          <div style="padding:11px 12px"><span style="{{ p.docsStyle }}">{{ p.docsLabel }}</span></div>
+                          <div style="padding:8px 12px"><button onClick="{{ p.onAnalisar }}" style="width:100%;padding:8px 10px;border:1px solid var(--interactive);border-radius:8px;background:#fff;color:var(--interactive);font-weight:600;font-size:12px;cursor:pointer;font-family:inherit">Analisar</button></div>
+                        </div>
+                      </sc-for>
+                    </div>
+                  </sc-if>
                 </div>
               </sc-for>
             </div>
@@ -1526,7 +1541,7 @@
           </div>
 
           <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-top:14px">
-            <div style="font-size:13px;color:var(--text-secondary)">Mostrando 1–12 de 1.588 · role para o lado para ver todos os documentos</div>
+            <div style="font-size:13px;color:var(--text-secondary)">Mostrando 11 atletas · 1.588 inscrições no ciclo · clique em um atleta para expandir os protocolos</div>
             <div style="display:flex;gap:6px">
               <button style="width:38px;height:38px;border:1px solid var(--border-color);border-radius:8px;background:#fff;color:var(--text-secondary);cursor:pointer"><i class="fas fa-angle-left"></i></button>
               <button style="width:38px;height:38px;border:0;border-radius:8px;background:var(--interactive);color:#fff;font-weight:700;cursor:pointer">1</button>
@@ -2978,7 +2993,7 @@ class Component extends DCLogic {
     rendaResp: [null,null,null,null,null,null], rendaValores: ['','','','','',''], escolaridade: null, veracidade: false,
     familia: [{ parentesco:'Próprio (atleta)', renda:'' },{ parentesco:'Mãe', renda:'' },{ parentesco:'Pai', renda:'' }],
     cepResid: '01310-100', cepClube: '',
-    filaSel: [], solAba: 'hist', modalData: null, convocar: 30, busca: '', filtroFlag: false, caixa: 'recebidas', respStatus: 'Aguardando complemento de informações', pubModal: null, cookieConsent: null };
+    filaSel: [], solAba: 'hist', modalData: null, convocar: 30, busca: '', filtroFlag: false, caixa: 'recebidas', respStatus: 'Aguardando complemento de informações', pubModal: null, cookieConsent: null, planilhaAberto: null };
 
   PROFILES = [
     { id:'seme', short:'SEME — Analista', name:'SEME — Backoffice', role:'Ana Ribeiro · Analista DGEA', area:'SEME · Backoffice', icon:'fas fa-building-columns', home:'seme-home' },
@@ -3355,6 +3370,7 @@ class Component extends DCLogic {
   openPubModal(k){ this.setState({ pubModal:k }); }
   closePubModal(){ this.setState({ pubModal:null }); }
   setCookie(v){ this.setState({ cookieConsent:v }); this.showToast(v==='aceito'?'Preferências de cookies salvas: todos aceitos.':'Preferências salvas: apenas cookies essenciais.'); }
+  togglePlanilha(cpf){ this.setState(s=>({ planilhaAberto: s.planilhaAberto===cpf?null:cpf })); }
 
   renderVals(){
     const profile = this.state.profile;
@@ -4373,6 +4389,9 @@ class Component extends DCLogic {
       { prot:'35273266', nome:'Gabriel Felício de Jesus', cpf:'458.758.438-02', tipo:'Geral', relev:false, sexo:'M', idade:19, faixa:'18 a 21', mod:'—', cat:'—', geral:'Indeferido', docs:'Pendência', resp:'Stella', rev:'—', d:['—','—','—','—','—','—','—','—'] },
       { prot:'37282824', nome:'Rafael Nunes Farias', cpf:'560.221.338-44', tipo:'Geral', relev:false, sexo:'M', idade:16, faixa:'08 a 17', mod:'Natação', cat:'Cat. I — 1º lugar', geral:'Aguardando', docs:'OK', resp:'Luan', rev:'—', d:['OK','OK','OK','OK','OK','OK','OK','OK'] },
       { prot:'37287566', nome:'Camila Ferreira Lopes', cpf:'491.552.708-90', tipo:'Geral', relev:false, sexo:'F', idade:13, faixa:'08 a 17', mod:'Ginástica Artística', cat:'Cat. III — 3º lugar', geral:'Aguardando', docs:'Pendência', resp:'Bia', rev:'—', d:['OK','—','OK','CORRIGIR','—','—','OK','—'] },
+      // mesmo CPF com 2 protocolos (atleta inscrito em Geral E Centro Olímpico — 1 protocolo por bolsa)
+      { prot:'37240781', nome:'Giovanna Lira Cascais', cpf:'557.360.658-19', tipo:'COTP', relev:false, sexo:'F', idade:15, faixa:'08 a 17', mod:'Voleibol de Quadra', cat:'12 pts', geral:'Aguardando', docs:'OK', resp:'Natalia', rev:'—', d:['OK','OK','OK','OK','N/A','N/A','N/A','N/A'] },
+      { prot:'37275980', nome:'Carlos Eduardo Lara', cpf:'431.152.918-09', tipo:'COTP', relev:false, sexo:'M', idade:22, faixa:'22 a 25', mod:'Atletismo', cat:'8 pts', geral:'Pendência', docs:'Pendência', resp:'Ana Emina', rev:'Com pend.', d:['OK','CORRIGIR','OK','OK','N/A','N/A','N/A','N/A'] },
     ];
     const planilhaRows = pRaw.map(r=>({
       prot:r.prot, nome:r.nome, cpf:r.cpf, tipoLabel:r.tipo, relev:r.relev, sexo:r.sexo, idade:String(r.idade), faixa:r.faixa, mod:r.mod, cat:r.cat, resp:r.resp, rev:r.rev,
@@ -4382,11 +4401,32 @@ class Component extends DCLogic {
       docCells: r.d.map(dChip),
     }));
     const planilhaDocCols = ['RG/CPF','Fed./ADECO','Clube','Escolar','Não patroc.','Anuência','Decl. resid.','Compr. resid.'];
+    // ===== planilha AGRUPADA POR CPF (alinhamento reunião 28/07): 1 linha por atleta; protocolos ao clicar =====
+    const _porCpf = {};
+    pRaw.forEach(r=>{ (_porCpf[r.cpf] = _porCpf[r.cpf] || { nome:r.nome, cpf:r.cpf, faixa:r.faixa, resp:r.resp, protos:[] }).protos.push(r); });
+    const _aggStatus = (protos)=>{ if(protos.some(p=>p.geral==='Pendência'||p.docs==='Pendência')) return 'Com pendência';
+      if(protos.some(p=>p.geral==='Aguardando')) return 'Em análise';
+      if(protos.every(p=>p.geral==='Finalizado')) return 'Finalizado';
+      if(protos.some(p=>p.geral==='Indeferido')) return 'Indeferido'; return 'Apto'; };
+    const planilhaAtletas = Object.keys(_porCpf).map(cpf=>{ const a=_porCpf[cpf]; const aberto=this.state.planilhaAberto===cpf; const agg=_aggStatus(a.protos);
+      return {
+        nome:a.nome, cpf:a.cpf, faixa:a.faixa, resp:a.resp,
+        nProtLabel: a.protos.length+(a.protos.length>1?' protocolos':' protocolo'),
+        bolsasLabel: a.protos.map(p=>p.tipo+(p.relev?'-Rel.':'')).join(' · '),
+        aggLabel: agg, aggStyle: gChip(agg==='Com pendência'?'Pendência':(agg==='Em análise'?'Aguardando':agg)),
+        aberto, chevron: aberto?'fas fa-angle-up':'fas fa-angle-down',
+        rowStyle:{ display:'grid', gridTemplateColumns:'240px 120px 220px 130px 150px 1fr 40px', gap:'0', borderBottom:'1px solid var(--gray-5)', alignItems:'center', cursor:'pointer', fontSize:'13px', background: aberto?'var(--interactive-light)':'#fff' },
+        onToggle:()=>this.togglePlanilha(a.cpf),
+        protos: a.protos.map(p=>({ prot:p.prot, tipo:p.tipo+(p.relev?' – Relevância':''), mod:p.mod, cat:p.cat,
+          geralLabel:p.geral, geralStyle:gChip(p.geral), docsLabel: p.docs==='OK'?'Documentos OK':'Com pendência', docsStyle:gChip(p.docs),
+          onAnalisar:()=>this.go('seme-solicitacao') })),
+      };
+    });
 
     return {
       show,
       showPlaceholder: !built.has(screen),
-      planilhaKPIs, planilhaTotais, planilhaFiltros, planilhaRows, planilhaDocCols,
+      planilhaKPIs, planilhaTotais, planilhaFiltros, planilhaRows, planilhaDocCols, planilhaAtletas,
       goOperacao:()=>this.go('seme-operacao'),
       timeline, eleg, tiposAtleta, inscSteps, docs, modelos, parcelas, atletaNotifs, chosenTipo: this.state.chosenTipo,
       solicitacoes, selCount, filtros, checklist, docFlags, historico, resultadosCat, resultadosPreview, recursos,
